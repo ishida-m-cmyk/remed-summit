@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>来日会談管理 — 4月21日</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f0f;
+  --bg2: #181818;
+  --bg3: #222;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #f0f0f0;
+  --muted: #888;
+  --accent: #c8a96e;
+  --accent2: #e8c98e;
+  --blue: #4a90d9;
+  --green: #5ab87a;
+  --red: #e06060;
+  --amber: #d4904a;
+  --purple: #9b7fd4;
+  --teal: #4ab8a8;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.6}
+.app{max-width:900px;margin:0 auto;padding:24px 20px}
+
+/* Header */
+.header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.header-left h1{font-size:22px;font-weight:700;color:var(--accent);letter-spacing:.02em}
+.header-left .sub{font-size:12px;color:var(--muted);margin-top:4px;font-family:'DM Mono',monospace}
+.countdown-box{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 16px;text-align:center}
+.countdown-num{font-size:24px;font-weight:700;color:var(--accent);font-family:'DM Mono',monospace}
+.countdown-label{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* Summary cards */
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px}
+.s-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px}
+.s-num{font-size:26px;font-weight:700;font-family:'DM Mono',monospace;color:var(--accent)}
+.s-label{font-size:11px;color:var(--muted);margin-top:3px}
+
+/* Tabs */
+.tabs{display:flex;gap:2px;margin-bottom:20px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:4px}
+.tab{flex:1;padding:9px 8px;font-size:12px;font-weight:500;cursor:pointer;border-radius:var(--radius-sm);color:var(--muted);text-align:center;transition:all .15s;border:none;background:none;font-family:'Noto Sans JP',sans-serif}
+.tab:hover{color:var(--text)}
+.tab.active{background:var(--bg3);color:var(--accent);border:1px solid var(--border2)}
+
+/* Section */
+.section{display:none}.section.active{display:block}
+
+/* Org blocks */
+.org-block{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.org-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border)}
+.org-name{display:flex;align-items:center;gap:8px;font-weight:500;font-size:13px}
+.org-dot{width:8px;height:8px;border-radius:50%}
+.org-type{font-size:10px;color:var(--muted);font-weight:400}
+.org-cnt{font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
+.person-row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--border)}
+.person-row:last-child{border-bottom:none}
+.avatar{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.p-name{font-size:13px}
+.p-role{font-size:11px;color:var(--muted)}
+.badge{font-size:10px;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.badge-pending{background:rgba(212,144,74,.15);color:var(--amber);border:1px solid rgba(212,144,74,.3)}
+.badge-dl{background:rgba(74,144,217,.12);color:var(--blue);border:1px solid rgba(74,144,217,.25)}
+.badge-owner{background:rgba(155,127,212,.12);color:var(--purple);border:1px solid rgba(155,127,212,.25)}
+.badge-urgent{background:rgba(224,96,96,.12);color:var(--red);border:1px solid rgba(224,96,96,.3)}
+.badge-ok{background:rgba(90,184,122,.12);color:var(--green);border:1px solid rgba(90,184,122,.25)}
+
+/* Buttons */
+.btn{background:transparent;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:7px 14px;font-size:12px;cursor:pointer;color:var(--text);font-family:'Noto Sans JP',sans-serif;transition:all .1s}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn-p{background:var(--accent);border:1px solid var(--accent);border-radius:var(--radius-sm);padding:7px 16px;font-size:12px;cursor:pointer;color:#0f0f0f;font-weight:700;font-family:'Noto Sans JP',sans-serif}
+.btn-p:hover{background:var(--accent2)}
+.btn-row{display:flex;gap:8px;margin-top:12px}
+
+/* Timeline */
+.timeline{position:relative;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:1px;background:var(--border2)}
+.tl-item{position:relative;margin-bottom:10px}
+.tl-dot{position:absolute;left:-18px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--bg3);border:2px solid var(--border2)}
+.tl-dot.active{border-color:var(--blue);background:var(--blue)}
+.tl-dot.done{border-color:var(--green);background:var(--green)}
+.tl-dot.warn{border-color:var(--amber);background:var(--amber)}
+.tl-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:11px 14px}
+.tl-time{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:3px}
+.tl-title{font-size:13px;font-weight:500}
+.tl-desc{font-size:12px;color:var(--muted);margin-top:3px}
+.tl-tags{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap}
+.tl-tag{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--bg3);color:var(--muted);border:1px solid var(--border)}
+
+/* Checklist */
+.check-section-title{font-size:10px;font-weight:700;color:var(--muted);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.1em;display:flex;align-items:center;justify-content:space-between}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;transition:border-color .1s}
+.check-item:hover{border-color:var(--border2)}
+.check-item.checked-item{opacity:.55}
+.check-box{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border2);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all .1s}
+.check-box.on{background:var(--accent);border-color:var(--accent);color:#0f0f0f}
+.check-text{font-size:13px;flex:1;line-height:1.4}
+.check-text.done-text{text-decoration:line-through;color:var(--muted)}
+.check-meta{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+
+/* Signing */
+.sign-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px}
+.sign-card h4{font-size:12px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+.sign-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.sign-row:last-of-type{border-bottom:none}
+.sign-label{color:var(--muted);font-size:12px}
+.signer-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.signer-row:last-child{border-bottom:none}
+
+/* Stakeholders */
+.stake-card{display:flex;align-items:center;gap:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:11px 14px;margin-bottom:8px}
+.stake-icon{width:34px;height:34px;border-radius:var(--radius-sm);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);padding:22px;width:340px;max-width:90vw}
+.modal h3{font-size:15px;font-weight:700;margin-bottom:16px;color:var(--accent)}
+.fg{margin-bottom:11px}
+.fg label{font-size:11px;color:var(--muted);display:block;margin-bottom:4px}
+.fg input,.fg select,.fg textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);padding:8px 10px;font-size:13px;color:var(--text);font-family:'Noto Sans JP',sans-serif;outline:none}
+.fg input:focus,.fg select:focus{border-color:var(--accent)}
+.fg select option{background:var(--bg3)}
+.modal-btns{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+/* Progress */
+.prog-wrap{height:3px;background:var(--bg3);border-radius:2px;margin-top:6px}
+.prog-fill{height:3px;border-radius:2px;background:var(--accent);transition:width .3s}
+
+@media(max-width:600px){
+  .summary{grid-template-columns:repeat(2,1fr)}
+  .tabs{flex-wrap:wrap}
+  .tab{flex:1 1 auto;min-width:80px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+  <div class="header-left">
+    <h1>来日会談管理</h1>
+    <div class="sub">2025.04.21 ・ 調印式あり ・ 多社参加</div>
+  </div>
+  <div class="countdown-box">
+    <div class="countdown-num" id="cd-num">—</div>
+    <div class="countdown-label">日前</div>
+  </div>
+</div>
+
+<div class="summary">
+  <div class="s-card"><div class="s-num" id="s-total">11</div><div class="s-label">参加者合計</div></div>
+  <div class="s-card"><div class="s-num" id="s-orgs">5</div><div class="s-label">参加企業</div></div>
+  <div class="s-card"><div class="s-num" id="s-check">—</div><div class="s-label">準備完了</div></div>
+  <div class="s-card"><div class="s-num" id="s-days">—</div><div class="s-label">残り日数</div></div>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('participants',this)">参加者</button>
+  <button class="tab" onclick="switchTab('schedule',this)">スケジュール</button>
+  <button class="tab" onclick="switchTab('checklist',this)">準備物</button>
+  <button class="tab" onclick="switchTab('signing',this)">調印式</button>
+  <button class="tab" onclick="switchTab('stakeholders',this)">関係者</button>
+</div>
+
+<!-- PARTICIPANTS -->
+<div class="section active" id="sec-participants">
+  <div id="org-list"></div>
+  <div class="btn-row">
+    <button class="btn" onclick="openModal('mo-person')">+ 参加者追加</button>
+    <button class="btn" onclick="openModal('mo-org')">+ 企業追加</button>
+  </div>
+</div>
+
+<!-- SCHEDULE -->
+<div class="section" id="sec-schedule">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <span style="font-size:12px;color:var(--muted)">4月21日 タイムライン</span>
+    <button class="btn" onclick="openModal('mo-schedule')">+ 追加</button>
+  </div>
+  <div class="timeline" id="tl-list"></div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="section" id="sec-checklist">
+  <div id="cl-area"></div>
+  <div class="btn-row"><button class="btn" onclick="openModal('mo-check')">+ 準備物追加</button></div>
+</div>
+
+<!-- SIGNING -->
+<div class="section" id="sec-signing">
+  <div class="sign-card">
+    <h4>調印式 概要</h4>
+    <div class="sign-row"><span class="sign-label">予定時刻</span><span id="sign-time">— 未設定</span></div>
+    <div class="sign-row"><span class="sign-label">場所</span><span id="sign-venue">— 未設定</span></div>
+    <div style="margin-top:10px"><button class="btn" onclick="openModal('mo-sign-edit')" style="width:100%">設定・編集</button></div>
+  </div>
+  <div class="sign-card">
+    <h4>署名者リスト</h4>
+    <div id="signers-list"></div>
+    <div style="margin-top:10px"><button class="btn" onclick="openModal('mo-signer')">+ 署名者追加</button></div>
+  </div>
+  <div class="sign-card">
+    <h4>当日 備品チェック（アトラ用意）</h4>
+    <div id="sign-cl"></div>
+  </div>
+</div>
+
+<!-- STAKEHOLDERS -->
+<div class="section" id="sec-stakeholders">
+  <div id="stake-list"></div>
+  <div class="btn-row"><button class="btn" onclick="openModal('mo-stake')">+ 関係者追加</button></div>
+</div>
+
+</div><!-- /app -->
+
+<!-- Modals -->
+<div class="modal-overlay" id="mo-person" onclick="bgClose(event,'mo-person')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>参加者追加</h3>
+  <div class="fg"><label>企業</label><select id="ap-org"></select></div>
+  <div class="fg"><label>氏名（空白 → 未確定）</label><input type="text" id="ap-name" placeholder="山田 太郎"></div>
+  <div class="fg"><label>役職</label><input type="text" id="ap-role" placeholder="代表取締役"></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-person')">キャンセル</button>
+    <button class="btn-p" onclick="addPerson()">追加</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="mo-org" onclick="bgClose(event,'mo-org')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>企業追加</h3>
+  <div class="fg"><label>企業名</label><input type="text" id="ao-name"></div>
+  <div class="fg"><label>種別</label><select id="ao-type"><option>ゲスト</option><option>主催</option><option>パートナー</option><option>その他</option></select></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-org')">キャンセル</button>
+    <button class="btn-p" onclick="addOrg()">追加</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="mo-schedule" onclick="bgClose(event,'mo-schedule')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>スケジュール追加</h3>
+  <div class="fg"><label>時刻</label><input type="text" id="as-time" placeholder="10:00"></div>
+  <div class="fg"><label>内容</label><input type="text" id="as-title"></div>
+  <div class="fg"><label>詳細・場所</label><input type="text" id="as-desc"></div>
+  <div class="fg"><label>参加企業（カンマ区切り）</label><input type="text" id="as-orgs" placeholder="REMED, LFI"></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-schedule')">キャンセル</button>
+    <button class="btn-p" onclick="addSchedule()">追加</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="mo-check" onclick="bgClose(event,'mo-check')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>準備物追加</h3>
+  <div class="fg"><label>カテゴリ</label>
+    <select id="ac-cat">
+      <option>手土産・お茶</option>
+      <option>調印式（横断幕・備品）</option>
+      <option>書類・会場</option>
+      <option>広報・記録</option>
+      <option>その他</option>
+    </select>
+  </div>
+  <div class="fg"><label>準備物名</label><input type="text" id="ac-name"></div>
+  <div class="fg"><label>担当</label><input type="text" id="ac-owner" placeholder="アトラ、REMED など"></div>
+  <div class="fg"><label>期限・タイミング</label><input type="text" id="ac-dl" placeholder="4月20日 購入、16日着"></div>
+  <div class="fg"><label>緊急度</label><select id="ac-urgent"><option value="">通常</option><option value="urgent">要確認</option></select></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-check')">キャンセル</button>
+    <button class="btn-p" onclick="addCheck()">追加</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="mo-sign-edit" onclick="bgClose(event,'mo-sign-edit')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>調印式 設定</h3>
+  <div class="fg"><label>予定時刻</label><input type="text" id="se-time" placeholder="14:00"></div>
+  <div class="fg"><label>場所</label><input type="text" id="se-venue" placeholder="会議室B 3F"></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-sign-edit')">キャンセル</button>
+    <button class="btn-p" onclick="saveSign()">保存</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="mo-signer" onclick="bgClose(event,'mo-signer')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>署名者追加</h3>
+  <div class="fg"><label>企業名</label><input type="text" id="sgn-org"></div>
+  <div class="fg"><label>氏名</label><input type="text" id="sgn-name"></div>
+  <div class="fg"><label>肩書き</label><input type="text" id="sgn-role"></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-signer')">キャンセル</button>
+    <button class="btn-p" onclick="addSigner()">追加</button>
+  </div>
+</div></div>
+
+<div class="modal-overlay" id="mo-stake" onclick="bgClose(event,'mo-stake')">
+<div class="modal" onclick="event.stopPropagation()">
+  <h3>関係者追加</h3>
+  <div class="fg"><label>役割</label>
+    <select id="st-role"><option>送迎ドライバー</option><option>通訳・翻訳</option><option>会場スタッフ</option><option>カメラマン</option><option>警備</option><option>その他</option></select>
+  </div>
+  <div class="fg"><label>氏名（空白 → 未定）</label><input type="text" id="st-name"></div>
+  <div class="fg"><label>連絡先</label><input type="text" id="st-contact"></div>
+  <div class="fg"><label>担当詳細</label><input type="text" id="st-detail"></div>
+  <div class="modal-btns">
+    <button class="btn" onclick="closeModal('mo-stake')">キャンセル</button>
+    <button class="btn-p" onclick="addStake()">追加</button>
+  </div>
+</div></div>
+
+<script>
+const ORG_COLORS=[
+  {bg:'rgba(74,144,217,.15)',tc:'#4a90d9',dot:'#4a90d9'},
+  {bg:'rgba(90,184,122,.15)',tc:'#5ab87a',dot:'#5ab87a'},
+  {bg:'rgba(212,144,74,.15)',tc:'#d4904a',dot:'#d4904a'},
+  {bg:'rgba(224,96,96,.15)',tc:'#e06060',dot:'#e06060'},
+  {bg:'rgba(155,127,212,.15)',tc:'#9b7fd4',dot:'#9b7fd4'},
+  {bg:'rgba(74,184,168,.15)',tc:'#4ab8a8',dot:'#4ab8a8'},
+];
+
+let orgs=[
+  {id:1,name:'REMED',type:'ゲスト',ci:0},
+  {id:2,name:'LFI',type:'ゲスト',ci:1},
+  {id:3,name:'アトラ',type:'ゲスト',ci:2},
+  {id:4,name:'クオンタムリープ',type:'ゲスト',ci:3},
+  {id:5,name:'ヤーマン',type:'ゲスト（後日参加）',ci:4},
+];
+
+let persons=[
+  {id:1,orgId:1,name:'（調整中）',role:'',pending:true},
+  {id:2,orgId:1,name:'（調整中）',role:'',pending:true},
+  {id:3,orgId:1,name:'（調整中）',role:'',pending:true},
+  {id:4,orgId:1,name:'（調整中）',role:'',pending:true},
+  {id:5,orgId:2,name:'（調整中）',role:'',pending:true},
+  {id:6,orgId:3,name:'（調整中）',role:'',pending:true},
+  {id:7,orgId:3,name:'（調整中）',role:'',pending:true},
+  {id:8,orgId:4,name:'（調整中）',role:'',pending:true},
+  {id:9,orgId:5,name:'（調整中）',role:'',pending:true},
+  {id:10,orgId:5,name:'（調整中）',role:'',pending:true},
+];
+
+let scheduleItems=[
+  {id:1,time:'終日',title:'4月21日 来日会談',desc:'詳細スケジュールは調整中',orgs:['全社'],status:'active'},
+];
+
+const teaCount=Math.ceil(11*1.5);
+let checkItems=[
+  {id:1,cat:'手土産・お茶',name:'手土産（五感）— REMED 4名分',owner:'担当者',deadline:'4月20日 購入',checked:false,urgent:''},
+  {id:2,cat:'手土産・お茶',name:`お茶 ${teaCount}本（11名×1.5）— ビオラル`,owner:'担当者',deadline:'4月20日 購入',checked:false,urgent:''},
+  {id:3,cat:'調印式（横断幕・備品）',name:'調印式 横断幕（REMED → アトラ手配）',owner:'REMED',deadline:'4月16日 アトラ着',checked:false,urgent:'urgent'},
+  {id:4,cat:'調印式（横断幕・備品）',name:'横断幕吊り下げ用フレーム',owner:'アトラ',deadline:'当日',checked:false,urgent:''},
+  {id:5,cat:'調印式（横断幕・備品）',name:'調印用 レザーマット',owner:'アトラ',deadline:'当日',checked:false,urgent:''},
+  {id:6,cat:'調印式（横断幕・備品）',name:'調印する契約書面',owner:'アトラ',deadline:'当日',checked:false,urgent:'urgent'},
+  {id:7,cat:'調印式（横断幕・備品）',name:'書面ファイル',owner:'アトラ',deadline:'当日',checked:false,urgent:''},
+  {id:8,cat:'書類・会場',name:'参加者名簿',owner:'',deadline:'前日までに確定',checked:false,urgent:''},
+  {id:9,cat:'書類・会場',name:'会議アジェンダ',owner:'',deadline:'前日までに配布',checked:false,urgent:''},
+  {id:10,cat:'書類・会場',name:'会議室予約',owner:'',deadline:'要確認',checked:false,urgent:'urgent'},
+  {id:11,cat:'書類・会場',name:'座席表・名札',owner:'',deadline:'前日',checked:false,urgent:''},
+  {id:12,cat:'広報・記録',name:'カメラマン手配',owner:'',deadline:'要手配',checked:false,urgent:'urgent'},
+  {id:13,cat:'広報・記録',name:'記念撮影の段取り確認',owner:'',deadline:'前日',checked:false,urgent:''},
+];
+
+let signers=[];
+let signTime='— 未設定',signVenue='— 未設定';
+let signCL=[
+  {id:'sc1',name:'署名ペン（複数本）',checked:false},
+  {id:'sc2',name:'横断幕の設置確認（16日着 → 当日セット）',checked:false},
+  {id:'sc3',name:'レザーマットの配置確認',checked:false},
+  {id:'sc4',name:'契約書面の部数確認',checked:false},
+  {id:'sc5',name:'記念撮影位置の確認',checked:false},
+  {id:'sc6',name:'公証人・立会人の手配',checked:false},
+];
+let stakeholders=[
+  {id:1,role:'送迎ドライバー',name:'（未定）',contact:'',detail:'空港 ↔ 会場',pending:true},
+];
+
+function switchTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sec-'+id).classList.add('active');
+}
+
+function openModal(id){
+  if(id==='mo-person'){
+    document.getElementById('ap-org').innerHTML=orgs.map(o=>`<option value="${o.id}">${o.name}</option>`).join('');
+  }
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+function bgClose(e,id){if(e.target===document.getElementById(id))closeModal(id);}
+
+function gc(org){return ORG_COLORS[org.ci%ORG_COLORS.length];}
+
+function renderParticipants(){
+  document.getElementById('org-list').innerHTML=orgs.map(org=>{
+    const c=gc(org);
+    const ppl=persons.filter(p=>p.orgId===org.id);
+    return `<div class="org-block">
+      <div class="org-hd">
+        <div class="org-name"><span class="org-dot" style="background:${c.dot}"></span>${org.name}<span class="org-type">${org.type}</span></div>
+        <span class="org-cnt">${ppl.length}名</span>
+      </div>
+      ${ppl.map(p=>`<div class="person-row">
+        <div class="avatar" style="background:${c.bg};color:${c.tc}">${p.pending?'?':p.name.charAt(0)}</div>
+        <div style="flex:1"><div class="p-name">${p.name}</div>${p.role?`<div class="p-role">${p.role}</div>`:''}</div>
+        ${p.pending?`<span class="badge badge-pending">名前未確定</span>`:''}
+      </div>`).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('s-total').textContent=persons.length;
+  document.getElementById('s-orgs').textContent=orgs.length;
+}
+
+function renderSchedule(){
+  document.getElementById('tl-list').innerHTML=scheduleItems.map(s=>`
+    <div class="tl-item">
+      <div class="tl-dot ${s.status||''}"></div>
+      <div class="tl-card">
+        <div class="tl-time">${s.time}</div>
+        <div class="tl-title">${s.title}</div>
+        ${s.desc?`<div class="tl-desc">${s.desc}</div>`:''}
+        <div class="tl-tags">${s.orgs.map(o=>`<span class="tl-tag">${o}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderChecklist(){
+  const cats=[...new Set(checkItems.map(c=>c.cat))];
+  const done=checkItems.filter(c=>c.checked).length;
+  document.getElementById('s-check').textContent=`${done}/${checkItems.length}`;
+  document.getElementById('cl-area').innerHTML=cats.map(cat=>{
+    const items=checkItems.filter(c=>c.cat===cat);
+    const cd=items.filter(c=>c.checked).length;
+    const pct=Math.round(cd/items.length*100);
+    return `<div>
+      <div class="check-section-title">${cat}<span>${cd}/${items.length}</span></div>
+      <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div style="margin-top:8px">${items.map(c=>`
+        <div class="check-item ${c.checked?'checked-item':''}" onclick="toggleCheck(${c.id})">
+          <div class="check-box ${c.checked?'on'}">${c.checked?'✓':''}</div>
+          <div style="flex:1">
+            <div class="check-text ${c.checked?'done-text':''}">${c.name}</div>
+            <div class="check-meta">
+              ${c.owner?`<span class="badge badge-owner">${c.owner}</span>`:''}
+              ${c.deadline?`<span class="badge badge-dl">${c.deadline}</span>`:''}
+              ${c.urgent&&!c.checked?`<span class="badge badge-urgent">要確認</span>`:''}
+            </div>
+          </div>
+        </div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCheck(id){
+  const c=checkItems.find(x=>x.id===id);if(c)c.checked=!c.checked;
+  renderChecklist();
+}
+
+function renderSigning(){
+  document.getElementById('sign-time').textContent=signTime;
+  document.getElementById('sign-venue').textContent=signVenue;
+  document.getElementById('signers-list').innerHTML=signers.length
+    ?signers.map(s=>`<div class="signer-row">
+        <div style="flex:1"><div style="font-size:13px;font-weight:500">${s.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${s.org} ・ ${s.role}</div></div>
+      </div>`).join('')
+    :'<div style="font-size:13px;color:var(--muted);padding:6px 0">署名者を追加してください</div>';
+  document.getElementById('sign-cl').innerHTML=signCL.map(c=>`
+    <div class="check-item ${c.checked?'checked-item':''}" onclick="toggleSignCL('${c.id}')">
+      <div class="check-box ${c.checked?'on'}">${c.checked?'✓':''}</div>
+      <div class="check-text ${c.checked?'done-text':''}">${c.name}</div>
+    </div>`).join('');
+}
+function toggleSignCL(id){const c=signCL.find(x=>x.id===id);if(c)c.checked=!c.checked;renderSigning();}
+
+function renderStakeholders(){
+  const icons={送迎ドライバー:'🚗',通訳:'🗣','通訳・翻訳':'🗣',会場スタッフ:'🏢',カメラマン:'📷',警備:'🛡',その他:'👤'};
+  document.getElementById('stake-list').innerHTML=stakeholders.map(s=>`
+    <div class="stake-card">
+      <div class="stake-icon">${icons[s.role]||'👤'}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500">${s.role}</div>
+        <div style="font-size:12px;color:var(--muted)">${s.name}${s.detail?' — '+s.detail:''}</div>
+        ${s.contact?`<div style="font-size:11px;color:var(--muted);margin-top:2px">${s.contact}</div>`:''}
+      </div>
+      ${s.pending?`<span class="badge badge-pending">未手配</span>`:''}
+    </div>`).join('');
+}
+
+function addPerson(){
+  const name=document.getElementById('ap-name').value.trim();
+  const role=document.getElementById('ap-role').value.trim();
+  persons.push({id:Date.now(),orgId:parseInt(document.getElementById('ap-org').value),name:name||'（調整中）',role,pending:!name});
+  closeModal('mo-person');
+  document.getElementById('ap-name').value='';document.getElementById('ap-role').value='';
+  renderParticipants();
+}
+function addOrg(){
+  const name=document.getElementById('ao-name').value.trim();if(!name)return;
+  orgs.push({id:Date.now(),name,type:document.getElementById('ao-type').value,ci:orgs.length});
+  closeModal('mo-org');document.getElementById('ao-name').value='';
+  renderParticipants();
+}
+function addSchedule(){
+  const title=document.getElementById('as-title').value.trim();if(!title)return;
+  const raw=document.getElementById('as-orgs').value.trim();
+  scheduleItems.push({id:Date.now(),time:document.getElementById('as-time').value.trim(),title,desc:document.getElementById('as-desc').value.trim(),orgs:raw?raw.split(',').map(s=>s.trim()):['全社'],status:''});
+  scheduleItems.sort((a,b)=>a.time.localeCompare(b.time));
+  closeModal('mo-schedule');
+  ['as-time','as-title','as-desc','as-orgs'].forEach(id=>document.getElementById(id).value='');
+  renderSchedule();
+}
+function addCheck(){
+  const name=document.getElementById('ac-name').value.trim();if(!name)return;
+  checkItems.push({id:Date.now(),cat:document.getElementById('ac-cat').value,name,owner:document.getElementById('ac-owner').value.trim(),deadline:document.getElementById('ac-dl').value.trim(),checked:false,urgent:document.getElementById('ac-urgent').value});
+  closeModal('mo-check');
+  ['ac-name','ac-owner','ac-dl'].forEach(id=>document.getElementById(id).value='');
+  renderChecklist();
+}
+function saveSign(){
+  const t=document.getElementById('se-time').value.trim();const v=document.getElementById('se-venue').value.trim();
+  if(t)signTime=t;if(v)signVenue=v;
+  closeModal('mo-sign-edit');renderSigning();
+}
+function addSigner(){
+  const name=document.getElementById('sgn-name').value.trim();if(!name)return;
+  signers.push({org:document.getElementById('sgn-org').value.trim(),name,role:document.getElementById('sgn-role').value.trim()});
+  closeModal('mo-signer');
+  ['sgn-org','sgn-name','sgn-role'].forEach(id=>document.getElementById(id).value='');
+  renderSigning();
+}
+function addStake(){
+  const name=document.getElementById('st-name').value.trim();
+  stakeholders.push({id:Date.now(),role:document.getElementById('st-role').value,name:name||'（未定）',contact:document.getElementById('st-contact').value.trim(),detail:document.getElementById('st-detail').value.trim(),pending:!name});
+  closeModal('mo-stake');
+  ['st-name','st-contact','st-detail'].forEach(id=>document.getElementById(id).value='');
+  renderStakeholders();
+}
+
+function updateCountdown(){
+  const target=new Date('2025-04-21T09:00:00+09:00');
+  const now=new Date();const diff=target-now;
+  if(diff<=0){document.getElementById('cd-num').textContent='本日';document.getElementById('s-days').textContent='0';return;}
+  const days=Math.floor(diff/86400000);
+  document.getElementById('cd-num').textContent=days;
+  document.getElementById('s-days').textContent=days+'日';
+}
+
+renderParticipants();renderSchedule();renderChecklist();renderSigning();renderStakeholders();
+updateCountdown();setInterval(updateCountdown,60000);
+</script>
+</body>
+</html>
