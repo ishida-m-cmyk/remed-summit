@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>えいけん じゅんにきゅう 22にちチャレンジ</title>
+<style>
+  :root{
+    --bg:#fff8e7;
+    --card:#ffffff;
+    --primary:#ff7aa2;
+    --primary-d:#e85a85;
+    --accent:#5ec8ff;
+    --accent-d:#3aa8e0;
+    --good:#7ed957;
+    --bad:#ff7676;
+    --ink:#3a2b4a;
+    --sub:#7c6f8a;
+    --gold:#ffcf45;
+    --shadow:0 6px 0 rgba(58,43,74,.12), 0 10px 22px rgba(58,43,74,.08);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family: "Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4","Yu Gothic","メイリオ",system-ui,-apple-system,sans-serif;
+    -webkit-tap-highlight-color:transparent;
+    overflow-x:hidden;
+  }
+  body{min-height:100vh;background-image:
+    radial-gradient(circle at 10% 10%, #ffe9b3 0 14px, transparent 15px),
+    radial-gradient(circle at 85% 20%, #cfeaff 0 12px, transparent 13px),
+    radial-gradient(circle at 20% 80%, #ffd1e0 0 10px, transparent 11px),
+    radial-gradient(circle at 75% 85%, #d8f3c8 0 14px, transparent 15px);
+    background-attachment: fixed;
+  }
+  header{
+    padding:18px 16px 6px; text-align:center;
+  }
+  h1{
+    margin:0; font-size:22px; letter-spacing:.02em;
+    background: linear-gradient(180deg,#ff7aa2,#e85a85);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow: 0 2px 0 rgba(255,255,255,.6);
+  }
+  .sub{color:var(--sub); font-size:12px; margin-top:4px}
+  main{max-width:760px; margin:0 auto; padding:8px 14px 100px}
+  .card{
+    background:var(--card); border-radius:22px; padding:18px;
+    box-shadow:var(--shadow); border:3px solid #fff;
+  }
+  .row{display:flex; gap:10px; flex-wrap:wrap}
+  .center{display:flex; align-items:center; justify-content:center}
+  .stat{
+    flex:1 1 0; min-width:90px;
+    background:#fff; border-radius:16px; padding:10px 12px;
+    box-shadow:var(--shadow); border:3px solid #fff; text-align:center;
+  }
+  .stat .n{font-size:22px; font-weight:800; color:var(--primary-d)}
+  .stat .l{font-size:11px; color:var(--sub); margin-top:2px}
+  .days{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(72px,1fr));
+    gap:10px; margin-top:14px;
+  }
+  .day{
+    aspect-ratio:1/1; border-radius:18px; background:#fff; border:3px solid #fff;
+    box-shadow:var(--shadow); display:flex; flex-direction:column;
+    align-items:center; justify-content:center; cursor:pointer;
+    transition:transform .12s ease;
+    position:relative; overflow:hidden;
+  }
+  .day:active{transform:translateY(2px)}
+  .day .n{font-size:13px; color:var(--sub)}
+  .day .d{font-size:24px; font-weight:900; color:var(--ink)}
+  .day .pct{font-size:10px; color:var(--sub); margin-top:2px}
+  .day.done{background:linear-gradient(180deg,#fff7c2,#ffd86b); border-color:#fff}
+  .day.done .d{color:#7a4b00}
+  .day.today{outline:3px dashed var(--primary); outline-offset:-2px}
+  .day .star{position:absolute; top:4px; right:6px; font-size:14px}
+  .badge{
+    display:inline-block; padding:2px 8px; border-radius:999px;
+    background:var(--primary); color:#fff; font-size:11px; font-weight:700;
+    margin-left:6px;
+  }
+  .btn{
+    appearance:none; border:none; cursor:pointer; user-select:none;
+    border-radius:999px; padding:14px 20px; font-weight:800; font-size:16px;
+    color:#fff; background:var(--primary);
+    box-shadow:0 4px 0 var(--primary-d), 0 8px 18px rgba(232,90,133,.25);
+    transition:transform .08s ease, box-shadow .08s ease;
+  }
+  .btn:active{transform:translateY(3px); box-shadow:0 1px 0 var(--primary-d)}
+  .btn.secondary{background:var(--accent); box-shadow:0 4px 0 var(--accent-d), 0 8px 18px rgba(58,168,224,.25)}
+  .btn.secondary:active{box-shadow:0 1px 0 var(--accent-d)}
+  .btn.ghost{background:#fff; color:var(--ink); box-shadow:0 4px 0 #d9d2e3, 0 8px 18px rgba(58,43,74,.08)}
+  .btn.ghost:active{box-shadow:0 1px 0 #d9d2e3}
+  .btn.small{padding:8px 14px; font-size:13px}
+  .btn.full{display:block; width:100%}
+  .btn.gold{background:linear-gradient(180deg,#ffe27a,#ffcf45); color:#7a4b00; box-shadow:0 4px 0 #c8961b, 0 8px 18px rgba(200,150,27,.25)}
+  .btn.gold:active{box-shadow:0 1px 0 #c8961b}
+
+  .toolbar{display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px}
+  .pill{background:#fff; border-radius:999px; padding:6px 12px; font-size:12px; box-shadow:var(--shadow); border:2px solid #fff}
+
+  /* Flashcard */
+  .flash-wrap{perspective:1200px; margin:10px 0}
+  .flash{
+    position:relative; height:300px; transform-style:preserve-3d;
+    transition:transform .55s cubic-bezier(.2,.8,.3,1.2);
+    cursor:pointer;
+  }
+  .flash.flip{transform:rotateY(180deg)}
+  .face{
+    position:absolute; inset:0; backface-visibility:hidden;
+    border-radius:24px; padding:18px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; text-align:center;
+    background:#fff; box-shadow:var(--shadow); border:3px solid #fff;
+  }
+  .face.back{transform:rotateY(180deg);
+    background:linear-gradient(180deg,#fff5fb,#ffe1ee);}
+  .word{font-size:42px; font-weight:900; letter-spacing:.01em; color:var(--ink)}
+  .pos{font-size:13px; color:var(--sub); margin-top:6px}
+  .ipa{font-size:14px; color:var(--sub); margin-top:2px}
+  .mean{font-size:26px; font-weight:800; color:var(--primary-d)}
+  .ex{font-size:13px; color:var(--ink); margin-top:12px; line-height:1.6;
+    background:#fffde9; padding:10px 12px; border-radius:14px; border:2px dashed #ffd86b}
+  .hint{font-size:11px; color:var(--sub); margin-top:10px}
+
+  /* Quiz */
+  .qbox{padding:18px; border-radius:24px; background:#fff; box-shadow:var(--shadow); border:3px solid #fff}
+  .q-en{font-size:36px; font-weight:900; text-align:center; margin:6px 0 4px}
+  .q-sub{font-size:12px; color:var(--sub); text-align:center; margin-bottom:14px}
+  .choices{display:grid; gap:10px; grid-template-columns:1fr 1fr}
+  .choice{
+    background:#fff; border:3px solid #f0e7f5; border-radius:18px;
+    padding:14px 10px; font-size:18px; font-weight:800; color:var(--ink);
+    cursor:pointer; box-shadow:0 3px 0 #e7dff0;
+    transition:transform .08s ease, background .15s, border-color .15s;
+    min-height:64px;
+  }
+  .choice rt{font-weight:500}
+  .choice:active{transform:translateY(2px); box-shadow:0 1px 0 #e7dff0}
+  .choice.correct{background:#e7ffe0; border-color:var(--good); color:#256d12}
+  .choice.wrong{background:#ffe5e5; border-color:var(--bad); color:#9d2c2c}
+  .progress{height:14px; border-radius:999px; background:#f0e7f5; overflow:hidden; margin-top:8px}
+  .progress > div{height:100%; background:linear-gradient(90deg,#ff9ec0,#ff7aa2); width:0%; transition:width .3s}
+
+  /* Result */
+  .result{text-align:center; padding:18px}
+  .big{font-size:64px; font-weight:900; color:var(--primary-d)}
+  .stars{font-size:36px; color:var(--gold)}
+
+  /* Daily list */
+  .wlist{display:grid; gap:8px; margin-top:10px}
+  .wrow{
+    display:grid; grid-template-columns: 1fr auto auto; align-items:center; gap:8px;
+    background:#fff; border-radius:14px; padding:10px 12px;
+    box-shadow:var(--shadow); border:2px solid #fff;
+  }
+  .wrow .en{font-weight:800; font-size:18px}
+  .wrow .ja{font-size:13px; color:var(--sub)}
+  .speak{
+    width:38px; height:38px; border-radius:50%; border:none; cursor:pointer;
+    background:var(--accent); color:#fff; font-size:18px;
+    box-shadow:0 3px 0 var(--accent-d);
+  }
+  .speak:active{transform:translateY(2px); box-shadow:0 1px 0 var(--accent-d)}
+  .check{
+    width:30px; height:30px; border-radius:50%; border:3px solid #ddd;
+    background:#fff; cursor:pointer; font-size:16px; display:flex;
+    align-items:center; justify-content:center;
+  }
+  .check.on{background:var(--good); border-color:var(--good); color:#fff}
+
+  .nav{display:flex; gap:10px; margin-top:14px}
+  .nav .btn{flex:1}
+
+  /* Modal */
+  .modal{
+    position:fixed; inset:0; background:rgba(58,43,74,.4);
+    display:none; align-items:center; justify-content:center; padding:20px; z-index:50;
+  }
+  .modal.show{display:flex}
+  .sheet{background:#fff; border-radius:22px; padding:20px; max-width:420px; width:100%;
+    box-shadow:var(--shadow); border:3px solid #fff; text-align:center}
+
+  /* Confetti & feedback */
+  .feedback{
+    position:fixed; inset:0; pointer-events:none; display:none;
+    align-items:center; justify-content:center; z-index:40;
+  }
+  .feedback.show{display:flex}
+  .feedback .emoji{font-size:120px; animation:pop .6s ease}
+  @keyframes pop{
+    0%{transform:scale(.4); opacity:0}
+    50%{transform:scale(1.2); opacity:1}
+    100%{transform:scale(1); opacity:1}
+  }
+
+  ruby rt{font-size:.55em; color:var(--sub); font-weight:400}
+
+  footer{position:fixed; left:0; right:0; bottom:0; padding:8px;
+    background:linear-gradient(180deg, transparent, rgba(255,248,231,.95)); pointer-events:none;
+    text-align:center; color:var(--sub); font-size:11px;
+  }
+
+  @media (min-width:520px){
+    .word{font-size:54px}
+    .q-en{font-size:46px}
+    .choices{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>えいけん じゅん2きゅう 22にちチャレンジ</h1>
+  <div class="sub">しけんまで <span id="daysLeft">22</span> にち / きょうのもくひょう <span id="todayGoal">1</span> にちめ</div>
+</header>
+
+<main id="app">
+  <!-- views are rendered here -->
+</main>
+
+<div class="modal" id="modal">
+  <div class="sheet" id="sheet"></div>
+</div>
+<div class="feedback" id="feedback"><div class="emoji" id="fbEmoji">🎉</div></div>
+
+<footer>たんごをタップ＝おんせい / カードをタップ＝うらがえし</footer>
+
+<script>
+/* ============================================================
+   Eiken Pre-2 vocabulary curriculum (22 days × ~10 words = 220)
+   Each entry: { en, pos, ipa, ja (with furigana ruby), ex_en, ex_ja }
+   ============================================================ */
+const CURRICULUM = [
+  /* Day 1: 基本どうし (1) */
+  [
+    {en:"arrive",pos:"動",ipa:"/əˈraɪv/",ja:"<ruby>到<rt>とう</rt>着<rt>ちゃく</rt></ruby>する",ex_en:"We arrive at school at eight.",ex_ja:"わたしたちは8<ruby>時<rt>じ</rt></ruby>に学校に<ruby>着<rt>つ</rt></ruby>く。"},
+    {en:"agree",pos:"動",ipa:"/əˈɡriː/",ja:"<ruby>同<rt>どう</rt>意<rt>い</rt></ruby>する",ex_en:"I agree with you.",ex_ja:"<ruby>君<rt>きみ</rt></ruby>に<ruby>賛<rt>さん</rt>成<rt>せい</rt></ruby>だよ。"},
+    {en:"answer",pos:"動/名",ipa:"/ˈænsər/",ja:"<ruby>答<rt>こた</rt></ruby>える / <ruby>答<rt>こた</rt></ruby>え",ex_en:"Please answer my question.",ex_ja:"わたしの<ruby>質<rt>しつ</rt>問<rt>もん</rt></ruby>に<ruby>答<rt>こた</rt></ruby>えてね。"},
+    {en:"believe",pos:"動",ipa:"/bɪˈliːv/",ja:"<ruby>信<rt>しん</rt></ruby>じる",ex_en:"I believe you.",ex_ja:"あなたを<ruby>信<rt>しん</rt></ruby>じる。"},
+    {en:"borrow",pos:"動",ipa:"/ˈbɒroʊ/",ja:"<ruby>借<rt>か</rt></ruby>りる",ex_en:"Can I borrow your pen?",ex_ja:"ペンを<ruby>借<rt>か</rt></ruby>りてもいい？"},
+    {en:"bring",pos:"動",ipa:"/brɪŋ/",ja:"<ruby>持<rt>も</rt></ruby>ってくる",ex_en:"Bring your lunch tomorrow.",ex_ja:"あした おべんとうを<ruby>持<rt>も</rt></ruby>ってきて。"},
+    {en:"build",pos:"動",ipa:"/bɪld/",ja:"<ruby>建<rt>た</rt></ruby>てる",ex_en:"They build houses.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>らは<ruby>家<rt>いえ</rt></ruby>を<ruby>建<rt>た</rt></ruby>てる。"},
+    {en:"carry",pos:"動",ipa:"/ˈkæri/",ja:"<ruby>運<rt>はこ</rt></ruby>ぶ",ex_en:"I'll carry your bag.",ex_ja:"カバンを<ruby>運<rt>はこ</rt></ruby>ぶよ。"},
+    {en:"catch",pos:"動",ipa:"/kætʃ/",ja:"つかまえる",ex_en:"Catch the ball!",ex_ja:"ボールをキャッチして！"},
+    {en:"change",pos:"動/名",ipa:"/tʃeɪndʒ/",ja:"かえる / へんか",ex_en:"Change your shoes here.",ex_ja:"ここでくつをはきかえてね。"},
+  ],
+  /* Day 2: 基本どうし (2) */
+  [
+    {en:"choose",pos:"動",ipa:"/tʃuːz/",ja:"<ruby>選<rt>えら</rt></ruby>ぶ",ex_en:"Choose your favorite color.",ex_ja:"すきな<ruby>色<rt>いろ</rt></ruby>を<ruby>選<rt>えら</rt></ruby>んでね。"},
+    {en:"close",pos:"動/形",ipa:"/kloʊz/",ja:"<ruby>閉<rt>と</rt></ruby>じる / <ruby>近<rt>ちか</rt></ruby>い",ex_en:"Close the door, please.",ex_ja:"ドアをしめてください。"},
+    {en:"continue",pos:"動",ipa:"/kənˈtɪnjuː/",ja:"<ruby>続<rt>つづ</rt></ruby>ける",ex_en:"Let's continue the game.",ex_ja:"ゲームを<ruby>続<rt>つづ</rt></ruby>けよう。"},
+    {en:"cost",pos:"動/名",ipa:"/kɒst/",ja:"（おかねが）かかる / ねだん",ex_en:"How much does it cost?",ex_ja:"いくらしますか？"},
+    {en:"decide",pos:"動",ipa:"/dɪˈsaɪd/",ja:"<ruby>決<rt>き</rt></ruby>める",ex_en:"I decided to study English.",ex_ja:"えいごをべんきょうすると<ruby>決<rt>き</rt></ruby>めた。"},
+    {en:"drop",pos:"動",ipa:"/drɒp/",ja:"おとす",ex_en:"Don't drop the cup.",ex_ja:"コップをおとさないで。"},
+    {en:"enjoy",pos:"動",ipa:"/ɪnˈdʒɔɪ/",ja:"たのしむ",ex_en:"I enjoy soccer.",ex_ja:"サッカーをたのしむ。"},
+    {en:"explain",pos:"動",ipa:"/ɪkˈspleɪn/",ja:"せつめいする",ex_en:"Please explain this word.",ex_ja:"このたんごを せつめいしてね。"},
+    {en:"finish",pos:"動",ipa:"/ˈfɪnɪʃ/",ja:"おわる",ex_en:"Finish your homework first.",ex_ja:"さきに しゅくだいをおえよう。"},
+    {en:"follow",pos:"動",ipa:"/ˈfɒloʊ/",ja:"ついていく",ex_en:"Follow me, please.",ex_ja:"ついてきてね。"},
+  ],
+  /* Day 3: 基本どうし (3) */
+  [
+    {en:"forget",pos:"動",ipa:"/fərˈɡet/",ja:"わすれる",ex_en:"Don't forget your key.",ex_ja:"かぎをわすれないで。"},
+    {en:"happen",pos:"動",ipa:"/ˈhæpən/",ja:"おこる",ex_en:"What happened?",ex_ja:"どうしたの？"},
+    {en:"hold",pos:"動",ipa:"/hoʊld/",ja:"もつ・かかえる",ex_en:"Hold my hand.",ex_ja:"わたしの<ruby>手<rt>て</rt></ruby>をにぎって。"},
+    {en:"hurt",pos:"動",ipa:"/hɜːrt/",ja:"いたい / きずつける",ex_en:"My leg hurts.",ex_ja:"<ruby>足<rt>あし</rt></ruby>がいたい。"},
+    {en:"invite",pos:"動",ipa:"/ɪnˈvaɪt/",ja:"しょうたいする",ex_en:"I'll invite you to my party.",ex_ja:"パーティーにしょうたいするね。"},
+    {en:"join",pos:"動",ipa:"/dʒɔɪn/",ja:"さんかする",ex_en:"Join our team!",ex_ja:"チームにはいろう！"},
+    {en:"keep",pos:"動",ipa:"/kiːp/",ja:"たもつ",ex_en:"Keep the room clean.",ex_ja:"へやをきれいにたもとう。"},
+    {en:"laugh",pos:"動",ipa:"/læf/",ja:"わらう",ex_en:"We all laughed.",ex_ja:"みんなわらった。"},
+    {en:"learn",pos:"動",ipa:"/lɜːrn/",ja:"まなぶ",ex_en:"I learn English every day.",ex_ja:"まいにち えいごを<ruby>学<rt>まな</rt></ruby>ぶ。"},
+    {en:"leave",pos:"動",ipa:"/liːv/",ja:"でる・はなれる",ex_en:"I leave home at seven.",ex_ja:"7<ruby>時<rt>じ</rt></ruby>に<ruby>家<rt>いえ</rt></ruby>を出る。"},
+  ],
+  /* Day 4: 基本どうし (4) */
+  [
+    {en:"lend",pos:"動",ipa:"/lend/",ja:"かす",ex_en:"Lend me a book, please.",ex_ja:"<ruby>本<rt>ほん</rt></ruby>をかしてね。"},
+    {en:"lose",pos:"動",ipa:"/luːz/",ja:"なくす・まける",ex_en:"Don't lose your ticket.",ex_ja:"きっぷをなくさないで。"},
+    {en:"miss",pos:"動",ipa:"/mɪs/",ja:"のがす・こいしい",ex_en:"I miss my friend.",ex_ja:"ともだちが こいしい。"},
+    {en:"move",pos:"動",ipa:"/muːv/",ja:"うごく・ひっこす",ex_en:"We will move next month.",ex_ja:"らいげつ ひっこすよ。"},
+    {en:"notice",pos:"動",ipa:"/ˈnoʊtɪs/",ja:"きづく",ex_en:"I didn't notice you.",ex_ja:"あなたに きづかなかった。"},
+    {en:"offer",pos:"動",ipa:"/ˈɒfər/",ja:"もうしでる",ex_en:"He offered me some tea.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はおちゃをすすめてくれた。"},
+    {en:"order",pos:"動/名",ipa:"/ˈɔːrdər/",ja:"ちゅうもんする",ex_en:"I'll order pizza.",ex_ja:"ピザをちゅうもんするね。"},
+    {en:"pay",pos:"動",ipa:"/peɪ/",ja:"はらう",ex_en:"I'll pay later.",ex_ja:"あとで はらうね。"},
+    {en:"plan",pos:"動/名",ipa:"/plæn/",ja:"けいかく（する）",ex_en:"What's your plan?",ex_ja:"けいかくは<ruby>何<rt>なに</rt></ruby>？"},
+    {en:"prepare",pos:"動",ipa:"/prɪˈpeər/",ja:"じゅんびする",ex_en:"Prepare for the test.",ex_ja:"テストのじゅんびをしよう。"},
+  ],
+  /* Day 5: 基本どうし (5) */
+  [
+    {en:"receive",pos:"動",ipa:"/rɪˈsiːv/",ja:"うけとる",ex_en:"I received a gift.",ex_ja:"プレゼントをうけとった。"},
+    {en:"remember",pos:"動",ipa:"/rɪˈmembər/",ja:"おぼえている",ex_en:"Remember my name.",ex_ja:"<ruby>名<rt>な</rt></ruby>まえをおぼえてね。"},
+    {en:"return",pos:"動",ipa:"/rɪˈtɜːrn/",ja:"かえる・かえす",ex_en:"Return the book to me.",ex_ja:"<ruby>本<rt>ほん</rt></ruby>を かえしてね。"},
+    {en:"save",pos:"動",ipa:"/seɪv/",ja:"たすける・ためる",ex_en:"Save your money.",ex_ja:"おかねを ためよう。"},
+    {en:"share",pos:"動",ipa:"/ʃeər/",ja:"わけあう",ex_en:"Share the cake.",ex_ja:"ケーキをわけあおう。"},
+    {en:"send",pos:"動",ipa:"/send/",ja:"おくる",ex_en:"I'll send you a message.",ex_ja:"メッセージを おくるね。"},
+    {en:"solve",pos:"動",ipa:"/sɒlv/",ja:"とく",ex_en:"Solve this problem.",ex_ja:"このもんだいをといて。"},
+    {en:"spend",pos:"動",ipa:"/spend/",ja:"つかう（おかね・じかん）",ex_en:"I spend an hour reading.",ex_ja:"<ruby>本<rt>ほん</rt></ruby>を1<ruby>時<rt>じ</rt>間<rt>かん</rt></ruby>よむ。"},
+    {en:"suggest",pos:"動",ipa:"/səˈdʒest/",ja:"ていあんする",ex_en:"I suggest we go now.",ex_ja:"いまいくのがいいとおもう。"},
+    {en:"travel",pos:"動",ipa:"/ˈtrævəl/",ja:"りょこうする",ex_en:"I travel by train.",ex_ja:"でんしゃで<ruby>旅<rt>たび</rt></ruby>する。"},
+  ],
+  /* Day 6: 基本どうし (6) */
+  [
+    {en:"try",pos:"動",ipa:"/traɪ/",ja:"ためす",ex_en:"Try this cake.",ex_ja:"このケーキをためしてみて。"},
+    {en:"wait",pos:"動",ipa:"/weɪt/",ja:"まつ",ex_en:"Wait here.",ex_ja:"ここでまってて。"},
+    {en:"wear",pos:"動",ipa:"/weər/",ja:"きる・みにつける",ex_en:"Wear a coat.",ex_ja:"コートをきよう。"},
+    {en:"check",pos:"動",ipa:"/tʃek/",ja:"たしかめる",ex_en:"Check your homework.",ex_ja:"しゅくだいをたしかめて。"},
+    {en:"collect",pos:"動",ipa:"/kəˈlekt/",ja:"あつめる",ex_en:"I collect stamps.",ex_ja:"きってを あつめている。"},
+    {en:"draw",pos:"動",ipa:"/drɔː/",ja:"えをかく",ex_en:"Draw a cat.",ex_ja:"ねこをかいてね。"},
+    {en:"forget",pos:"動",ipa:"/fərˈɡet/",ja:"わすれる",ex_en:"I forgot my umbrella.",ex_ja:"かさをわすれた。"},
+    {en:"grow",pos:"動",ipa:"/ɡroʊ/",ja:"そだつ",ex_en:"Plants grow in spring.",ex_ja:"はなははるにそだつ。"},
+    {en:"introduce",pos:"動",ipa:"/ˌɪntrəˈdjuːs/",ja:"しょうかいする",ex_en:"I'll introduce my friend.",ex_ja:"ともだちをしょうかいするね。"},
+    {en:"protect",pos:"動",ipa:"/prəˈtekt/",ja:"まもる",ex_en:"We protect the earth.",ex_ja:"<ruby>地<rt>ち</rt>球<rt>きゅう</rt></ruby>をまもる。"},
+  ],
+  /* Day 7: けいようし(1) */
+  [
+    {en:"afraid",pos:"形",ipa:"/əˈfreɪd/",ja:"こわい",ex_en:"I'm afraid of dogs.",ex_ja:"いぬが こわい。"},
+    {en:"angry",pos:"形",ipa:"/ˈæŋɡri/",ja:"おこっている",ex_en:"Mom is angry.",ex_ja:"ママはおこってる。"},
+    {en:"beautiful",pos:"形",ipa:"/ˈbjuːtɪfʊl/",ja:"うつくしい",ex_en:"What a beautiful flower!",ex_ja:"なんて うつくしい<ruby>花<rt>はな</rt></ruby>！"},
+    {en:"busy",pos:"形",ipa:"/ˈbɪzi/",ja:"いそがしい",ex_en:"I'm busy today.",ex_ja:"きょうはいそがしい。"},
+    {en:"careful",pos:"形",ipa:"/ˈkeərfʊl/",ja:"ちゅういぶかい",ex_en:"Be careful!",ex_ja:"きをつけて！"},
+    {en:"cheap",pos:"形",ipa:"/tʃiːp/",ja:"やすい",ex_en:"This bag is cheap.",ex_ja:"このカバンはやすい。"},
+    {en:"clean",pos:"形/動",ipa:"/kliːn/",ja:"きれいな",ex_en:"Keep your room clean.",ex_ja:"へやをきれいにたもとう。"},
+    {en:"dangerous",pos:"形",ipa:"/ˈdeɪndʒərəs/",ja:"きけんな",ex_en:"It's dangerous here.",ex_ja:"ここは あぶないよ。"},
+    {en:"delicious",pos:"形",ipa:"/dɪˈlɪʃəs/",ja:"とてもおいしい",ex_en:"This cake is delicious.",ex_ja:"このケーキはおいしい。"},
+    {en:"different",pos:"形",ipa:"/ˈdɪfərənt/",ja:"ちがう",ex_en:"They are different.",ex_ja:"それらはちがう。"},
+  ],
+  /* Day 8: けいようし(2) */
+  [
+    {en:"difficult",pos:"形",ipa:"/ˈdɪfɪkəlt/",ja:"むずかしい",ex_en:"This is difficult.",ex_ja:"これはむずかしい。"},
+    {en:"easy",pos:"形",ipa:"/ˈiːzi/",ja:"かんたんな",ex_en:"That's easy!",ex_ja:"それはかんたん！"},
+    {en:"expensive",pos:"形",ipa:"/ɪkˈspensɪv/",ja:"たかい（ねだん）",ex_en:"This watch is expensive.",ex_ja:"このとけいはたかい。"},
+    {en:"famous",pos:"形",ipa:"/ˈfeɪməs/",ja:"ゆうめいな",ex_en:"He is a famous singer.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はゆうめいな<ruby>歌<rt>か</rt>手<rt>しゅ</rt></ruby>。"},
+    {en:"free",pos:"形",ipa:"/friː/",ja:"ひまな・ただの",ex_en:"Are you free now?",ex_ja:"いま ひま？"},
+    {en:"fresh",pos:"形",ipa:"/freʃ/",ja:"しんせんな",ex_en:"Fresh fruit is sweet.",ex_ja:"しんせんなくだものはあまい。"},
+    {en:"friendly",pos:"形",ipa:"/ˈfrendli/",ja:"したしい",ex_en:"He is friendly.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>は やさしい。"},
+    {en:"happy",pos:"形",ipa:"/ˈhæpi/",ja:"しあわせな",ex_en:"I'm so happy.",ex_ja:"とてもうれしい。"},
+    {en:"healthy",pos:"形",ipa:"/ˈhelθi/",ja:"けんこうな",ex_en:"Vegetables are healthy.",ex_ja:"<ruby>野<rt>や</rt>菜<rt>さい</rt></ruby>はけんこうにいい。"},
+    {en:"important",pos:"形",ipa:"/ɪmˈpɔːrtnt/",ja:"だいじな",ex_en:"This is important.",ex_ja:"これはだいじだよ。"},
+  ],
+  /* Day 9: けいようし(3) */
+  [
+    {en:"interesting",pos:"形",ipa:"/ˈɪntrəstɪŋ/",ja:"おもしろい",ex_en:"This book is interesting.",ex_ja:"この<ruby>本<rt>ほん</rt></ruby>はおもしろい。"},
+    {en:"kind",pos:"形",ipa:"/kaɪnd/",ja:"しんせつな",ex_en:"She is kind.",ex_ja:"<ruby>彼<rt>かの</rt>女<rt>じょ</rt></ruby>はやさしい。"},
+    {en:"large",pos:"形",ipa:"/lɑːrdʒ/",ja:"おおきい",ex_en:"A large tree.",ex_ja:"おおきな木。"},
+    {en:"late",pos:"形",ipa:"/leɪt/",ja:"おそい",ex_en:"Don't be late.",ex_ja:"おくれないで。"},
+    {en:"popular",pos:"形",ipa:"/ˈpɒpjələr/",ja:"にんきがある",ex_en:"This game is popular.",ex_ja:"このゲームはにんきがある。"},
+    {en:"quiet",pos:"形",ipa:"/ˈkwaɪət/",ja:"しずかな",ex_en:"Be quiet, please.",ex_ja:"しずかにしてね。"},
+    {en:"safe",pos:"形",ipa:"/seɪf/",ja:"あんぜんな",ex_en:"This park is safe.",ex_ja:"このこうえんはあんぜん。"},
+    {en:"sick",pos:"形",ipa:"/sɪk/",ja:"びょうきの",ex_en:"I feel sick.",ex_ja:"ぐあいがわるい。"},
+    {en:"special",pos:"形",ipa:"/ˈspeʃəl/",ja:"とくべつな",ex_en:"Today is special.",ex_ja:"きょうはとくべつ。"},
+    {en:"strong",pos:"形",ipa:"/strɒŋ/",ja:"つよい",ex_en:"He is strong.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はつよい。"},
+  ],
+  /* Day 10: けいようし(4) ＋ ふくし */
+  [
+    {en:"useful",pos:"形",ipa:"/ˈjuːsfəl/",ja:"やくにたつ",ex_en:"This app is useful.",ex_ja:"このアプリはべんり。"},
+    {en:"wonderful",pos:"形",ipa:"/ˈwʌndərfʊl/",ja:"すばらしい",ex_en:"What a wonderful day!",ex_ja:"なんてすばらしい日！"},
+    {en:"young",pos:"形",ipa:"/jʌŋ/",ja:"わかい",ex_en:"He is young.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はわかい。"},
+    {en:"always",pos:"副",ipa:"/ˈɔːlweɪz/",ja:"いつも",ex_en:"I always read at night.",ex_ja:"いつも<ruby>夜<rt>よる</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>をよむ。"},
+    {en:"sometimes",pos:"副",ipa:"/ˈsʌmtaɪmz/",ja:"ときどき",ex_en:"Sometimes I run.",ex_ja:"ときどき はしる。"},
+    {en:"usually",pos:"副",ipa:"/ˈjuːʒuəli/",ja:"たいてい",ex_en:"I usually wake up at 7.",ex_ja:"たいてい7<ruby>時<rt>じ</rt></ruby>におきる。"},
+    {en:"early",pos:"副/形",ipa:"/ˈɜːrli/",ja:"はやく",ex_en:"Get up early.",ex_ja:"はやくおきよう。"},
+    {en:"finally",pos:"副",ipa:"/ˈfaɪnəli/",ja:"ついに",ex_en:"Finally, I won!",ex_ja:"ついにかった！"},
+    {en:"maybe",pos:"副",ipa:"/ˈmeɪbi/",ja:"たぶん",ex_en:"Maybe it'll rain.",ex_ja:"たぶん あめがふる。"},
+    {en:"already",pos:"副",ipa:"/ɔːlˈredi/",ja:"もう・すでに",ex_en:"I already finished.",ex_ja:"もうおわった。"},
+  ],
+  /* Day 11: 名詞: 学校・生活 */
+  [
+    {en:"classroom",pos:"名",ipa:"/ˈklæsruːm/",ja:"きょうしつ",ex_en:"Our classroom is big.",ex_ja:"きょうしつはひろい。"},
+    {en:"homework",pos:"名",ipa:"/ˈhoʊmwɜːrk/",ja:"しゅくだい",ex_en:"Do your homework.",ex_ja:"しゅくだいをしよう。"},
+    {en:"science",pos:"名",ipa:"/ˈsaɪəns/",ja:"<ruby>理<rt>り</rt>科<rt>か</rt></ruby>",ex_en:"I like science.",ex_ja:"りかがすき。"},
+    {en:"history",pos:"名",ipa:"/ˈhɪstri/",ja:"れきし",ex_en:"History is fun.",ex_ja:"れきしはたのしい。"},
+    {en:"language",pos:"名",ipa:"/ˈlæŋɡwɪdʒ/",ja:"ことば",ex_en:"English is a language.",ex_ja:"えいごはことばだ。"},
+    {en:"library",pos:"名",ipa:"/ˈlaɪbreri/",ja:"としょかん",ex_en:"Let's go to the library.",ex_ja:"としょかんへいこう。"},
+    {en:"dictionary",pos:"名",ipa:"/ˈdɪkʃəneri/",ja:"じしょ",ex_en:"Use a dictionary.",ex_ja:"じしょをつかおう。"},
+    {en:"teacher",pos:"名",ipa:"/ˈtiːtʃər/",ja:"せんせい",ex_en:"Our teacher is kind.",ex_ja:"せんせいはやさしい。"},
+    {en:"student",pos:"名",ipa:"/ˈstuːdənt/",ja:"せいと",ex_en:"I'm a student.",ex_ja:"わたしは<ruby>生<rt>せい</rt>徒<rt>と</rt></ruby>。"},
+    {en:"school",pos:"名",ipa:"/skuːl/",ja:"がっこう",ex_en:"I go to school.",ex_ja:"がっこうへいく。"},
+  ],
+  /* Day 12: 名詞: たべもの */
+  [
+    {en:"breakfast",pos:"名",ipa:"/ˈbrekfəst/",ja:"あさごはん",ex_en:"I eat breakfast at 7.",ex_ja:"7<ruby>時<rt>じ</rt></ruby>にあさごはん。"},
+    {en:"lunch",pos:"名",ipa:"/lʌntʃ/",ja:"ひるごはん",ex_en:"Lunch is ready.",ex_ja:"ひるごはん できたよ。"},
+    {en:"dinner",pos:"名",ipa:"/ˈdɪnər/",ja:"ばんごはん",ex_en:"Dinner is at 7.",ex_ja:"ばんごはんは7<ruby>時<rt>じ</rt></ruby>。"},
+    {en:"vegetable",pos:"名",ipa:"/ˈvedʒtəbl/",ja:"やさい",ex_en:"Eat vegetables.",ex_ja:"やさいをたべよう。"},
+    {en:"fruit",pos:"名",ipa:"/fruːt/",ja:"くだもの",ex_en:"I love fruit.",ex_ja:"くだものだいすき。"},
+    {en:"meat",pos:"名",ipa:"/miːt/",ja:"にく",ex_en:"He doesn't eat meat.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はにくをたべない。"},
+    {en:"bread",pos:"名",ipa:"/bred/",ja:"パン",ex_en:"Bread is fresh.",ex_ja:"パンはやきたて。"},
+    {en:"juice",pos:"名",ipa:"/dʒuːs/",ja:"ジュース",ex_en:"Apple juice, please.",ex_ja:"りんごジュースください。"},
+    {en:"snack",pos:"名",ipa:"/snæk/",ja:"おやつ",ex_en:"Have a snack.",ex_ja:"おやつをたべよう。"},
+    {en:"restaurant",pos:"名",ipa:"/ˈrestrɒnt/",ja:"レストラン",ex_en:"Let's eat at a restaurant.",ex_ja:"レストランでたべよう。"},
+  ],
+  /* Day 13: 名詞: しごと・人 */
+  [
+    {en:"doctor",pos:"名",ipa:"/ˈdɒktər/",ja:"いしゃ",ex_en:"My mom is a doctor.",ex_ja:"ママはいしゃだ。"},
+    {en:"nurse",pos:"名",ipa:"/nɜːrs/",ja:"かんごし",ex_en:"The nurse is kind.",ex_ja:"かんごしさんはやさしい。"},
+    {en:"farmer",pos:"名",ipa:"/ˈfɑːrmər/",ja:"のうか",ex_en:"He is a farmer.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はのうかだ。"},
+    {en:"police",pos:"名",ipa:"/pəˈliːs/",ja:"けいさつ",ex_en:"Call the police!",ex_ja:"けいさつをよんで！"},
+    {en:"singer",pos:"名",ipa:"/ˈsɪŋər/",ja:"かしゅ",ex_en:"She is a great singer.",ex_ja:"<ruby>彼<rt>かの</rt>女<rt>じょ</rt></ruby>はすばらしいかしゅ。"},
+    {en:"writer",pos:"名",ipa:"/ˈraɪtər/",ja:"さっか",ex_en:"He is a writer.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はさっかだ。"},
+    {en:"artist",pos:"名",ipa:"/ˈɑːrtɪst/",ja:"げいじゅつか",ex_en:"She is an artist.",ex_ja:"<ruby>彼<rt>かの</rt>女<rt>じょ</rt></ruby>はげいじゅつか。"},
+    {en:"neighbor",pos:"名",ipa:"/ˈneɪbər/",ja:"きんじょのひと",ex_en:"My neighbor is nice.",ex_ja:"おとなりさんはやさしい。"},
+    {en:"family",pos:"名",ipa:"/ˈfæməli/",ja:"かぞく",ex_en:"My family is big.",ex_ja:"わが家はにぎやか。"},
+    {en:"friend",pos:"名",ipa:"/frend/",ja:"ともだち",ex_en:"He is my friend.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はともだち。"},
+  ],
+  /* Day 14: 名詞: しぜん */
+  [
+    {en:"mountain",pos:"名",ipa:"/ˈmaʊntn/",ja:"やま",ex_en:"That mountain is high.",ex_ja:"あの山はたかい。"},
+    {en:"river",pos:"名",ipa:"/ˈrɪvər/",ja:"かわ",ex_en:"The river is long.",ex_ja:"かわはながい。"},
+    {en:"ocean",pos:"名",ipa:"/ˈoʊʃən/",ja:"うみ",ex_en:"The ocean is blue.",ex_ja:"うみはあおい。"},
+    {en:"forest",pos:"名",ipa:"/ˈfɒrɪst/",ja:"もり",ex_en:"A bear lives in the forest.",ex_ja:"くまはもりにすむ。"},
+    {en:"island",pos:"名",ipa:"/ˈaɪlənd/",ja:"しま",ex_en:"This is a small island.",ex_ja:"これは小さなしま。"},
+    {en:"earth",pos:"名",ipa:"/ɜːrθ/",ja:"ちきゅう",ex_en:"We live on Earth.",ex_ja:"わたしたちはちきゅうにすむ。"},
+    {en:"weather",pos:"名",ipa:"/ˈweðər/",ja:"てんき",ex_en:"How's the weather?",ex_ja:"てんきはどう？"},
+    {en:"snow",pos:"名/動",ipa:"/snoʊ/",ja:"ゆき / ゆきがふる",ex_en:"It's snowing.",ex_ja:"ゆきがふっている。"},
+    {en:"wind",pos:"名",ipa:"/wɪnd/",ja:"かぜ",ex_en:"The wind is strong.",ex_ja:"かぜがつよい。"},
+    {en:"sky",pos:"名",ipa:"/skaɪ/",ja:"そら",ex_en:"The sky is blue.",ex_ja:"そらはあおい。"},
+  ],
+  /* Day 15: 名詞: どうぶつ・もの */
+  [
+    {en:"animal",pos:"名",ipa:"/ˈænɪməl/",ja:"どうぶつ",ex_en:"I love animals.",ex_ja:"どうぶつだいすき。"},
+    {en:"butterfly",pos:"名",ipa:"/ˈbʌtərflaɪ/",ja:"ちょうちょ",ex_en:"A butterfly is flying.",ex_ja:"ちょうちょがとぶ。"},
+    {en:"insect",pos:"名",ipa:"/ˈɪnsekt/",ja:"こんちゅう",ex_en:"That's a small insect.",ex_ja:"小さなこんちゅうだ。"},
+    {en:"plant",pos:"名/動",ipa:"/plænt/",ja:"しょくぶつ / うえる",ex_en:"Plant a tree.",ex_ja:"<ruby>木<rt>き</rt></ruby>をうえよう。"},
+    {en:"flower",pos:"名",ipa:"/ˈflaʊər/",ja:"はな",ex_en:"A red flower.",ex_ja:"あかいはな。"},
+    {en:"machine",pos:"名",ipa:"/məˈʃiːn/",ja:"きかい",ex_en:"A new machine.",ex_ja:"あたらしいきかい。"},
+    {en:"computer",pos:"名",ipa:"/kəmˈpjuːtər/",ja:"パソコン",ex_en:"Use the computer.",ex_ja:"パソコンをつかう。"},
+    {en:"camera",pos:"名",ipa:"/ˈkæmərə/",ja:"カメラ",ex_en:"My camera is new.",ex_ja:"わたしのカメラはあたらしい。"},
+    {en:"newspaper",pos:"名",ipa:"/ˈnuːzpeɪpər/",ja:"しんぶん",ex_en:"Read the newspaper.",ex_ja:"しんぶんをよむ。"},
+    {en:"present",pos:"名",ipa:"/ˈpreznt/",ja:"プレゼント",ex_en:"I got a present.",ex_ja:"プレゼントをもらった。"},
+  ],
+  /* Day 16: 名詞: まち・たてもの */
+  [
+    {en:"airport",pos:"名",ipa:"/ˈeərpɔːrt/",ja:"くうこう",ex_en:"Go to the airport.",ex_ja:"くうこうへ行く。"},
+    {en:"station",pos:"名",ipa:"/ˈsteɪʃn/",ja:"えき",ex_en:"Meet at the station.",ex_ja:"えきであおう。"},
+    {en:"hospital",pos:"名",ipa:"/ˈhɒspɪtl/",ja:"びょういん",ex_en:"He is in the hospital.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はびょういんにいる。"},
+    {en:"hotel",pos:"名",ipa:"/hoʊˈtel/",ja:"ホテル",ex_en:"Stay at the hotel.",ex_ja:"ホテルにとまる。"},
+    {en:"museum",pos:"名",ipa:"/mjuːˈziːəm/",ja:"はくぶつかん",ex_en:"Visit the museum.",ex_ja:"はくぶつかんをみよう。"},
+    {en:"bank",pos:"名",ipa:"/bæŋk/",ja:"ぎんこう",ex_en:"Go to the bank.",ex_ja:"ぎんこうにいく。"},
+    {en:"factory",pos:"名",ipa:"/ˈfæktri/",ja:"こうじょう",ex_en:"He works at a factory.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はこうじょうではたらく。"},
+    {en:"office",pos:"名",ipa:"/ˈɒfɪs/",ja:"じむしょ",ex_en:"My dad's office is big.",ex_ja:"パパのじむしょはおおきい。"},
+    {en:"city",pos:"名",ipa:"/ˈsɪti/",ja:"とし",ex_en:"Tokyo is a big city.",ex_ja:"とうきょうは大きなとし。"},
+    {en:"country",pos:"名",ipa:"/ˈkʌntri/",ja:"くに",ex_en:"Japan is my country.",ex_ja:"にほんはわたしのくに。"},
+  ],
+  /* Day 17: 名詞: いえ・もの */
+  [
+    {en:"kitchen",pos:"名",ipa:"/ˈkɪtʃɪn/",ja:"だいどころ",ex_en:"Mom is in the kitchen.",ex_ja:"ママはだいどころにいる。"},
+    {en:"bathroom",pos:"名",ipa:"/ˈbæθruːm/",ja:"おふろば",ex_en:"Where's the bathroom?",ex_ja:"おふろばはどこ？"},
+    {en:"garden",pos:"名",ipa:"/ˈɡɑːrdn/",ja:"にわ",ex_en:"The garden is beautiful.",ex_ja:"にわはきれい。"},
+    {en:"window",pos:"名",ipa:"/ˈwɪndoʊ/",ja:"まど",ex_en:"Open the window.",ex_ja:"まどをあけて。"},
+    {en:"floor",pos:"名",ipa:"/flɔːr/",ja:"ゆか・かい",ex_en:"On the second floor.",ex_ja:"2かいです。"},
+    {en:"chair",pos:"名",ipa:"/tʃeər/",ja:"いす",ex_en:"Sit on the chair.",ex_ja:"いすにすわって。"},
+    {en:"clock",pos:"名",ipa:"/klɒk/",ja:"とけい",ex_en:"The clock is new.",ex_ja:"そのとけいはあたらしい。"},
+    {en:"key",pos:"名",ipa:"/kiː/",ja:"かぎ",ex_en:"Where's my key?",ex_ja:"かぎはどこ？"},
+    {en:"toy",pos:"名",ipa:"/tɔɪ/",ja:"おもちゃ",ex_en:"I love this toy.",ex_ja:"このおもちゃだいすき。"},
+    {en:"map",pos:"名",ipa:"/mæp/",ja:"ちず",ex_en:"Show me the map.",ex_ja:"ちずをみせて。"},
+  ],
+  /* Day 18: ぶんけい・じゅくご(1) */
+  [
+    {en:"a lot of",pos:"句",ipa:"/ə lɒt əv/",ja:"たくさんの",ex_en:"A lot of people came.",ex_ja:"たくさんの<ruby>人<rt>ひと</rt></ruby>がきた。"},
+    {en:"each other",pos:"句",ipa:"/iːtʃ ˈʌðər/",ja:"おたがい",ex_en:"We help each other.",ex_ja:"おたがい たすけあう。"},
+    {en:"for example",pos:"句",ipa:"/fər ɪɡˈzæmpl/",ja:"たとえば",ex_en:"For example, apples.",ex_ja:"たとえば りんご。"},
+    {en:"in front of",pos:"句",ipa:"/ɪn frʌnt əv/",ja:"〜のまえに",ex_en:"In front of the door.",ex_ja:"ドアのまえ。"},
+    {en:"look for",pos:"句",ipa:"/lʊk fɔːr/",ja:"さがす",ex_en:"I'm looking for my hat.",ex_ja:"ぼうしをさがしてる。"},
+    {en:"look forward to",pos:"句",ipa:"/lʊk ˈfɔːrwərd tə/",ja:"たのしみにする",ex_en:"I look forward to it.",ex_ja:"たのしみにしてる。"},
+    {en:"take care of",pos:"句",ipa:"/teɪk keər əv/",ja:"せわをする",ex_en:"Take care of the cat.",ex_ja:"ねこのせわをして。"},
+    {en:"be good at",pos:"句",ipa:"/bi ɡʊd æt/",ja:"〜がじょうずだ",ex_en:"I'm good at math.",ex_ja:"さんすうがとくい。"},
+    {en:"be interested in",pos:"句",ipa:"/bi ˈɪntrəstɪd ɪn/",ja:"〜にきょうみがある",ex_en:"I'm interested in space.",ex_ja:"うちゅうにきょうみがある。"},
+    {en:"have to",pos:"句",ipa:"/hæv tə/",ja:"〜しなければ",ex_en:"I have to go now.",ex_ja:"もういかなきゃ。"},
+  ],
+  /* Day 19: ぶんけい・じゅくご(2) */
+  [
+    {en:"according to",pos:"句",ipa:"/əˈkɔːrdɪŋ tə/",ja:"〜によると",ex_en:"According to the news…",ex_ja:"ニュースによると…"},
+    {en:"as soon as",pos:"句",ipa:"/əz suːn əz/",ja:"〜するとすぐに",ex_en:"As soon as I arrived…",ex_ja:"ついてすぐに…"},
+    {en:"because of",pos:"句",ipa:"/bɪˈkɒz əv/",ja:"〜のせいで",ex_en:"Because of the rain.",ex_ja:"あめのせいで。"},
+    {en:"by the way",pos:"句",ipa:"/baɪ ðə weɪ/",ja:"ところで",ex_en:"By the way, hi!",ex_ja:"ところで、やあ！"},
+    {en:"give up",pos:"句",ipa:"/ɡɪv ʌp/",ja:"あきらめる",ex_en:"Don't give up.",ex_ja:"あきらめないで。"},
+    {en:"grow up",pos:"句",ipa:"/ɡroʊ ʌp/",ja:"せいちょうする",ex_en:"I grew up here.",ex_ja:"ここでそだった。"},
+    {en:"put on",pos:"句",ipa:"/pʊt ɒn/",ja:"みにつける",ex_en:"Put on your jacket.",ex_ja:"ジャケットをきて。"},
+    {en:"take off",pos:"句",ipa:"/teɪk ɔːf/",ja:"ぬぐ・りりくする",ex_en:"Take off your shoes.",ex_ja:"くつをぬいで。"},
+    {en:"turn on",pos:"句",ipa:"/tɜːrn ɒn/",ja:"スイッチをいれる",ex_en:"Turn on the light.",ex_ja:"でんきをつけて。"},
+    {en:"turn off",pos:"句",ipa:"/tɜːrn ɔːf/",ja:"スイッチをきる",ex_en:"Turn off the TV.",ex_ja:"テレビをけして。"},
+  ],
+  /* Day 20: 動詞・じゅうよう (高ひんしゅつ) */
+  [
+    {en:"recommend",pos:"動",ipa:"/ˌrekəˈmend/",ja:"すすめる",ex_en:"I recommend this book.",ex_ja:"この<ruby>本<rt>ほん</rt></ruby>をおすすめ。"},
+    {en:"realize",pos:"動",ipa:"/ˈriːəlaɪz/",ja:"きづく",ex_en:"I realized my mistake.",ex_ja:"まちがいに きづいた。"},
+    {en:"reply",pos:"動",ipa:"/rɪˈplaɪ/",ja:"へんじする",ex_en:"Please reply soon.",ex_ja:"はやくへんじしてね。"},
+    {en:"hope",pos:"動",ipa:"/hoʊp/",ja:"のぞむ",ex_en:"I hope to see you.",ex_ja:"あえるといいな。"},
+    {en:"wish",pos:"動",ipa:"/wɪʃ/",ja:"ねがう",ex_en:"I wish you luck.",ex_ja:"うんがいいことをいのる。"},
+    {en:"worry",pos:"動",ipa:"/ˈwɜːri/",ja:"しんぱいする",ex_en:"Don't worry.",ex_ja:"しんぱいしないで。"},
+    {en:"surprise",pos:"動/名",ipa:"/sərˈpraɪz/",ja:"おどろかす",ex_en:"What a surprise!",ex_ja:"びっくり！"},
+    {en:"appear",pos:"動",ipa:"/əˈpɪər/",ja:"あらわれる",ex_en:"A rainbow appeared.",ex_ja:"にじがあらわれた。"},
+    {en:"happen",pos:"動",ipa:"/ˈhæpən/",ja:"おこる",ex_en:"What happened today?",ex_ja:"きょう なにがあった？"},
+    {en:"agree",pos:"動",ipa:"/əˈɡriː/",ja:"さんせいする",ex_en:"I agree with you.",ex_ja:"あなたにさんせい。"},
+  ],
+  /* Day 21: テストでよくでる名詞 */
+  [
+    {en:"information",pos:"名",ipa:"/ˌɪnfərˈmeɪʃn/",ja:"じょうほう",ex_en:"More information, please.",ex_ja:"もっとじょうほうをください。"},
+    {en:"experience",pos:"名",ipa:"/ɪkˈspɪriəns/",ja:"けいけん",ex_en:"It was a fun experience.",ex_ja:"たのしいけいけん。"},
+    {en:"chance",pos:"名",ipa:"/tʃæns/",ja:"きかい",ex_en:"Give me a chance.",ex_ja:"きかいをちょうだい。"},
+    {en:"problem",pos:"名",ipa:"/ˈprɒbləm/",ja:"もんだい",ex_en:"No problem.",ex_ja:"もんだいないよ。"},
+    {en:"reason",pos:"名",ipa:"/ˈriːzn/",ja:"りゆう",ex_en:"What's the reason?",ex_ja:"りゆうは何？"},
+    {en:"trip",pos:"名",ipa:"/trɪp/",ja:"りょこう",ex_en:"Have a nice trip.",ex_ja:"よいたびを。"},
+    {en:"vacation",pos:"名",ipa:"/veɪˈkeɪʃn/",ja:"きゅうか",ex_en:"Summer vacation is fun.",ex_ja:"なつやすみはたのしい。"},
+    {en:"event",pos:"名",ipa:"/ɪˈvent/",ja:"イベント",ex_en:"A big event today.",ex_ja:"きょうはおおきなイベント。"},
+    {en:"future",pos:"名",ipa:"/ˈfjuːtʃər/",ja:"みらい",ex_en:"In the future…",ex_ja:"みらいでは…"},
+    {en:"world",pos:"名",ipa:"/wɜːrld/",ja:"せかい",ex_en:"The world is big.",ex_ja:"せかいはひろい。"},
+  ],
+  /* Day 22: そうふくしゅう (高ひんしゅつ・やや上) */
+  [
+    {en:"environment",pos:"名",ipa:"/ɪnˈvaɪrənmənt/",ja:"かんきょう",ex_en:"Protect the environment.",ex_ja:"かんきょうをまもろう。"},
+    {en:"culture",pos:"名",ipa:"/ˈkʌltʃər/",ja:"ぶんか",ex_en:"Japanese culture is rich.",ex_ja:"にほんのぶんかはゆたか。"},
+    {en:"health",pos:"名",ipa:"/helθ/",ja:"けんこう",ex_en:"Health is important.",ex_ja:"けんこうはだいじ。"},
+    {en:"energy",pos:"名",ipa:"/ˈenərdʒi/",ja:"エネルギー",ex_en:"Save energy.",ex_ja:"エネルギーをせつやく。"},
+    {en:"recycle",pos:"動",ipa:"/ˌriːˈsaɪkl/",ja:"リサイクルする",ex_en:"We recycle paper.",ex_ja:"かみをリサイクルする。"},
+    {en:"reduce",pos:"動",ipa:"/rɪˈduːs/",ja:"へらす",ex_en:"Reduce plastic.",ex_ja:"プラスチックをへらそう。"},
+    {en:"increase",pos:"動",ipa:"/ɪnˈkriːs/",ja:"ふえる",ex_en:"Prices increase.",ex_ja:"ねだんがあがる。"},
+    {en:"however",pos:"副",ipa:"/haʊˈevər/",ja:"しかしながら",ex_en:"However, it's hard.",ex_ja:"しかし、むずかしい。"},
+    {en:"although",pos:"接",ipa:"/ɔːlˈðoʊ/",ja:"〜だけれども",ex_en:"Although it rained, we played.",ex_ja:"あめだったけど あそんだ。"},
+    {en:"instead",pos:"副",ipa:"/ɪnˈsted/",ja:"そのかわりに",ex_en:"Tea, instead of coffee.",ex_ja:"コーヒーじゃなくおちゃ。"},
+  ],
+];
+
+const TOTAL_DAYS = CURRICULUM.length;
+const STORAGE_KEY = "eiken_pre2_kid_v1";
+
+/* Storage */
+function load(){
+  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ return {}; }
+}
+function save(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+let state = load();
+state.start = state.start || new Date().toISOString().slice(0,10);
+state.days = state.days || {};       // dayIdx -> {learned:[idx], quizBest:0..10}
+state.streak = state.streak || 0;
+state.lastDay = state.lastDay || null;
+state.points = state.points || 0;
+save(state);
+
+function todayIdx(){
+  const start = new Date(state.start);
+  const today = new Date();
+  const diff = Math.floor((today - start) / 86400000);
+  return Math.max(0, Math.min(TOTAL_DAYS-1, diff));
+}
+
+/* Speech */
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US"; u.rate = 0.9; u.pitch = 1.05;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* Feedback */
+function feedback(emoji, ms=700){
+  const el = document.getElementById('feedback');
+  document.getElementById('fbEmoji').textContent = emoji;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), ms);
+}
+
+/* Modal */
+function openModal(html){
+  document.getElementById('sheet').innerHTML = html;
+  document.getElementById('modal').classList.add('show');
+}
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+document.getElementById('modal').addEventListener('click', (e)=>{
+  if(e.target.id==='modal') closeModal();
+});
+
+/* Header info */
+function refreshHeader(){
+  const start = new Date(state.start);
+  const exam = new Date(start); exam.setDate(exam.getDate() + TOTAL_DAYS);
+  const today = new Date();
+  const left = Math.max(0, Math.ceil((exam - today)/86400000));
+  document.getElementById('daysLeft').textContent = left;
+  document.getElementById('todayGoal').textContent = todayIdx()+1;
+}
+
+/* ----- Views ----- */
+const app = document.getElementById('app');
+
+function viewHome(){
+  refreshHeader();
+  const total = TOTAL_DAYS*10;
+  let learned = 0;
+  for(const k in state.days){ learned += (state.days[k].learned||[]).length; }
+  const t = todayIdx();
+
+  let daysHTML = "";
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const d = state.days[i] || {};
+    const ln = (d.learned||[]).length;
+    const pct = Math.round(ln/10*100);
+    const star = (d.quizBest||0) >= 8 ? "⭐" : (ln>=10? "✅" : (ln>0?"✏️":""));
+    const cls = ["day"];
+    if(ln>=10 && (d.quizBest||0)>=8) cls.push("done");
+    if(i===t) cls.push("today");
+    daysHTML += `<div class="${cls.join(' ')}" data-day="${i}">
+      <div class="star">${star}</div>
+      <div class="n">Day</div>
+      <div class="d">${i+1}</div>
+      <div class="pct">${pct}%</div>
+    </div>`;
+  }
+
+  app.innerHTML = `
+    <div class="row" style="margin-bottom:10px">
+      <div class="stat"><div class="n">${learned}/${total}</div><div class="l">おぼえたたんご</div></div>
+      <div class="stat"><div class="n">${state.streak}🔥</div><div class="l">れんぞくにっすう</div></div>
+      <div class="stat"><div class="n">${state.points}✨</div><div class="l">ポイント</div></div>
+    </div>
+    <div class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between">
+        <div style="font-weight:800">🌸 きょうのチャレンジ</div>
+        <span class="pill">Day ${t+1} / 22</span>
+      </div>
+      <div style="margin-top:10px; color:var(--sub); font-size:13px">
+        まずは「フラッシュカード」でたんごをおぼえて、つぎに「クイズ」でちょうせんしてみよう！
+      </div>
+      <div class="nav">
+        <button class="btn" onclick="viewDay(${t})">きょうのDayをはじめる ▶</button>
+      </div>
+    </div>
+    <div style="margin-top:14px; font-weight:800; padding-left:6px">22にちカレンダー</div>
+    <div class="days">${daysHTML}</div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn ghost full" onclick="viewMixedQuiz()">💪 これまで全部から ミックスクイズ</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost small" onclick="resetAll()">🔄 きろくをリセット</button>
+    </div>
+  `;
+  document.querySelectorAll('.day').forEach(el=>{
+    el.addEventListener('click', ()=> viewDay(parseInt(el.dataset.day)));
+  });
+}
+
+function viewDay(idx){
+  const day = CURRICULUM[idx];
+  const dstate = state.days[idx] || (state.days[idx]={learned:[], quizBest:0});
+  let html = `
+    <div class="toolbar">
+      <button class="btn ghost small" onclick="viewHome()">← もどる</button>
+      <div class="pill">Day ${idx+1}・${day.length}たんご</div>
+      <button class="btn small" onclick="viewFlash(${idx},0)">🃏 カード</button>
+    </div>
+    <div class="card">
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <div style="font-weight:800">📖 きょうのたんご</div>
+        <div class="pill">${(dstate.learned||[]).length}/${day.length}</div>
+      </div>
+      <div class="wlist">
+  `;
+  day.forEach((w,i)=>{
+    const checked = (dstate.learned||[]).includes(i);
+    html += `
+      <div class="wrow">
+        <div>
+          <div class="en">${w.en} <span style="font-size:11px;color:var(--sub)">${w.pos}</span></div>
+          <div class="ja">${w.ja}</div>
+        </div>
+        <button class="speak" onclick="speak('${w.en.replace(/'/g,"\\'")}')">🔊</button>
+        <button class="check ${checked?'on':''}" data-i="${i}" data-d="${idx}">${checked?'✓':''}</button>
+      </div>
+    `;
+  });
+  html += `</div></div>
+    <div class="nav">
+      <button class="btn secondary" onclick="viewFlash(${idx},0)">🃏 フラッシュカード</button>
+      <button class="btn" onclick="viewQuiz(${idx})">📝 クイズ ${dstate.quizBest? '🏆 ベスト'+dstate.quizBest+'/10':''}</button>
+    </div>
+  `;
+  app.innerHTML = html;
+  document.querySelectorAll('.check').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const i = parseInt(el.dataset.i);
+      const d = parseInt(el.dataset.d);
+      const ds = state.days[d];
+      ds.learned = ds.learned || [];
+      const k = ds.learned.indexOf(i);
+      if(k===-1){ ds.learned.push(i); state.points+=1; el.classList.add('on'); el.textContent='✓'; }
+      else { ds.learned.splice(k,1); el.classList.remove('on'); el.textContent=''; }
+      save(state);
+    });
+  });
+}
+
+/* Flashcard */
+function viewFlash(dayIdx, i){
+  const day = CURRICULUM[dayIdx];
+  if(i>=day.length){
+    feedback("🎊", 900);
+    setTimeout(()=>viewDayResult(dayIdx, "カードコンプリート！"),700);
+    return;
+  }
+  const w = day[i];
+  app.innerHTML = `
+    <div class="toolbar">
+      <button class="btn ghost small" onclick="viewDay(${dayIdx})">← もどる</button>
+      <div class="pill">Day ${dayIdx+1}・${i+1}/${day.length}</div>
+      <button class="btn small secondary" onclick="speak('${w.en.replace(/'/g,"\\'")}')">🔊</button>
+    </div>
+    <div class="progress"><div style="width:${(i/day.length)*100}%"></div></div>
+    <div class="flash-wrap">
+      <div class="flash" id="flash">
+        <div class="face front">
+          <div class="word">${w.en}</div>
+          <div class="pos">${w.pos} ${w.ipa||""}</div>
+          <div class="hint">タップでこたえをみる</div>
+        </div>
+        <div class="face back">
+          <div class="mean">${w.ja}</div>
+          <div class="ex">${w.ex_en}<br/><span style="color:var(--sub)">${w.ex_ja}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn ghost" onclick="flashAnswer(${dayIdx},${i},false)">😵 まだまだ</button>
+      <button class="btn gold" onclick="flashAnswer(${dayIdx},${i},true)">😄 おぼえた！</button>
+    </div>
+  `;
+  const fl = document.getElementById('flash');
+  fl.addEventListener('click', ()=> fl.classList.toggle('flip'));
+  speak(w.en);
+}
+function flashAnswer(dayIdx, i, learned){
+  const ds = state.days[dayIdx] || (state.days[dayIdx]={learned:[],quizBest:0});
+  ds.learned = ds.learned || [];
+  if(learned && !ds.learned.includes(i)){ ds.learned.push(i); state.points+=2; }
+  save(state);
+  feedback(learned?"⭐":"💪", 500);
+  setTimeout(()=>viewFlash(dayIdx, i+1), 350);
+}
+
+/* Quiz */
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function buildQuestions(words, allWords){
+  // 10 questions, alternating E->J and J->E
+  const qs = shuffle([...words]).slice(0,10).map((w,i)=>{
+    const wrong = shuffle(allWords.filter(x=>x.en!==w.en)).slice(0,3);
+    const dirEJ = i%2===0;
+    if(dirEJ){
+      const opts = shuffle([w, ...wrong]);
+      return {prompt:w.en, sub:w.pos+" "+(w.ipa||""), options:opts.map(o=>o.ja), answer:opts.findIndex(o=>o.en===w.en), speak:w.en};
+    }else{
+      const opts = shuffle([w, ...wrong]);
+      return {prompt:w.ja, sub:"日本語→英語", options:opts.map(o=>o.en), answer:opts.findIndex(o=>o.en===w.en), speak:null};
+    }
+  });
+  return qs;
+}
+
+function viewQuiz(dayIdx){
+  const allWords = CURRICULUM.flat();
+  const qs = buildQuestions(CURRICULUM[dayIdx], allWords);
+  runQuiz(qs, (score)=>{
+    const ds = state.days[dayIdx] || (state.days[dayIdx]={learned:[],quizBest:0});
+    ds.quizBest = Math.max(ds.quizBest||0, score);
+    state.points += score;
+    // streak
+    const today = new Date().toISOString().slice(0,10);
+    if(state.lastDay !== today){
+      const y = new Date(); y.setDate(y.getDate()-1);
+      state.streak = (state.lastDay === y.toISOString().slice(0,10)) ? (state.streak+1) : 1;
+      state.lastDay = today;
+    }
+    save(state);
+    showResult(dayIdx, score, qs.length);
+  });
+}
+
+function viewMixedQuiz(){
+  const t = todayIdx();
+  const learned = [];
+  for(let i=0;i<=t;i++){ learned.push(...CURRICULUM[i]); }
+  if(learned.length<4){ openModal(`<h3>まだたんごがすくないよ</h3><p>Day1からはじめよう！</p><button class='btn' onclick='closeModal()'>OK</button>`); return; }
+  const qs = buildQuestions(learned, CURRICULUM.flat());
+  runQuiz(qs, (score)=>{
+    state.points += score;
+    save(state);
+    showResult(-1, score, qs.length);
+  });
+}
+
+function runQuiz(qs, onDone){
+  let i=0, score=0;
+  const render = ()=>{
+    if(i>=qs.length){ onDone(score); return; }
+    const q = qs[i];
+    app.innerHTML = `
+      <div class="toolbar">
+        <button class="btn ghost small" onclick="viewHome()">← やめる</button>
+        <div class="pill">${i+1}/${qs.length}・${score}せいかい</div>
+        ${q.speak?`<button class="btn small secondary" onclick="speak('${q.speak.replace(/'/g,"\\'")}')">🔊</button>`:'<div></div>'}
+      </div>
+      <div class="progress"><div style="width:${(i/qs.length)*100}%"></div></div>
+      <div class="qbox">
+        <div class="q-en">${q.prompt}</div>
+        <div class="q-sub">${q.sub}</div>
+        <div class="choices">
+          ${q.options.map((o,k)=>`<div class="choice" data-k="${k}">${o}</div>`).join('')}
+        </div>
+      </div>
+    `;
+    if(q.speak) speak(q.speak);
+    document.querySelectorAll('.choice').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const k = parseInt(el.dataset.k);
+        if(k===q.answer){
+          el.classList.add('correct'); score++; feedback("⭕",450);
+        }else{
+          el.classList.add('wrong');
+          document.querySelectorAll('.choice')[q.answer].classList.add('correct');
+          feedback("❌",550);
+        }
+        document.querySelectorAll('.choice').forEach(c=>c.style.pointerEvents='none');
+        setTimeout(()=>{ i++; render(); }, 750);
+      });
+    });
+  };
+  render();
+}
+
+function showResult(dayIdx, score, total){
+  const stars = score>=9? "⭐⭐⭐" : score>=7? "⭐⭐" : score>=4? "⭐" : "💪";
+  const msg = score>=9? "かんぺき！" : score>=7? "じょうずだね！" : score>=4? "もうちょっと！" : "もう一どチャレンジ！";
+  feedback(score>=7?"🎉":"💪", 800);
+  app.innerHTML = `
+    <div class="card result">
+      <div class="stars">${stars}</div>
+      <div style="font-weight:800; font-size:18px; margin-top:6px">${msg}</div>
+      <div class="big">${score}<span style="font-size:24px;color:var(--sub)">/${total}</span></div>
+      <div style="color:var(--sub); margin-bottom:14px">+${score} ポイント ✨</div>
+      <div class="row" style="justify-content:center">
+        ${dayIdx>=0?`<button class="btn secondary" onclick="viewQuiz(${dayIdx})">🔁 もういちど</button>`:''}
+        <button class="btn" onclick="viewHome()">🏠 ホームへ</button>
+      </div>
+    </div>
+  `;
+}
+
+function viewDayResult(dayIdx, message){
+  app.innerHTML = `
+    <div class="card result">
+      <div class="big">🎊</div>
+      <div style="font-weight:800; font-size:18px">${message}</div>
+      <div style="margin-top:14px" class="row" style="justify-content:center">
+        <button class="btn secondary" onclick="viewQuiz(${dayIdx})">📝 クイズへ</button>
+        <button class="btn" onclick="viewHome()">🏠 ホーム</button>
+      </div>
+    </div>
+  `;
+}
+
+function resetAll(){
+  openModal(`
+    <h3>🔄 きろくをぜんぶけしますか？</h3>
+    <p style="color:var(--sub); font-size:13px">おぼえたチェック・ポイント・れんぞくにっすうがゼロにもどります。</p>
+    <div class="row" style="justify-content:center; margin-top:10px">
+      <button class="btn ghost" onclick="closeModal()">やめる</button>
+      <button class="btn" onclick="doReset()">けす</button>
+    </div>
+  `);
+}
+function doReset(){
+  localStorage.removeItem(STORAGE_KEY);
+  state = load();
+  state.start = new Date().toISOString().slice(0,10);
+  state.days = {}; state.streak=0; state.lastDay=null; state.points=0;
+  save(state);
+  closeModal();
+  viewHome();
+}
+
+/* Init */
+viewHome();
+</script>
+</body>
+</html>
