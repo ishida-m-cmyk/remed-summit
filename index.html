@@ -3,530 +3,159 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>えいけん じゅんにきゅう 22にちチャレンジ</title>
+<title>えいけん じゅん2きゅう 22日チャレンジ</title>
 <style>
   :root{
-    --bg:#fff8e7;
-    --card:#ffffff;
-    --primary:#ff7aa2;
-    --primary-d:#e85a85;
-    --accent:#5ec8ff;
-    --accent-d:#3aa8e0;
-    --good:#7ed957;
-    --bad:#ff7676;
-    --ink:#3a2b4a;
-    --sub:#7c6f8a;
-    --gold:#ffcf45;
+    --bg:#fff8e7; --card:#ffffff;
+    --primary:#ff7aa2; --primary-d:#e85a85;
+    --accent:#5ec8ff; --accent-d:#3aa8e0;
+    --good:#7ed957; --bad:#ff7676;
+    --gold:#ffcf45; --warn:#ff944d;
+    --ink:#3a2b4a; --sub:#7c6f8a;
     --shadow:0 6px 0 rgba(58,43,74,.12), 0 10px 22px rgba(58,43,74,.08);
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
-    font-family: "Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4","Yu Gothic","メイリオ",system-ui,-apple-system,sans-serif;
-    -webkit-tap-highlight-color:transparent;
-    overflow-x:hidden;
-  }
+    font-family:"Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4","Yu Gothic","メイリオ",system-ui,sans-serif;
+    -webkit-tap-highlight-color:transparent;overflow-x:hidden;}
   body{min-height:100vh;background-image:
-    radial-gradient(circle at 10% 10%, #ffe9b3 0 14px, transparent 15px),
-    radial-gradient(circle at 85% 20%, #cfeaff 0 12px, transparent 13px),
-    radial-gradient(circle at 20% 80%, #ffd1e0 0 10px, transparent 11px),
-    radial-gradient(circle at 75% 85%, #d8f3c8 0 14px, transparent 15px);
-    background-attachment: fixed;
-  }
-  header{
-    padding:18px 16px 6px; text-align:center;
-  }
-  h1{
-    margin:0; font-size:22px; letter-spacing:.02em;
-    background: linear-gradient(180deg,#ff7aa2,#e85a85);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow: 0 2px 0 rgba(255,255,255,.6);
-  }
-  .sub{color:var(--sub); font-size:12px; margin-top:4px}
-  main{max-width:760px; margin:0 auto; padding:8px 14px 100px}
-  .card{
-    background:var(--card); border-radius:22px; padding:18px;
-    box-shadow:var(--shadow); border:3px solid #fff;
-  }
-  .row{display:flex; gap:10px; flex-wrap:wrap}
-  .center{display:flex; align-items:center; justify-content:center}
-  .stat{
-    flex:1 1 0; min-width:90px;
-    background:#fff; border-radius:16px; padding:10px 12px;
-    box-shadow:var(--shadow); border:3px solid #fff; text-align:center;
-  }
-  .stat .n{font-size:22px; font-weight:800; color:var(--primary-d)}
-  .stat .l{font-size:11px; color:var(--sub); margin-top:2px}
-  .days{
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(72px,1fr));
-    gap:10px; margin-top:14px;
-  }
-  .day{
-    aspect-ratio:1/1; border-radius:18px; background:#fff; border:3px solid #fff;
-    box-shadow:var(--shadow); display:flex; flex-direction:column;
-    align-items:center; justify-content:center; cursor:pointer;
-    transition:transform .12s ease;
-    position:relative; overflow:hidden;
-  }
+    radial-gradient(circle at 10% 10%,#ffe9b3 0 14px,transparent 15px),
+    radial-gradient(circle at 85% 20%,#cfeaff 0 12px,transparent 13px),
+    radial-gradient(circle at 20% 80%,#ffd1e0 0 10px,transparent 11px),
+    radial-gradient(circle at 75% 85%,#d8f3c8 0 14px,transparent 15px);
+    background-attachment:fixed;}
+  header{padding:18px 16px 6px;text-align:center}
+  h1{margin:0;font-size:22px;
+    background:linear-gradient(180deg,#ff7aa2,#e85a85);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 2px 0 rgba(255,255,255,.6);}
+  .sub{color:var(--sub);font-size:12px;margin-top:4px}
+  main{max-width:760px;margin:0 auto;padding:8px 14px 100px}
+  .card{background:#fff;border-radius:22px;padding:18px;box-shadow:var(--shadow);border:3px solid #fff}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .stat{flex:1 1 0;min-width:90px;background:#fff;border-radius:16px;padding:10px 12px;
+    box-shadow:var(--shadow);border:3px solid #fff;text-align:center}
+  .stat .n{font-size:22px;font-weight:800;color:var(--primary-d)}
+  .stat .l{font-size:11px;color:var(--sub);margin-top:2px}
+  .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:14px}
+  .day{aspect-ratio:1/1;border-radius:18px;background:#fff;border:3px solid #fff;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;cursor:pointer;
+    transition:transform .12s ease;position:relative;overflow:hidden}
   .day:active{transform:translateY(2px)}
-  .day .n{font-size:13px; color:var(--sub)}
-  .day .d{font-size:24px; font-weight:900; color:var(--ink)}
-  .day .pct{font-size:10px; color:var(--sub); margin-top:2px}
-  .day.done{background:linear-gradient(180deg,#fff7c2,#ffd86b); border-color:#fff}
+  .day .n{font-size:13px;color:var(--sub)}
+  .day .d{font-size:24px;font-weight:900;color:var(--ink)}
+  .day .pct{font-size:10px;color:var(--sub);margin-top:2px}
+  .day.done{background:linear-gradient(180deg,#fff7c2,#ffd86b);border-color:#fff}
   .day.done .d{color:#7a4b00}
-  .day.today{outline:3px dashed var(--primary); outline-offset:-2px}
-  .day .star{position:absolute; top:4px; right:6px; font-size:14px}
-  .badge{
-    display:inline-block; padding:2px 8px; border-radius:999px;
-    background:var(--primary); color:#fff; font-size:11px; font-weight:700;
-    margin-left:6px;
-  }
-  .btn{
-    appearance:none; border:none; cursor:pointer; user-select:none;
-    border-radius:999px; padding:14px 20px; font-weight:800; font-size:16px;
-    color:#fff; background:var(--primary);
-    box-shadow:0 4px 0 var(--primary-d), 0 8px 18px rgba(232,90,133,.25);
-    transition:transform .08s ease, box-shadow .08s ease;
-  }
-  .btn:active{transform:translateY(3px); box-shadow:0 1px 0 var(--primary-d)}
-  .btn.secondary{background:var(--accent); box-shadow:0 4px 0 var(--accent-d), 0 8px 18px rgba(58,168,224,.25)}
+  .day.today{outline:3px dashed var(--primary);outline-offset:-2px}
+  .day .star{position:absolute;top:4px;right:6px;font-size:14px}
+  .pill{background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;box-shadow:var(--shadow);border:2px solid #fff}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+  .btn{appearance:none;border:none;cursor:pointer;user-select:none;
+    border-radius:999px;padding:14px 20px;font-weight:800;font-size:16px;
+    color:#fff;background:var(--primary);
+    box-shadow:0 4px 0 var(--primary-d),0 8px 18px rgba(232,90,133,.25);
+    transition:transform .08s ease,box-shadow .08s ease}
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--primary-d)}
+  .btn.secondary{background:var(--accent);box-shadow:0 4px 0 var(--accent-d),0 8px 18px rgba(58,168,224,.25)}
   .btn.secondary:active{box-shadow:0 1px 0 var(--accent-d)}
-  .btn.ghost{background:#fff; color:var(--ink); box-shadow:0 4px 0 #d9d2e3, 0 8px 18px rgba(58,43,74,.08)}
+  .btn.warn{background:var(--warn);box-shadow:0 4px 0 #cc6e2a,0 8px 18px rgba(255,148,77,.25)}
+  .btn.warn:active{box-shadow:0 1px 0 #cc6e2a}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:0 4px 0 #d9d2e3,0 8px 18px rgba(58,43,74,.08)}
   .btn.ghost:active{box-shadow:0 1px 0 #d9d2e3}
-  .btn.small{padding:8px 14px; font-size:13px}
-  .btn.full{display:block; width:100%}
-  .btn.gold{background:linear-gradient(180deg,#ffe27a,#ffcf45); color:#7a4b00; box-shadow:0 4px 0 #c8961b, 0 8px 18px rgba(200,150,27,.25)}
+  .btn.gold{background:linear-gradient(180deg,#ffe27a,#ffcf45);color:#7a4b00;box-shadow:0 4px 0 #c8961b,0 8px 18px rgba(200,150,27,.25)}
   .btn.gold:active{box-shadow:0 1px 0 #c8961b}
-
-  .toolbar{display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:10px}
-  .pill{background:#fff; border-radius:999px; padding:6px 12px; font-size:12px; box-shadow:var(--shadow); border:2px solid #fff}
-
-  /* Flashcard */
-  .flash-wrap{perspective:1200px; margin:10px 0}
-  .flash{
-    position:relative; height:300px; transform-style:preserve-3d;
-    transition:transform .55s cubic-bezier(.2,.8,.3,1.2);
-    cursor:pointer;
-  }
+  .btn.small{padding:8px 14px;font-size:13px}
+  .btn.full{display:block;width:100%}
+  .flash-wrap{perspective:1200px;margin:10px 0}
+  .flash{position:relative;height:300px;transform-style:preserve-3d;
+    transition:transform .55s cubic-bezier(.2,.8,.3,1.2);cursor:pointer}
   .flash.flip{transform:rotateY(180deg)}
-  .face{
-    position:absolute; inset:0; backface-visibility:hidden;
-    border-radius:24px; padding:18px; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; text-align:center;
-    background:#fff; box-shadow:var(--shadow); border:3px solid #fff;
-  }
-  .face.back{transform:rotateY(180deg);
-    background:linear-gradient(180deg,#fff5fb,#ffe1ee);}
-  .word{font-size:42px; font-weight:900; letter-spacing:.01em; color:var(--ink)}
-  .pos{font-size:13px; color:var(--sub); margin-top:6px}
-  .ipa{font-size:14px; color:var(--sub); margin-top:2px}
-  .mean{font-size:26px; font-weight:800; color:var(--primary-d)}
-  .ex{font-size:13px; color:var(--ink); margin-top:12px; line-height:1.6;
-    background:#fffde9; padding:10px 12px; border-radius:14px; border:2px dashed #ffd86b}
-  .hint{font-size:11px; color:var(--sub); margin-top:10px}
-
-  /* Quiz */
-  .qbox{padding:18px; border-radius:24px; background:#fff; box-shadow:var(--shadow); border:3px solid #fff}
-  .q-en{font-size:36px; font-weight:900; text-align:center; margin:6px 0 4px}
-  .q-sub{font-size:12px; color:var(--sub); text-align:center; margin-bottom:14px}
-  .choices{display:grid; gap:10px; grid-template-columns:1fr 1fr}
-  .choice{
-    background:#fff; border:3px solid #f0e7f5; border-radius:18px;
-    padding:14px 10px; font-size:18px; font-weight:800; color:var(--ink);
-    cursor:pointer; box-shadow:0 3px 0 #e7dff0;
-    transition:transform .08s ease, background .15s, border-color .15s;
-    min-height:64px;
-  }
+  .face{position:absolute;inset:0;backface-visibility:hidden;
+    border-radius:24px;padding:18px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    background:#fff;box-shadow:var(--shadow);border:3px solid #fff}
+  .face.back{transform:rotateY(180deg);background:linear-gradient(180deg,#fff5fb,#ffe1ee)}
+  .word{font-size:42px;font-weight:900;color:var(--ink)}
+  .pos{font-size:13px;color:var(--sub);margin-top:6px}
+  .mean{font-size:26px;font-weight:800;color:var(--primary-d)}
+  .ex{font-size:13px;color:var(--ink);margin-top:12px;line-height:1.6;
+    background:#fffde9;padding:10px 12px;border-radius:14px;border:2px dashed #ffd86b}
+  .hint{font-size:11px;color:var(--sub);margin-top:10px}
+  .qbox{padding:18px;border-radius:24px;background:#fff;box-shadow:var(--shadow);border:3px solid #fff}
+  .q-en{font-size:34px;font-weight:900;text-align:center;margin:6px 0 4px}
+  .q-sub{font-size:12px;color:var(--sub);text-align:center;margin-bottom:14px}
+  .choices{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .choice{background:#fff;border:3px solid #f0e7f5;border-radius:18px;
+    padding:14px 10px;font-size:17px;font-weight:800;color:var(--ink);
+    cursor:pointer;box-shadow:0 3px 0 #e7dff0;
+    transition:transform .08s,background .15s,border-color .15s;min-height:64px}
   .choice rt{font-weight:500}
-  .choice:active{transform:translateY(2px); box-shadow:0 1px 0 #e7dff0}
-  .choice.correct{background:#e7ffe0; border-color:var(--good); color:#256d12}
-  .choice.wrong{background:#ffe5e5; border-color:var(--bad); color:#9d2c2c}
-  .progress{height:14px; border-radius:999px; background:#f0e7f5; overflow:hidden; margin-top:8px}
-  .progress > div{height:100%; background:linear-gradient(90deg,#ff9ec0,#ff7aa2); width:0%; transition:width .3s}
-
-  /* Result */
-  .result{text-align:center; padding:18px}
-  .big{font-size:64px; font-weight:900; color:var(--primary-d)}
-  .stars{font-size:36px; color:var(--gold)}
-
-  /* Daily list */
-  .wlist{display:grid; gap:8px; margin-top:10px}
-  .wrow{
-    display:grid; grid-template-columns: 1fr auto auto; align-items:center; gap:8px;
-    background:#fff; border-radius:14px; padding:10px 12px;
-    box-shadow:var(--shadow); border:2px solid #fff;
-  }
-  .wrow .en{font-weight:800; font-size:18px}
-  .wrow .ja{font-size:13px; color:var(--sub)}
-  .speak{
-    width:38px; height:38px; border-radius:50%; border:none; cursor:pointer;
-    background:var(--accent); color:#fff; font-size:18px;
-    box-shadow:0 3px 0 var(--accent-d);
-  }
-  .speak:active{transform:translateY(2px); box-shadow:0 1px 0 var(--accent-d)}
-  .check{
-    width:30px; height:30px; border-radius:50%; border:3px solid #ddd;
-    background:#fff; cursor:pointer; font-size:16px; display:flex;
-    align-items:center; justify-content:center;
-  }
-  .check.on{background:var(--good); border-color:var(--good); color:#fff}
-
-  .nav{display:flex; gap:10px; margin-top:14px}
+  .choice:active{transform:translateY(2px);box-shadow:0 1px 0 #e7dff0}
+  .choice.correct{background:#e7ffe0;border-color:var(--good);color:#256d12}
+  .choice.wrong{background:#ffe5e5;border-color:var(--bad);color:#9d2c2c}
+  .progress{height:14px;border-radius:999px;background:#f0e7f5;overflow:hidden;margin-top:8px}
+  .progress>div{height:100%;background:linear-gradient(90deg,#ff9ec0,#ff7aa2);width:0%;transition:width .3s}
+  .result{text-align:center;padding:18px}
+  .big{font-size:64px;font-weight:900;color:var(--primary-d)}
+  .stars{font-size:36px;color:var(--gold)}
+  .wlist{display:grid;gap:6px;margin-top:10px}
+  .wrow{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:8px;
+    background:#fff;border-radius:14px;padding:8px 10px;
+    box-shadow:0 3px 0 rgba(58,43,74,.06);border:2px solid #fff}
+  .wrow .en{font-weight:800;font-size:16px}
+  .wrow .ja{font-size:11px;color:var(--sub)}
+  .speak{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:16px;box-shadow:0 3px 0 var(--accent-d)}
+  .speak:active{transform:translateY(2px);box-shadow:0 1px 0 var(--accent-d)}
+  .check{width:28px;height:28px;border-radius:50%;border:3px solid #ddd;
+    background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .check.on{background:var(--good);border-color:var(--good);color:#fff}
+  .nav{display:flex;gap:10px;margin-top:14px}
   .nav .btn{flex:1}
-
-  /* Modal */
-  .modal{
-    position:fixed; inset:0; background:rgba(58,43,74,.4);
-    display:none; align-items:center; justify-content:center; padding:20px; z-index:50;
-  }
+  .modal{position:fixed;inset:0;background:rgba(58,43,74,.4);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
   .modal.show{display:flex}
-  .sheet{background:#fff; border-radius:22px; padding:20px; max-width:420px; width:100%;
-    box-shadow:var(--shadow); border:3px solid #fff; text-align:center}
-
-  /* Confetti & feedback */
-  .feedback{
-    position:fixed; inset:0; pointer-events:none; display:none;
-    align-items:center; justify-content:center; z-index:40;
-  }
+  .sheet{background:#fff;border-radius:22px;padding:20px;max-width:420px;width:100%;
+    box-shadow:var(--shadow);border:3px solid #fff;text-align:center}
+  .feedback{position:fixed;inset:0;pointer-events:none;display:none;
+    align-items:center;justify-content:center;z-index:40}
   .feedback.show{display:flex}
-  .feedback .emoji{font-size:120px; animation:pop .6s ease}
-  @keyframes pop{
-    0%{transform:scale(.4); opacity:0}
-    50%{transform:scale(1.2); opacity:1}
-    100%{transform:scale(1); opacity:1}
-  }
-
-  ruby rt{font-size:.55em; color:var(--sub); font-weight:400}
-
-  footer{position:fixed; left:0; right:0; bottom:0; padding:8px;
-    background:linear-gradient(180deg, transparent, rgba(255,248,231,.95)); pointer-events:none;
-    text-align:center; color:var(--sub); font-size:11px;
-  }
-
-  @media (min-width:520px){
-    .word{font-size:54px}
-    .q-en{font-size:46px}
-    .choices{grid-template-columns:1fr 1fr}
-  }
+  .feedback .emoji{font-size:120px;animation:pop .6s ease}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}50%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+  ruby rt{font-size:.55em;color:var(--sub);font-weight:400}
+  footer{position:fixed;left:0;right:0;bottom:0;padding:8px;
+    background:linear-gradient(180deg,transparent,rgba(255,248,231,.95));pointer-events:none;
+    text-align:center;color:var(--sub);font-size:11px}
+  .alert-pill{background:linear-gradient(180deg,#fff,#ffe1d3);border:2px solid #ff944d;
+    border-radius:18px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+  .alert-pill .num{font-size:24px;font-weight:900;color:#cc4f00}
+  @media (min-width:520px){.word{font-size:52px}.q-en{font-size:42px}}
 </style>
 </head>
 <body>
 <header>
-  <h1>えいけん じゅん2きゅう 22にちチャレンジ</h1>
-  <div class="sub">しけんまで <span id="daysLeft">22</span> にち / きょうのもくひょう <span id="todayGoal">1</span> にちめ</div>
+  <h1>えいけん じゅん2きゅう 22日チャレンジ</h1>
+  <div class="sub">しけんまで <span id="daysLeft">22</span> 日 / きょうのもくひょう <span id="todayGoal">1</span> 日め</div>
 </header>
-
-<main id="app">
-  <!-- views are rendered here -->
-</main>
-
-<div class="modal" id="modal">
-  <div class="sheet" id="sheet"></div>
-</div>
+<main id="app"></main>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 <div class="feedback" id="feedback"><div class="emoji" id="fbEmoji">🎉</div></div>
-
 <footer>たんごをタップ＝おんせい / カードをタップ＝うらがえし</footer>
 
 <script>
+window.CURRICULUM = [{"name": "基本動作の動詞①", "words": [{"en": "arrive", "pos": "動", "ja": "<ruby>到<rt>とう</rt></ruby><ruby>着<rt>ちゃく</rt></ruby>する", "ex_en": "We arrive at school at 8.", "ex_ja": "8<ruby>時<rt>じ</rt></ruby>に学校に<ruby>着<rt>つ</rt></ruby>く。"}, {"en": "agree", "pos": "動", "ja": "さんせいする", "ex_en": "I agree with you.", "ex_ja": "あなたにさんせい。"}, {"en": "answer", "pos": "動/名", "ja": "こたえる/こたえ", "ex_en": "Please answer.", "ex_ja": "こたえてね。"}, {"en": "believe", "pos": "動", "ja": "しんじる", "ex_en": "I believe you.", "ex_ja": "あなたをしんじる。"}, {"en": "borrow", "pos": "動", "ja": "かりる", "ex_en": "Can I borrow this?", "ex_ja": "これかりていい？"}, {"en": "bring", "pos": "動", "ja": "もってくる", "ex_en": "Bring your lunch.", "ex_ja": "おべんとうもってきて。"}, {"en": "build", "pos": "動", "ja": "たてる", "ex_en": "They build houses.", "ex_ja": "かれらは家をたてる。"}, {"en": "carry", "pos": "動", "ja": "はこぶ", "ex_en": "I'll carry it.", "ex_ja": "はこぶよ。"}, {"en": "catch", "pos": "動", "ja": "つかまえる", "ex_en": "Catch the ball!", "ex_ja": "ボールキャッチ！"}, {"en": "change", "pos": "動/名", "ja": "かえる/へんか", "ex_en": "Change your shoes.", "ex_ja": "くつをはきかえて。"}, {"en": "choose", "pos": "動", "ja": "えらぶ", "ex_en": "Choose your color.", "ex_ja": "いろをえらんで。"}, {"en": "close", "pos": "動/形", "ja": "しめる/ちかい", "ex_en": "Close the door.", "ex_ja": "ドアをしめて。"}, {"en": "continue", "pos": "動", "ja": "つづける", "ex_en": "Let's continue.", "ex_ja": "つづけよう。"}, {"en": "cost", "pos": "動/名", "ja": "(費用が)かかる", "ex_en": "How much does it cost?", "ex_ja": "いくら？"}, {"en": "decide", "pos": "動", "ja": "きめる", "ex_en": "I decided.", "ex_ja": "きめた。"}, {"en": "drop", "pos": "動", "ja": "おとす", "ex_en": "Don't drop it.", "ex_ja": "おとさないで。"}, {"en": "enjoy", "pos": "動", "ja": "たのしむ", "ex_en": "Enjoy the game.", "ex_ja": "ゲームをたのしんで。"}, {"en": "explain", "pos": "動", "ja": "せつめいする", "ex_en": "Please explain.", "ex_ja": "せつめいしてね。"}, {"en": "finish", "pos": "動", "ja": "おわる", "ex_en": "Finish your homework.", "ex_ja": "しゅくだいをおえて。"}, {"en": "follow", "pos": "動", "ja": "ついていく", "ex_en": "Follow me.", "ex_ja": "ついてきて。"}, {"en": "forget", "pos": "動", "ja": "わすれる", "ex_en": "Don't forget.", "ex_ja": "わすれないで。"}, {"en": "happen", "pos": "動", "ja": "おこる", "ex_en": "What happened?", "ex_ja": "なにがあった？"}, {"en": "hold", "pos": "動", "ja": "もつ・かかえる", "ex_en": "Hold this bag.", "ex_ja": "このカバンもって。"}, {"en": "hurt", "pos": "動", "ja": "いたい/きずつける", "ex_en": "My leg hurts.", "ex_ja": "あしがいたい。"}, {"en": "invite", "pos": "動", "ja": "しょうたいする", "ex_en": "I'll invite you.", "ex_ja": "しょうたいするね。"}, {"en": "join", "pos": "動", "ja": "さんかする", "ex_en": "Join us!", "ex_ja": "いっしょにやろう！"}, {"en": "keep", "pos": "動", "ja": "たもつ", "ex_en": "Keep it clean.", "ex_ja": "きれいにしておいて。"}, {"en": "laugh", "pos": "動", "ja": "わらう", "ex_en": "We laughed.", "ex_ja": "わらった。"}, {"en": "learn", "pos": "動", "ja": "まなぶ", "ex_en": "I learn English.", "ex_ja": "えいごをまなぶ。"}, {"en": "leave", "pos": "動", "ja": "でる/はなれる", "ex_en": "I leave at 7.", "ex_ja": "7時に出る。"}, {"en": "lend", "pos": "動", "ja": "かす", "ex_en": "Lend me a book.", "ex_ja": "本かして。"}, {"en": "lose", "pos": "動", "ja": "なくす/まける", "ex_en": "Don't lose it.", "ex_ja": "なくさないで。"}, {"en": "miss", "pos": "動", "ja": "のがす/こいしい", "ex_en": "I miss you.", "ex_ja": "あいたいよ。"}, {"en": "move", "pos": "動", "ja": "うごく/ひっこす", "ex_en": "We move next month.", "ex_ja": "らいげつひっこす。"}, {"en": "notice", "pos": "動", "ja": "きづく", "ex_en": "I didn't notice.", "ex_ja": "きづかなかった。"}, {"en": "offer", "pos": "動", "ja": "もうしでる", "ex_en": "He offered help.", "ex_ja": "てつだうとくれた。"}, {"en": "order", "pos": "動/名", "ja": "ちゅうもんする", "ex_en": "I'll order pizza.", "ex_ja": "ピザたのむね。"}, {"en": "pay", "pos": "動", "ja": "はらう", "ex_en": "I'll pay later.", "ex_ja": "あとではらう。"}, {"en": "plan", "pos": "動/名", "ja": "けいかく", "ex_en": "What's your plan?", "ex_ja": "けいかくは？"}, {"en": "prepare", "pos": "動", "ja": "じゅんびする", "ex_en": "Prepare for the test.", "ex_ja": "テストにそなえて。"}, {"en": "receive", "pos": "動", "ja": "うけとる", "ex_en": "I received a gift.", "ex_ja": "プレゼントをもらった。"}, {"en": "remember", "pos": "動", "ja": "おぼえている", "ex_en": "Remember this.", "ex_ja": "これをおぼえて。"}, {"en": "return", "pos": "動", "ja": "かえる/かえす", "ex_en": "Return the book.", "ex_ja": "本をかえして。"}, {"en": "save", "pos": "動", "ja": "たすける/ためる", "ex_en": "Save money.", "ex_ja": "おかねをためる。"}, {"en": "share", "pos": "動", "ja": "わけあう", "ex_en": "Share the cake.", "ex_ja": "ケーキをわけて。"}]}, {"name": "コミュニケーションの動詞", "words": [{"en": "send", "pos": "動", "ja": "おくる", "ex_en": "Send a message.", "ex_ja": "メッセージおくる。"}, {"en": "solve", "pos": "動", "ja": "とく(問題)", "ex_en": "Solve this.", "ex_ja": "これをとく。"}, {"en": "spend", "pos": "動", "ja": "つかう(時間/金)", "ex_en": "Spend an hour.", "ex_ja": "1時間つかう。"}, {"en": "suggest", "pos": "動", "ja": "ていあんする", "ex_en": "I suggest tea.", "ex_ja": "おちゃがいいかも。"}, {"en": "travel", "pos": "動", "ja": "りょこうする", "ex_en": "Travel by train.", "ex_ja": "でんしゃでりょこう。"}, {"en": "try", "pos": "動", "ja": "ためす/ためしてみる", "ex_en": "Try this.", "ex_ja": "ためしてみて。"}, {"en": "wait", "pos": "動", "ja": "まつ", "ex_en": "Wait here.", "ex_ja": "ここでまって。"}, {"en": "wear", "pos": "動", "ja": "きる", "ex_en": "Wear a coat.", "ex_ja": "コートをきて。"}, {"en": "check", "pos": "動", "ja": "たしかめる", "ex_en": "Check it.", "ex_ja": "たしかめて。"}, {"en": "collect", "pos": "動", "ja": "あつめる", "ex_en": "Collect stamps.", "ex_ja": "きってをあつめる。"}, {"en": "draw", "pos": "動", "ja": "えをかく", "ex_en": "Draw a cat.", "ex_ja": "ねこをかいて。"}, {"en": "grow", "pos": "動", "ja": "そだつ", "ex_en": "Plants grow.", "ex_ja": "しょくぶつがそだつ。"}, {"en": "introduce", "pos": "動", "ja": "しょうかいする", "ex_en": "I'll introduce her.", "ex_ja": "かのじょをしょうかい。"}, {"en": "protect", "pos": "動", "ja": "まもる", "ex_en": "Protect the earth.", "ex_ja": "ちきゅうをまもる。"}, {"en": "recommend", "pos": "動", "ja": "おすすめする", "ex_en": "I recommend it.", "ex_ja": "おすすめだよ。"}, {"en": "realize", "pos": "動", "ja": "きづく", "ex_en": "I realized.", "ex_ja": "きづいた。"}, {"en": "reply", "pos": "動", "ja": "へんじする", "ex_en": "Please reply.", "ex_ja": "へんじしてね。"}, {"en": "hope", "pos": "動", "ja": "のぞむ", "ex_en": "I hope so.", "ex_ja": "そうだといいな。"}, {"en": "wish", "pos": "動", "ja": "ねがう", "ex_en": "I wish you luck.", "ex_ja": "うんがいいことをいのる。"}, {"en": "worry", "pos": "動", "ja": "しんぱいする", "ex_en": "Don't worry.", "ex_ja": "しんぱいしないで。"}, {"en": "surprise", "pos": "動", "ja": "おどろかす", "ex_en": "What a surprise!", "ex_ja": "びっくり！"}, {"en": "appear", "pos": "動", "ja": "あらわれる", "ex_en": "A rainbow appeared.", "ex_ja": "にじがでた。"}, {"en": "recycle", "pos": "動", "ja": "リサイクルする", "ex_en": "Recycle paper.", "ex_ja": "かみをリサイクル。"}, {"en": "reduce", "pos": "動", "ja": "へらす", "ex_en": "Reduce waste.", "ex_ja": "ごみをへらす。"}, {"en": "increase", "pos": "動", "ja": "ふえる", "ex_en": "Prices increase.", "ex_ja": "ねだんがあがる。"}, {"en": "accept", "pos": "動", "ja": "うけいれる", "ex_en": "Accept the gift.", "ex_ja": "プレゼントをうけとる。"}, {"en": "advise", "pos": "動", "ja": "アドバイスする", "ex_en": "She advised me.", "ex_ja": "アドバイスしてくれた。"}, {"en": "affect", "pos": "動", "ja": "えいきょうする", "ex_en": "It affects health.", "ex_ja": "けんこうにえいきょうする。"}, {"en": "allow", "pos": "動", "ja": "ゆるす", "ex_en": "Allow me to help.", "ex_ja": "てつだわせて。"}, {"en": "announce", "pos": "動", "ja": "はっぴょうする", "ex_en": "Announce the winner.", "ex_ja": "ゆうしょうしゃをはっぴょう。"}, {"en": "apologize", "pos": "動", "ja": "あやまる", "ex_en": "I apologize.", "ex_ja": "ごめんなさい。"}, {"en": "appreciate", "pos": "動", "ja": "かんしゃする", "ex_en": "I appreciate it.", "ex_ja": "かんしゃしてる。"}, {"en": "arrange", "pos": "動", "ja": "ならべる/てはいする", "ex_en": "Arrange chairs.", "ex_ja": "いすをならべる。"}, {"en": "attend", "pos": "動", "ja": "しゅっせきする", "ex_en": "Attend class.", "ex_ja": "じゅぎょうにでる。"}, {"en": "avoid", "pos": "動", "ja": "さける", "ex_en": "Avoid danger.", "ex_ja": "きけんをさける。"}, {"en": "cause", "pos": "動/名", "ja": "ひきおこす/げんいん", "ex_en": "It causes pain.", "ex_ja": "いたみをひきおこす。"}, {"en": "celebrate", "pos": "動", "ja": "いわう", "ex_en": "Celebrate the day.", "ex_ja": "お祝いしよう。"}, {"en": "communicate", "pos": "動", "ja": "コミュニケーションをとる", "ex_en": "Communicate well.", "ex_ja": "じょうずにつたえよう。"}, {"en": "compare", "pos": "動", "ja": "くらべる", "ex_en": "Compare two cars.", "ex_ja": "2台をくらべる。"}, {"en": "complain", "pos": "動", "ja": "ふへいをいう", "ex_en": "Don't complain.", "ex_ja": "もんくいわないで。"}, {"en": "complete", "pos": "動/形", "ja": "かんりょうする/かんぜんな", "ex_en": "Complete the test.", "ex_ja": "テストをおわらせて。"}, {"en": "connect", "pos": "動", "ja": "つなぐ", "ex_en": "Connect the wire.", "ex_ja": "せんをつなぐ。"}, {"en": "consider", "pos": "動", "ja": "かんがえる", "ex_en": "Consider it.", "ex_ja": "よくかんがえて。"}, {"en": "contain", "pos": "動", "ja": "ふくむ", "ex_en": "It contains sugar.", "ex_ja": "さとうがはいってる。"}, {"en": "control", "pos": "動", "ja": "コントロールする", "ex_en": "Control the volume.", "ex_ja": "おとをちょうせい。"}]}, {"name": "動作・つくる・はこぶの動詞", "words": [{"en": "count", "pos": "動", "ja": "かぞえる", "ex_en": "Count to ten.", "ex_ja": "10までかぞえて。"}, {"en": "create", "pos": "動", "ja": "つくりだす", "ex_en": "Create art.", "ex_ja": "アートをつくる。"}, {"en": "deliver", "pos": "動", "ja": "とどける", "ex_en": "Deliver the box.", "ex_ja": "はこをとどける。"}, {"en": "describe", "pos": "動", "ja": "せつめいする", "ex_en": "Describe it.", "ex_ja": "せつめいして。"}, {"en": "design", "pos": "動/名", "ja": "せっけいする", "ex_en": "Design a poster.", "ex_ja": "ポスターをデザイン。"}, {"en": "develop", "pos": "動", "ja": "かいはつする", "ex_en": "Develop a game.", "ex_ja": "ゲームをかいはつ。"}, {"en": "disagree", "pos": "動", "ja": "はんたいする", "ex_en": "I disagree.", "ex_ja": "はんたいだ。"}, {"en": "discover", "pos": "動", "ja": "はっけんする", "ex_en": "Discover treasure.", "ex_ja": "たからをはっけん。"}, {"en": "discuss", "pos": "動", "ja": "はなしあう", "ex_en": "Discuss the plan.", "ex_ja": "けいかくをはなしあう。"}, {"en": "divide", "pos": "動", "ja": "わける", "ex_en": "Divide into 4.", "ex_ja": "4つにわける。"}, {"en": "drive", "pos": "動", "ja": "うんてんする", "ex_en": "Drive a car.", "ex_ja": "車をうんてんする。"}, {"en": "encourage", "pos": "動", "ja": "はげます", "ex_en": "Encourage him.", "ex_ja": "かれをはげます。"}, {"en": "escape", "pos": "動", "ja": "にげる", "ex_en": "Escape from danger.", "ex_ja": "きけんからにげる。"}, {"en": "exchange", "pos": "動", "ja": "こうかんする", "ex_en": "Exchange gifts.", "ex_ja": "プレゼントをこうかん。"}, {"en": "express", "pos": "動", "ja": "ひょうげんする", "ex_en": "Express your idea.", "ex_ja": "かんがえをいう。"}, {"en": "fail", "pos": "動", "ja": "しっぱいする", "ex_en": "Don't fail.", "ex_ja": "しっぱいしないで。"}, {"en": "feed", "pos": "動", "ja": "えさをやる", "ex_en": "Feed the dog.", "ex_ja": "犬にえさを。"}, {"en": "fight", "pos": "動", "ja": "たたかう", "ex_en": "Fight bravely.", "ex_ja": "ゆうかんにたたかう。"}, {"en": "fix", "pos": "動", "ja": "しゅうりする", "ex_en": "Fix the bike.", "ex_ja": "じてんしゃをなおす。"}, {"en": "fly", "pos": "動", "ja": "とぶ", "ex_en": "Birds fly.", "ex_ja": "とりがとぶ。"}, {"en": "gather", "pos": "動", "ja": "あつまる", "ex_en": "Gather here.", "ex_ja": "ここにあつまって。"}, {"en": "guess", "pos": "動", "ja": "すいそくする", "ex_en": "Guess what?", "ex_ja": "あててみて。"}, {"en": "guide", "pos": "動/名", "ja": "あんないする", "ex_en": "Guide me.", "ex_ja": "あんないして。"}, {"en": "hate", "pos": "動", "ja": "きらう", "ex_en": "I hate it.", "ex_ja": "きらい。"}, {"en": "heat", "pos": "動/名", "ja": "あたためる/ねつ", "ex_en": "Heat the soup.", "ex_ja": "スープをあたためて。"}, {"en": "hide", "pos": "動", "ja": "かくす", "ex_en": "Hide the gift.", "ex_ja": "プレゼントをかくして。"}, {"en": "hire", "pos": "動", "ja": "やとう", "ex_en": "Hire him.", "ex_ja": "かれをやとう。"}, {"en": "ignore", "pos": "動", "ja": "むしする", "ex_en": "Don't ignore me.", "ex_ja": "むししないで。"}, {"en": "imagine", "pos": "動", "ja": "そうぞうする", "ex_en": "Imagine it.", "ex_ja": "そうぞうして。"}, {"en": "improve", "pos": "動", "ja": "かいぜんする", "ex_en": "Improve your skill.", "ex_ja": "ぎじゅつをみがく。"}, {"en": "include", "pos": "動", "ja": "ふくめる", "ex_en": "Include tax.", "ex_ja": "ぜいこみ。"}, {"en": "influence", "pos": "動", "ja": "えいきょう", "ex_en": "Bad influence.", "ex_ja": "わるいえいきょう。"}, {"en": "inform", "pos": "動", "ja": "しらせる", "ex_en": "Inform me.", "ex_ja": "しらせて。"}, {"en": "invent", "pos": "動", "ja": "はつめいする", "ex_en": "Invent a tool.", "ex_ja": "どうぐをはつめい。"}, {"en": "kick", "pos": "動", "ja": "ける", "ex_en": "Kick the ball.", "ex_ja": "ボールをける。"}, {"en": "knock", "pos": "動", "ja": "ノックする", "ex_en": "Knock first.", "ex_ja": "まずノックして。"}, {"en": "lay", "pos": "動", "ja": "おく/ならべる", "ex_en": "Lay it down.", "ex_ja": "おいて。"}, {"en": "lead", "pos": "動", "ja": "ひきいる", "ex_en": "Lead the team.", "ex_ja": "チームをひきいる。"}, {"en": "lift", "pos": "動", "ja": "もちあげる", "ex_en": "Lift the box.", "ex_ja": "はこをもちあげて。"}, {"en": "mail", "pos": "動/名", "ja": "ゆうそうする", "ex_en": "Mail the letter.", "ex_ja": "てがみをだす。"}, {"en": "manage", "pos": "動", "ja": "かんりする", "ex_en": "Manage time.", "ex_ja": "じかんかんり。"}, {"en": "mean", "pos": "動", "ja": "いみする", "ex_en": "What does it mean?", "ex_ja": "どういういみ？"}, {"en": "measure", "pos": "動", "ja": "はかる", "ex_en": "Measure it.", "ex_ja": "はかって。"}, {"en": "mention", "pos": "動", "ja": "ふれる(話に)", "ex_en": "He mentioned you.", "ex_ja": "あなたのこといってた。"}, {"en": "mind", "pos": "動", "ja": "きにする", "ex_en": "Don't mind.", "ex_ja": "きにしないで。"}]}, {"name": "動詞 ④", "words": [{"en": "observe", "pos": "動", "ja": "かんさつする", "ex_en": "Observe stars.", "ex_ja": "ほしをかんさつ。"}, {"en": "own", "pos": "動", "ja": "もっている", "ex_en": "I own a bike.", "ex_ja": "じてんしゃをもってる。"}, {"en": "paint", "pos": "動", "ja": "ペンキをぬる", "ex_en": "Paint the wall.", "ex_ja": "かべをぬる。"}, {"en": "perform", "pos": "動", "ja": "えんじる", "ex_en": "Perform a song.", "ex_ja": "うたをはっぴょう。"}, {"en": "point", "pos": "動", "ja": "ゆびさす", "ex_en": "Point here.", "ex_ja": "ここをさして。"}, {"en": "practice", "pos": "動", "ja": "れんしゅうする", "ex_en": "Practice piano.", "ex_ja": "ピアノのれんしゅう。"}, {"en": "predict", "pos": "動", "ja": "よそうする", "ex_en": "Predict the future.", "ex_ja": "みらいをよそう。"}, {"en": "prefer", "pos": "動", "ja": "このむ", "ex_en": "I prefer tea.", "ex_ja": "おちゃがすき。"}, {"en": "pretend", "pos": "動", "ja": "ふりをする", "ex_en": "Don't pretend.", "ex_ja": "ふりしないで。"}, {"en": "print", "pos": "動", "ja": "いんさつする", "ex_en": "Print this.", "ex_ja": "これをいんさつ。"}, {"en": "produce", "pos": "動", "ja": "せいさんする", "ex_en": "Produce milk.", "ex_ja": "ぎゅうにゅうをつくる。"}, {"en": "promise", "pos": "動", "ja": "やくそくする", "ex_en": "I promise.", "ex_ja": "やくそくする。"}, {"en": "prove", "pos": "動", "ja": "しょうめいする", "ex_en": "Prove it.", "ex_ja": "しょうめいして。"}, {"en": "provide", "pos": "動", "ja": "ていきょうする", "ex_en": "Provide food.", "ex_ja": "食事をていきょう。"}, {"en": "publish", "pos": "動", "ja": "しゅっぱんする", "ex_en": "Publish a book.", "ex_ja": "本をだす。"}, {"en": "punish", "pos": "動", "ja": "ばっする", "ex_en": "Don't punish him.", "ex_ja": "ばっしないで。"}, {"en": "push", "pos": "動", "ja": "おす", "ex_en": "Push the door.", "ex_ja": "ドアをおす。"}, {"en": "quit", "pos": "動", "ja": "やめる", "ex_en": "Quit the job.", "ex_ja": "しごとをやめる。"}, {"en": "raise", "pos": "動", "ja": "あげる", "ex_en": "Raise your hand.", "ex_ja": "てをあげて。"}, {"en": "reach", "pos": "動", "ja": "とどく", "ex_en": "Reach the top.", "ex_ja": "てっぺんへ。"}, {"en": "react", "pos": "動", "ja": "はんのうする", "ex_en": "Don't react.", "ex_ja": "はんのうしないで。"}, {"en": "recognize", "pos": "動", "ja": "みわける", "ex_en": "I recognize you.", "ex_ja": "だれかわかる。"}, {"en": "refuse", "pos": "動", "ja": "ことわる", "ex_en": "Refuse politely.", "ex_ja": "ていねいにことわる。"}, {"en": "regret", "pos": "動", "ja": "こうかいする", "ex_en": "I regret it.", "ex_ja": "こうかいしてる。"}, {"en": "relax", "pos": "動", "ja": "くつろぐ", "ex_en": "Just relax.", "ex_ja": "リラックスしよう。"}, {"en": "rely", "pos": "動", "ja": "たよる", "ex_en": "Rely on me.", "ex_ja": "たよっていいよ。"}, {"en": "remind", "pos": "動", "ja": "おもいださせる", "ex_en": "Remind me.", "ex_ja": "おもいだせて。"}, {"en": "remove", "pos": "動", "ja": "とりのぞく", "ex_en": "Remove this.", "ex_ja": "これをとって。"}, {"en": "rent", "pos": "動", "ja": "ちんたいする", "ex_en": "Rent a car.", "ex_ja": "車をかりる。"}, {"en": "repair", "pos": "動", "ja": "しゅうりする", "ex_en": "Repair the toy.", "ex_ja": "おもちゃをなおす。"}, {"en": "repeat", "pos": "動", "ja": "くりかえす", "ex_en": "Repeat after me.", "ex_ja": "くりかえして。"}, {"en": "replace", "pos": "動", "ja": "とりかえる", "ex_en": "Replace it.", "ex_ja": "とりかえて。"}, {"en": "report", "pos": "動", "ja": "ほうこくする", "ex_en": "Report the news.", "ex_ja": "ニュースをつたえる。"}, {"en": "require", "pos": "動", "ja": "ひつようとする", "ex_en": "It requires care.", "ex_ja": "ちゅういがひつよう。"}, {"en": "rescue", "pos": "動", "ja": "きゅうじょする", "ex_en": "Rescue the cat.", "ex_ja": "ねこをたすける。"}, {"en": "respect", "pos": "動", "ja": "そんけいする", "ex_en": "I respect him.", "ex_ja": "かれをそんけい。"}, {"en": "respond", "pos": "動", "ja": "へんじする", "ex_en": "Respond quickly.", "ex_ja": "はやくへんじ。"}, {"en": "rest", "pos": "動", "ja": "やすむ", "ex_en": "Rest a while.", "ex_ja": "すこしやすんで。"}, {"en": "ride", "pos": "動", "ja": "のる", "ex_en": "Ride a bike.", "ex_ja": "じてんしゃにのる。"}, {"en": "ring", "pos": "動", "ja": "なる", "ex_en": "Bells ring.", "ex_ja": "かねがなる。"}, {"en": "roll", "pos": "動", "ja": "ころがる", "ex_en": "Roll the ball.", "ex_ja": "ボールをころがして。"}, {"en": "rule", "pos": "動/名", "ja": "しはい/きそく", "ex_en": "Follow the rules.", "ex_ja": "きそくをまもる。"}, {"en": "rush", "pos": "動", "ja": "いそぐ", "ex_en": "Don't rush.", "ex_ja": "いそがないで。"}, {"en": "satisfy", "pos": "動", "ja": "まんぞくさせる", "ex_en": "Satisfy the kids.", "ex_ja": "こどもをよろこばせる。"}, {"en": "scare", "pos": "動", "ja": "こわがらせる", "ex_en": "Don't scare me.", "ex_ja": "おどかさないで。"}]}, {"name": "動詞 ⑤", "words": [{"en": "search", "pos": "動", "ja": "さがす", "ex_en": "Search the web.", "ex_ja": "ネットでさがす。"}, {"en": "separate", "pos": "動", "ja": "わける", "ex_en": "Separate trash.", "ex_ja": "ごみをわける。"}, {"en": "serve", "pos": "動", "ja": "だす(料理)", "ex_en": "Serve dinner.", "ex_ja": "ばんごはんをだす。"}, {"en": "settle", "pos": "動", "ja": "おちつく", "ex_en": "Settle down.", "ex_ja": "おちついて。"}, {"en": "shake", "pos": "動", "ja": "ふる", "ex_en": "Shake hands.", "ex_ja": "あくしゅしよう。"}, {"en": "shine", "pos": "動", "ja": "かがやく", "ex_en": "Stars shine.", "ex_ja": "ほしがかがやく。"}, {"en": "shoot", "pos": "動", "ja": "うつ/シュート", "ex_en": "Shoot the ball.", "ex_ja": "ボールをシュート。"}, {"en": "shout", "pos": "動", "ja": "さけぶ", "ex_en": "Don't shout.", "ex_ja": "さけばないで。"}, {"en": "shut", "pos": "動", "ja": "しめる", "ex_en": "Shut the door.", "ex_ja": "ドアをしめて。"}, {"en": "sing", "pos": "動", "ja": "うたう", "ex_en": "Sing a song.", "ex_ja": "うたをうたって。"}, {"en": "ski", "pos": "動", "ja": "スキーをする", "ex_en": "I love to ski.", "ex_ja": "スキーがすき。"}, {"en": "smell", "pos": "動", "ja": "においがする", "ex_en": "It smells good.", "ex_ja": "いいにおい。"}, {"en": "sound", "pos": "動", "ja": "聞こえる", "ex_en": "Sounds nice.", "ex_ja": "いいね。"}, {"en": "spell", "pos": "動", "ja": "つづる", "ex_en": "Spell it.", "ex_ja": "スペルは？"}, {"en": "spread", "pos": "動", "ja": "ひろげる", "ex_en": "Spread the news.", "ex_ja": "しらせる。"}, {"en": "stand", "pos": "動", "ja": "たつ", "ex_en": "Stand up.", "ex_ja": "たって。"}, {"en": "stare", "pos": "動", "ja": "じっと見る", "ex_en": "Don't stare.", "ex_ja": "じろじろ見ないで。"}, {"en": "steal", "pos": "動", "ja": "ぬすむ", "ex_en": "Don't steal.", "ex_ja": "ぬすまないで。"}, {"en": "step", "pos": "動/名", "ja": "ふみだす/いっぽ", "ex_en": "Step back.", "ex_ja": "さがって。"}, {"en": "stick", "pos": "動", "ja": "くっつける", "ex_en": "Stick it here.", "ex_ja": "ここにはって。"}, {"en": "store", "pos": "動/名", "ja": "ためる/みせ", "ex_en": "Store food.", "ex_ja": "しょくりょうをためる。"}, {"en": "stretch", "pos": "動", "ja": "のばす", "ex_en": "Stretch your legs.", "ex_ja": "あしをのばして。"}, {"en": "succeed", "pos": "動", "ja": "せいこうする", "ex_en": "I'll succeed.", "ex_ja": "せいこうするよ。"}, {"en": "support", "pos": "動", "ja": "しえんする", "ex_en": "Support the team.", "ex_ja": "チームをおうえん。"}, {"en": "suppose", "pos": "動", "ja": "とおもう", "ex_en": "I suppose so.", "ex_ja": "そうだとおもう。"}, {"en": "swim", "pos": "動", "ja": "およぐ", "ex_en": "Let's swim.", "ex_ja": "およごう。"}, {"en": "switch", "pos": "動", "ja": "きりかえる", "ex_en": "Switch off.", "ex_ja": "スイッチをきる。"}, {"en": "teach", "pos": "動", "ja": "おしえる", "ex_en": "Teach me.", "ex_ja": "おしえて。"}, {"en": "tear", "pos": "動", "ja": "やぶる", "ex_en": "Don't tear it.", "ex_ja": "やぶらないで。"}, {"en": "tell", "pos": "動", "ja": "つたえる", "ex_en": "Tell me.", "ex_ja": "おしえて。"}, {"en": "thank", "pos": "動", "ja": "かんしゃする", "ex_en": "Thank you.", "ex_ja": "ありがとう。"}, {"en": "think", "pos": "動", "ja": "かんがえる", "ex_en": "Think hard.", "ex_ja": "よくかんがえて。"}, {"en": "throw", "pos": "動", "ja": "なげる", "ex_en": "Throw the ball.", "ex_ja": "ボールをなげて。"}, {"en": "tie", "pos": "動", "ja": "むすぶ", "ex_en": "Tie your shoes.", "ex_ja": "くつのひもをむすんで。"}, {"en": "touch", "pos": "動", "ja": "さわる", "ex_en": "Don't touch.", "ex_ja": "さわらないで。"}, {"en": "translate", "pos": "動", "ja": "ほんやくする", "ex_en": "Translate this.", "ex_ja": "ほんやくして。"}, {"en": "treat", "pos": "動", "ja": "あつかう/おごる", "ex_en": "Treat well.", "ex_ja": "だいじにあつかって。"}, {"en": "trust", "pos": "動", "ja": "しんらいする", "ex_en": "Trust me.", "ex_ja": "しんじて。"}, {"en": "understand", "pos": "動", "ja": "りかいする", "ex_en": "I understand.", "ex_ja": "わかった。"}, {"en": "upload", "pos": "動", "ja": "アップロードする", "ex_en": "Upload the file.", "ex_ja": "ファイルをアップ。"}, {"en": "vote", "pos": "動", "ja": "とうひょうする", "ex_en": "Please vote.", "ex_ja": "とうひょうしてね。"}, {"en": "wake", "pos": "動", "ja": "めをさます", "ex_en": "Wake up!", "ex_ja": "おきて！"}, {"en": "walk", "pos": "動", "ja": "あるく", "ex_en": "Walk slowly.", "ex_ja": "ゆっくりあるいて。"}, {"en": "wash", "pos": "動", "ja": "あらう", "ex_en": "Wash your hands.", "ex_ja": "てをあらって。"}, {"en": "waste", "pos": "動", "ja": "むだにする", "ex_en": "Don't waste it.", "ex_ja": "むだにしないで。"}]}, {"name": "動詞 ⑥", "words": [{"en": "watch", "pos": "動", "ja": "みる", "ex_en": "Watch out!", "ex_ja": "きをつけて！"}, {"en": "weigh", "pos": "動", "ja": "おもさをはかる", "ex_en": "Weigh it.", "ex_ja": "おもさをはかって。"}, {"en": "welcome", "pos": "動/形", "ja": "かんげいする", "ex_en": "Welcome!", "ex_ja": "ようこそ！"}, {"en": "win", "pos": "動", "ja": "かつ", "ex_en": "Win the game.", "ex_ja": "ゲームにかつ。"}, {"en": "wipe", "pos": "動", "ja": "ふく", "ex_en": "Wipe the table.", "ex_ja": "テーブルをふいて。"}, {"en": "wonder", "pos": "動", "ja": "ふしぎにおもう", "ex_en": "I wonder why.", "ex_ja": "なぜかな。"}, {"en": "wrap", "pos": "動", "ja": "つつむ", "ex_en": "Wrap the gift.", "ex_ja": "プレゼントをつつむ。"}, {"en": "write", "pos": "動", "ja": "かく", "ex_en": "Write a letter.", "ex_ja": "てがみをかく。"}, {"en": "yell", "pos": "動", "ja": "さけぶ", "ex_en": "Don't yell.", "ex_ja": "どならないで。"}, {"en": "lock", "pos": "動", "ja": "かぎをかける", "ex_en": "Lock the door.", "ex_ja": "かぎをかけて。"}, {"en": "type", "pos": "動", "ja": "タイプする", "ex_en": "Type fast.", "ex_ja": "はやくタイプ。"}, {"en": "swing", "pos": "動", "ja": "ゆれる", "ex_en": "Swing the bat.", "ex_ja": "バットをふる。"}, {"en": "balance", "pos": "動/名", "ja": "バランスをとる", "ex_en": "Keep balance.", "ex_ja": "バランスを。"}, {"en": "boil", "pos": "動", "ja": "にる/ゆでる", "ex_en": "Boil water.", "ex_ja": "おゆをわかす。"}, {"en": "bake", "pos": "動", "ja": "やく(オーブン)", "ex_en": "Bake a cake.", "ex_ja": "ケーキをやく。"}, {"en": "blow", "pos": "動", "ja": "ふく(風)", "ex_en": "Wind blows.", "ex_ja": "風がふく。"}, {"en": "breathe", "pos": "動", "ja": "いきをする", "ex_en": "Breathe deeply.", "ex_ja": "しんこきゅう。"}, {"en": "burn", "pos": "動", "ja": "もえる", "ex_en": "Don't burn it.", "ex_ja": "やかないで。"}, {"en": "cancel", "pos": "動", "ja": "とりけす", "ex_en": "Cancel the trip.", "ex_ja": "りょこうをキャンセル。"}, {"en": "charge", "pos": "動", "ja": "じゅうでんする", "ex_en": "Charge the phone.", "ex_ja": "スマホをじゅうでん。"}, {"en": "concentrate", "pos": "動", "ja": "しゅうちゅうする", "ex_en": "Concentrate!", "ex_ja": "しゅうちゅうして！"}, {"en": "congratulate", "pos": "動", "ja": "いわう", "ex_en": "I congratulate you.", "ex_ja": "おめでとう。"}, {"en": "contact", "pos": "動", "ja": "れんらくする", "ex_en": "Contact me.", "ex_ja": "れんらくして。"}, {"en": "contribute", "pos": "動", "ja": "こうけんする", "ex_en": "Contribute money.", "ex_ja": "おかねをきふ。"}, {"en": "cooperate", "pos": "動", "ja": "きょうりょくする", "ex_en": "Cooperate well.", "ex_ja": "きょうりょくしよう。"}, {"en": "copy", "pos": "動", "ja": "コピーする", "ex_en": "Copy this page.", "ex_ja": "このページをコピー。"}, {"en": "demand", "pos": "動", "ja": "ようきゅうする", "ex_en": "I demand it.", "ex_ja": "ようきゅうする。"}, {"en": "depend", "pos": "動", "ja": "たよる", "ex_en": "Depend on you.", "ex_ja": "あなたしだい。"}, {"en": "deserve", "pos": "動", "ja": "あたいする", "ex_en": "You deserve it.", "ex_ja": "あなたにふさわしい。"}, {"en": "dial", "pos": "動", "ja": "ダイヤルする", "ex_en": "Dial the number.", "ex_ja": "ばんごうをまわして。"}, {"en": "disappear", "pos": "動", "ja": "きえる", "ex_en": "It disappeared.", "ex_ja": "きえた。"}, {"en": "dive", "pos": "動", "ja": "とびこむ", "ex_en": "Dive in.", "ex_ja": "とびこんで。"}, {"en": "donate", "pos": "動", "ja": "きふする", "ex_en": "Donate clothes.", "ex_ja": "ふくをきふ。"}, {"en": "doubt", "pos": "動", "ja": "うたがう", "ex_en": "I doubt it.", "ex_ja": "うたがう。"}, {"en": "dress", "pos": "動", "ja": "ふくをきせる", "ex_en": "Get dressed.", "ex_ja": "きがえて。"}, {"en": "educate", "pos": "動", "ja": "きょういくする", "ex_en": "Educate kids.", "ex_ja": "こどもをそだてる。"}, {"en": "elect", "pos": "動", "ja": "せんぶする", "ex_en": "Elect a leader.", "ex_ja": "リーダーをえらぶ。"}, {"en": "employ", "pos": "動", "ja": "やとう", "ex_en": "Employ workers.", "ex_ja": "ろうどうしゃをやとう。"}, {"en": "enter", "pos": "動", "ja": "はいる", "ex_en": "Enter the room.", "ex_ja": "へやにはいる。"}, {"en": "exercise", "pos": "動/名", "ja": "うんどうする", "ex_en": "Exercise daily.", "ex_ja": "まいにちうんどう。"}, {"en": "exist", "pos": "動", "ja": "そんざいする", "ex_en": "Aliens exist?", "ex_ja": "エイリアンはいる？"}, {"en": "expand", "pos": "動", "ja": "ひろげる", "ex_en": "Expand the area.", "ex_ja": "エリアをひろげる。"}, {"en": "expect", "pos": "動", "ja": "きたいする", "ex_en": "I expect rain.", "ex_ja": "あめがふりそう。"}, {"en": "explore", "pos": "動", "ja": "たんけんする", "ex_en": "Explore the cave.", "ex_ja": "どうくつをたんけん。"}, {"en": "fade", "pos": "動", "ja": "あせる/きえる", "ex_en": "Colors fade.", "ex_ja": "いろがあせる。"}]}, {"name": "動詞 ⑦", "words": [{"en": "fasten", "pos": "動", "ja": "しっかりとめる", "ex_en": "Fasten your belt.", "ex_ja": "ベルトをしめて。"}, {"en": "fear", "pos": "動/名", "ja": "おそれる", "ex_en": "Don't fear.", "ex_ja": "こわがらないで。"}, {"en": "fetch", "pos": "動", "ja": "とってくる", "ex_en": "Fetch the ball.", "ex_ja": "ボールをとってきて。"}, {"en": "fill", "pos": "動", "ja": "みたす", "ex_en": "Fill the cup.", "ex_ja": "カップをみたす。"}, {"en": "freeze", "pos": "動", "ja": "こおる", "ex_en": "Water freezes.", "ex_ja": "水がこおる。"}, {"en": "gain", "pos": "動", "ja": "える", "ex_en": "Gain weight.", "ex_ja": "たいじゅうがふえる。"}, {"en": "greet", "pos": "動", "ja": "あいさつする", "ex_en": "Greet guests.", "ex_ja": "おきゃくにあいさつ。"}, {"en": "hang", "pos": "動", "ja": "ぶらさげる", "ex_en": "Hang the coat.", "ex_ja": "コートをかけて。"}, {"en": "harm", "pos": "動", "ja": "きずつける", "ex_en": "Don't harm animals.", "ex_ja": "どうぶつをきずつけないで。"}, {"en": "hesitate", "pos": "動", "ja": "ためらう", "ex_en": "Don't hesitate.", "ex_ja": "ためらわないで。"}, {"en": "hike", "pos": "動", "ja": "ハイキングする", "ex_en": "Hike the mountain.", "ex_ja": "山にハイキング。"}, {"en": "hit", "pos": "動", "ja": "うつ/たたく", "ex_en": "Hit the ball.", "ex_ja": "ボールをうつ。"}, {"en": "hop", "pos": "動", "ja": "とびはねる", "ex_en": "Hop here.", "ex_ja": "ここにとんできて。"}, {"en": "howl", "pos": "動", "ja": "とおぼえする", "ex_en": "Wolves howl.", "ex_ja": "おおかみがほえる。"}, {"en": "hurry", "pos": "動", "ja": "いそぐ", "ex_en": "Hurry up!", "ex_ja": "いそいで！"}, {"en": "identify", "pos": "動", "ja": "みわける", "ex_en": "Identify the bird.", "ex_ja": "とりをみわける。"}, {"en": "impress", "pos": "動", "ja": "かんどうさせる", "ex_en": "You impressed me.", "ex_ja": "かんどうした。"}, {"en": "indicate", "pos": "動", "ja": "しめす", "ex_en": "Indicate north.", "ex_ja": "きたをさす。"}, {"en": "inquire", "pos": "動", "ja": "たずねる", "ex_en": "Inquire here.", "ex_ja": "ここでたずねて。"}, {"en": "insist", "pos": "動", "ja": "しゅちょうする", "ex_en": "I insist.", "ex_ja": "ぜったいに。"}, {"en": "inspect", "pos": "動", "ja": "けんさする", "ex_en": "Inspect the car.", "ex_ja": "車をてんけん。"}, {"en": "install", "pos": "動", "ja": "インストールする", "ex_en": "Install the app.", "ex_ja": "アプリをいれる。"}, {"en": "invest", "pos": "動", "ja": "とうしする", "ex_en": "Invest wisely.", "ex_ja": "かしこくとうし。"}, {"en": "involve", "pos": "動", "ja": "まきこむ", "ex_en": "It involves us.", "ex_ja": "わたしたちもかんけい。"}, {"en": "iron", "pos": "動", "ja": "アイロンをかける", "ex_en": "Iron the shirt.", "ex_ja": "シャツにアイロン。"}, {"en": "issue", "pos": "動/名", "ja": "はっこうする/もんだい", "ex_en": "Issue a ticket.", "ex_ja": "チケットをはっこう。"}, {"en": "jog", "pos": "動", "ja": "ジョギングする", "ex_en": "I jog daily.", "ex_ja": "まいにちジョギング。"}, {"en": "judge", "pos": "動", "ja": "はんだんする", "ex_en": "Don't judge me.", "ex_ja": "はんだんしないで。"}, {"en": "jump", "pos": "動", "ja": "とぶ", "ex_en": "Jump high.", "ex_ja": "たかくとんで。"}, {"en": "kneel", "pos": "動", "ja": "ひざまずく", "ex_en": "Kneel down.", "ex_ja": "ひざまずいて。"}, {"en": "label", "pos": "動", "ja": "ラベルをはる", "ex_en": "Label the box.", "ex_ja": "はこにラベル。"}, {"en": "last", "pos": "動", "ja": "つづく", "ex_en": "Last 5 minutes.", "ex_ja": "5分つづく。"}, {"en": "link", "pos": "動", "ja": "つなぐ", "ex_en": "Link the pages.", "ex_ja": "ページをつなぐ。"}, {"en": "list", "pos": "動/名", "ja": "リストにする", "ex_en": "List items.", "ex_ja": "アイテムをリストに。"}, {"en": "locate", "pos": "動", "ja": "みつける/位置する", "ex_en": "Locate it.", "ex_ja": "ばしょをさがして。"}, {"en": "log", "pos": "動/名", "ja": "きろくする", "ex_en": "Log in.", "ex_ja": "ログインして。"}, {"en": "march", "pos": "動", "ja": "こうしんする", "ex_en": "March forward.", "ex_ja": "まえへすすめ。"}, {"en": "marry", "pos": "動", "ja": "けっこんする", "ex_en": "They married.", "ex_ja": "けっこんした。"}, {"en": "mark", "pos": "動", "ja": "しるしをつける", "ex_en": "Mark it.", "ex_ja": "しるしをつけて。"}, {"en": "matter", "pos": "動", "ja": "じゅうようだ", "ex_en": "It matters.", "ex_ja": "だいじだよ。"}, {"en": "melt", "pos": "動", "ja": "とける", "ex_en": "Ice melts.", "ex_ja": "こおりがとける。"}, {"en": "memorize", "pos": "動", "ja": "あんきする", "ex_en": "Memorize words.", "ex_ja": "たんごをおぼえる。"}, {"en": "mix", "pos": "動", "ja": "まぜる", "ex_en": "Mix well.", "ex_ja": "よくまぜて。"}, {"en": "model", "pos": "動", "ja": "モデルをする", "ex_en": "She models.", "ex_ja": "かのじょはモデル。"}, {"en": "nod", "pos": "動", "ja": "うなずく", "ex_en": "I nodded.", "ex_ja": "うなずいた。"}]}, {"name": "動詞 ⑧ 最終", "words": [{"en": "note", "pos": "動", "ja": "メモする", "ex_en": "Note this.", "ex_ja": "これをメモ。"}, {"en": "obey", "pos": "動", "ja": "したがう", "ex_en": "Obey rules.", "ex_ja": "きそくをまもる。"}, {"en": "operate", "pos": "動", "ja": "そうさする", "ex_en": "Operate the machine.", "ex_ja": "きかいをそうさ。"}, {"en": "oppose", "pos": "動", "ja": "はんたいする", "ex_en": "Oppose the plan.", "ex_ja": "けいかくにはんたい。"}, {"en": "organize", "pos": "動", "ja": "せいりする", "ex_en": "Organize files.", "ex_ja": "ファイルをせいり。"}, {"en": "paste", "pos": "動", "ja": "はる(のり)", "ex_en": "Paste the picture.", "ex_ja": "えをはる。"}, {"en": "pause", "pos": "動", "ja": "ちょっとやめる", "ex_en": "Pause the video.", "ex_ja": "ビデオをとめて。"}, {"en": "peel", "pos": "動", "ja": "かわをむく", "ex_en": "Peel the apple.", "ex_ja": "りんごのかわをむく。"}, {"en": "permit", "pos": "動", "ja": "ゆるす", "ex_en": "Permit me.", "ex_ja": "ゆるして。"}, {"en": "photo", "pos": "名", "ja": "しゃしん", "ex_en": "Take a photo.", "ex_ja": "しゃしんをとって。"}, {"en": "pick", "pos": "動", "ja": "つむ/えらぶ", "ex_en": "Pick a flower.", "ex_ja": "花をつむ。"}, {"en": "pile", "pos": "動", "ja": "つみあげる", "ex_en": "Pile the books.", "ex_ja": "本をつみあげる。"}, {"en": "plug", "pos": "動", "ja": "プラグをさす", "ex_en": "Plug it in.", "ex_ja": "プラグをさして。"}, {"en": "polish", "pos": "動", "ja": "みがく", "ex_en": "Polish shoes.", "ex_ja": "くつをみがく。"}, {"en": "post", "pos": "動", "ja": "とうこうする", "ex_en": "Post a photo.", "ex_ja": "しゃしんをアップ。"}, {"en": "pour", "pos": "動", "ja": "つぐ", "ex_en": "Pour water.", "ex_ja": "水をついで。"}, {"en": "praise", "pos": "動", "ja": "ほめる", "ex_en": "Praise the child.", "ex_ja": "こどもをほめる。"}, {"en": "predict", "pos": "動", "ja": "よそくする", "ex_en": "Predict weather.", "ex_ja": "てんきをよそく。"}, {"en": "press", "pos": "動", "ja": "おす", "ex_en": "Press the button.", "ex_ja": "ボタンをおす。"}, {"en": "pretend", "pos": "動", "ja": "ふりをする", "ex_en": "Stop pretending.", "ex_ja": "ふりをやめて。"}, {"en": "print", "pos": "動", "ja": "プリントする", "ex_en": "Print the page.", "ex_ja": "ページをいんさつ。"}, {"en": "proceed", "pos": "動", "ja": "すすめる", "ex_en": "Proceed slowly.", "ex_ja": "ゆっくりすすめて。"}, {"en": "propose", "pos": "動", "ja": "ていあんする", "ex_en": "Propose a plan.", "ex_ja": "けいかくをていあん。"}, {"en": "protest", "pos": "動", "ja": "こうぎする", "ex_en": "People protest.", "ex_ja": "ひとびとがこうぎ。"}, {"en": "pull", "pos": "動", "ja": "ひく", "ex_en": "Pull the rope.", "ex_ja": "ロープをひく。"}, {"en": "purchase", "pos": "動", "ja": "こうにゅうする", "ex_en": "Purchase a ticket.", "ex_ja": "チケットをかう。"}, {"en": "quote", "pos": "動", "ja": "いんようする", "ex_en": "Quote the line.", "ex_ja": "せりふをいんよう。"}, {"en": "rate", "pos": "動/名", "ja": "ひょうかする", "ex_en": "Rate the movie.", "ex_ja": "えいがをひょうか。"}, {"en": "read", "pos": "動", "ja": "よむ", "ex_en": "Read aloud.", "ex_ja": "こえに出してよんで。"}, {"en": "recover", "pos": "動", "ja": "かいふくする", "ex_en": "Recover soon.", "ex_ja": "はやくよくなって。"}, {"en": "reflect", "pos": "動", "ja": "はんしゃする", "ex_en": "Reflect light.", "ex_ja": "ひかりをはんしゃ。"}, {"en": "regard", "pos": "動", "ja": "みなす", "ex_en": "Regard him highly.", "ex_ja": "かれをそんちょう。"}, {"en": "register", "pos": "動", "ja": "とうろくする", "ex_en": "Register here.", "ex_ja": "ここでとうろく。"}, {"en": "relate", "pos": "動", "ja": "かんけいする", "ex_en": "Relate to it.", "ex_ja": "それにかんけい。"}, {"en": "remain", "pos": "動", "ja": "のこる", "ex_en": "Stay/remain calm.", "ex_ja": "おちついて。"}, {"en": "repair", "pos": "動", "ja": "しゅうりする", "ex_en": "Repair the bike.", "ex_ja": "じてんしゃをしゅうり。"}, {"en": "retire", "pos": "動", "ja": "いんたいする", "ex_en": "Retire at 60.", "ex_ja": "60でいんたい。"}, {"en": "review", "pos": "動", "ja": "ふくしゅう", "ex_en": "Review notes.", "ex_ja": "ノートをふくしゅう。"}, {"en": "reward", "pos": "動", "ja": "ほうびをあげる", "ex_en": "Reward kids.", "ex_ja": "ごほうび。"}, {"en": "ride", "pos": "動", "ja": "のる", "ex_en": "Ride a horse.", "ex_ja": "うまにのる。"}, {"en": "roast", "pos": "動", "ja": "ローストする", "ex_en": "Roast chicken.", "ex_ja": "チキンをやく。"}, {"en": "row", "pos": "動", "ja": "こぐ", "ex_en": "Row the boat.", "ex_ja": "ボートをこぐ。"}, {"en": "save", "pos": "動", "ja": "セーブする", "ex_en": "Save the file.", "ex_ja": "ファイルをほぞん。"}, {"en": "scan", "pos": "動", "ja": "スキャンする", "ex_en": "Scan the code.", "ex_ja": "コードをスキャン。"}, {"en": "schedule", "pos": "動/名", "ja": "よていする", "ex_en": "Schedule a meeting.", "ex_ja": "ミーティングをよてい。"}]}, {"name": "けいようし ①", "words": [{"en": "afraid", "pos": "形", "ja": "こわい", "ex_en": "I'm afraid.", "ex_ja": "こわい。"}, {"en": "angry", "pos": "形", "ja": "おこっている", "ex_en": "Mom is angry.", "ex_ja": "ママおこってる。"}, {"en": "beautiful", "pos": "形", "ja": "うつくしい", "ex_en": "Beautiful flower.", "ex_ja": "きれいな花。"}, {"en": "big", "pos": "形", "ja": "おおきい", "ex_en": "Big tree.", "ex_ja": "おおきな木。"}, {"en": "busy", "pos": "形", "ja": "いそがしい", "ex_en": "Busy day.", "ex_ja": "いそがしい日。"}, {"en": "careful", "pos": "形", "ja": "きをつけて", "ex_en": "Be careful.", "ex_ja": "きをつけて。"}, {"en": "cheap", "pos": "形", "ja": "やすい", "ex_en": "Cheap bag.", "ex_ja": "やすいカバン。"}, {"en": "clean", "pos": "形", "ja": "きれい", "ex_en": "Clean room.", "ex_ja": "きれいな部屋。"}, {"en": "cold", "pos": "形", "ja": "つめたい", "ex_en": "Cold water.", "ex_ja": "つめたい水。"}, {"en": "cute", "pos": "形", "ja": "かわいい", "ex_en": "Cute baby.", "ex_ja": "かわいいあかちゃん。"}, {"en": "dangerous", "pos": "形", "ja": "きけん", "ex_en": "Dangerous road.", "ex_ja": "きけんなみち。"}, {"en": "dark", "pos": "形", "ja": "くらい", "ex_en": "Dark room.", "ex_ja": "くらい部屋。"}, {"en": "deep", "pos": "形", "ja": "ふかい", "ex_en": "Deep ocean.", "ex_ja": "ふかいうみ。"}, {"en": "delicious", "pos": "形", "ja": "おいしい", "ex_en": "Delicious cake.", "ex_ja": "おいしいケーキ。"}, {"en": "different", "pos": "形", "ja": "ちがう", "ex_en": "Different colors.", "ex_ja": "ちがういろ。"}, {"en": "difficult", "pos": "形", "ja": "むずかしい", "ex_en": "Difficult test.", "ex_ja": "むずかしいテスト。"}, {"en": "dirty", "pos": "形", "ja": "きたない", "ex_en": "Dirty shoes.", "ex_ja": "きたないくつ。"}, {"en": "dry", "pos": "形", "ja": "かわいた", "ex_en": "Dry towel.", "ex_ja": "かわいたタオル。"}, {"en": "easy", "pos": "形", "ja": "かんたん", "ex_en": "Easy task.", "ex_ja": "かんたんなしごと。"}, {"en": "expensive", "pos": "形", "ja": "たかい(値段)", "ex_en": "Expensive bag.", "ex_ja": "たかいカバン。"}, {"en": "famous", "pos": "形", "ja": "ゆうめい", "ex_en": "Famous singer.", "ex_ja": "ゆうめいなかしゅ。"}, {"en": "fast", "pos": "形/副", "ja": "はやい", "ex_en": "Fast car.", "ex_ja": "はやい車。"}, {"en": "free", "pos": "形", "ja": "ひま/ただ", "ex_en": "Free time.", "ex_ja": "ひまな時間。"}, {"en": "fresh", "pos": "形", "ja": "しんせん", "ex_en": "Fresh fruit.", "ex_ja": "しんせんなくだもの。"}, {"en": "friendly", "pos": "形", "ja": "したしみのある", "ex_en": "Friendly dog.", "ex_ja": "したしみある犬。"}, {"en": "full", "pos": "形", "ja": "いっぱい", "ex_en": "Full bottle.", "ex_ja": "いっぱいのびん。"}, {"en": "funny", "pos": "形", "ja": "おもしろい", "ex_en": "Funny joke.", "ex_ja": "おもしろいジョーク。"}, {"en": "happy", "pos": "形", "ja": "しあわせ", "ex_en": "Happy day.", "ex_ja": "しあわせな日。"}, {"en": "hard", "pos": "形/副", "ja": "かたい/たいへん", "ex_en": "Hard work.", "ex_ja": "たいへんなしごと。"}, {"en": "heavy", "pos": "形", "ja": "おもい", "ex_en": "Heavy bag.", "ex_ja": "おもいカバン。"}, {"en": "hot", "pos": "形", "ja": "あつい", "ex_en": "Hot soup.", "ex_ja": "あついスープ。"}, {"en": "hungry", "pos": "形", "ja": "おなかがすいた", "ex_en": "I'm hungry.", "ex_ja": "おなかすいた。"}, {"en": "important", "pos": "形", "ja": "だいじ", "ex_en": "Important thing.", "ex_ja": "だいじなこと。"}, {"en": "interesting", "pos": "形", "ja": "おもしろい", "ex_en": "Interesting book.", "ex_ja": "おもしろい本。"}, {"en": "kind", "pos": "形", "ja": "しんせつ", "ex_en": "Kind teacher.", "ex_ja": "やさしい先生。"}, {"en": "large", "pos": "形", "ja": "おおきい", "ex_en": "Large size.", "ex_ja": "おおきいサイズ。"}, {"en": "late", "pos": "形", "ja": "おそい", "ex_en": "Late bus.", "ex_ja": "おそいバス。"}, {"en": "light", "pos": "形", "ja": "かるい/明るい", "ex_en": "Light bag.", "ex_ja": "かるいカバン。"}, {"en": "lonely", "pos": "形", "ja": "さみしい", "ex_en": "Feel lonely.", "ex_ja": "さみしい。"}, {"en": "loud", "pos": "形", "ja": "うるさい", "ex_en": "Loud noise.", "ex_ja": "うるさいおと。"}, {"en": "new", "pos": "形", "ja": "あたらしい", "ex_en": "New game.", "ex_ja": "あたらしいゲーム。"}, {"en": "old", "pos": "形", "ja": "ふるい/年とった", "ex_en": "Old book.", "ex_ja": "ふるい本。"}, {"en": "popular", "pos": "形", "ja": "にんきがある", "ex_en": "Popular song.", "ex_ja": "にんきのうた。"}, {"en": "quiet", "pos": "形", "ja": "しずか", "ex_en": "Quiet park.", "ex_ja": "しずかなこうえん。"}, {"en": "rich", "pos": "形", "ja": "おかねもち", "ex_en": "Rich man.", "ex_ja": "おかねもち。"}]}, {"name": "けいようし ② ＆ 副詞", "words": [{"en": "sad", "pos": "形", "ja": "かなしい", "ex_en": "Sad story.", "ex_ja": "かなしい話。"}, {"en": "safe", "pos": "形", "ja": "あんぜん", "ex_en": "Safe place.", "ex_ja": "あんぜんなばしょ。"}, {"en": "short", "pos": "形", "ja": "みじかい", "ex_en": "Short hair.", "ex_ja": "みじかいかみ。"}, {"en": "sick", "pos": "形", "ja": "びょうき", "ex_en": "I'm sick.", "ex_ja": "びょうき。"}, {"en": "simple", "pos": "形", "ja": "かんたん", "ex_en": "Simple rule.", "ex_ja": "かんたんなルール。"}, {"en": "slow", "pos": "形", "ja": "おそい", "ex_en": "Slow turtle.", "ex_ja": "おそいかめ。"}, {"en": "small", "pos": "形", "ja": "ちいさい", "ex_en": "Small dog.", "ex_ja": "ちいさい犬。"}, {"en": "smart", "pos": "形", "ja": "かしこい", "ex_en": "Smart kid.", "ex_ja": "かしこい子。"}, {"en": "soft", "pos": "形", "ja": "やわらかい", "ex_en": "Soft pillow.", "ex_ja": "やわらかいまくら。"}, {"en": "special", "pos": "形", "ja": "とくべつ", "ex_en": "Special day.", "ex_ja": "とくべつな日。"}, {"en": "strong", "pos": "形", "ja": "つよい", "ex_en": "Strong wind.", "ex_ja": "つよい風。"}, {"en": "sweet", "pos": "形", "ja": "あまい", "ex_en": "Sweet candy.", "ex_ja": "あまいキャンディ。"}, {"en": "tall", "pos": "形", "ja": "せがたかい", "ex_en": "Tall tree.", "ex_ja": "せがたかい木。"}, {"en": "thick", "pos": "形", "ja": "あつい(厚)", "ex_en": "Thick book.", "ex_ja": "あつい本。"}, {"en": "thin", "pos": "形", "ja": "うすい/やせた", "ex_en": "Thin paper.", "ex_ja": "うすいかみ。"}, {"en": "tired", "pos": "形", "ja": "つかれた", "ex_en": "I'm tired.", "ex_ja": "つかれた。"}, {"en": "useful", "pos": "形", "ja": "やくにたつ", "ex_en": "Useful tool.", "ex_ja": "やくにたつ。"}, {"en": "warm", "pos": "形", "ja": "あたたかい", "ex_en": "Warm coat.", "ex_ja": "あたたかいコート。"}, {"en": "weak", "pos": "形", "ja": "よわい", "ex_en": "Weak signal.", "ex_ja": "よわい電波。"}, {"en": "wet", "pos": "形", "ja": "ぬれた", "ex_en": "Wet floor.", "ex_ja": "ぬれたゆか。"}, {"en": "wild", "pos": "形", "ja": "やせい", "ex_en": "Wild animal.", "ex_ja": "やせいどうぶつ。"}, {"en": "young", "pos": "形", "ja": "わかい", "ex_en": "Young boy.", "ex_ja": "わかい男の子。"}, {"en": "brave", "pos": "形", "ja": "ゆうかんな", "ex_en": "Brave soldier.", "ex_ja": "ゆうかんなへいし。"}, {"en": "calm", "pos": "形", "ja": "おだやか", "ex_en": "Calm sea.", "ex_ja": "おだやかなうみ。"}, {"en": "clever", "pos": "形", "ja": "かしこい", "ex_en": "Clever fox.", "ex_ja": "かしこいきつね。"}, {"en": "common", "pos": "形", "ja": "ふつう", "ex_en": "Common name.", "ex_ja": "よくあるなまえ。"}, {"en": "confident", "pos": "形", "ja": "じしんがある", "ex_en": "Confident smile.", "ex_ja": "じしんあるえがお。"}, {"en": "curious", "pos": "形", "ja": "こうきしんがある", "ex_en": "Curious cat.", "ex_ja": "こうきしんねこ。"}, {"en": "daily", "pos": "形", "ja": "まいにちの", "ex_en": "Daily routine.", "ex_ja": "まいにちのしゅうかん。"}, {"en": "eager", "pos": "形", "ja": "ねっしんな", "ex_en": "Eager to learn.", "ex_ja": "まなびたがってる。"}, {"en": "elderly", "pos": "形", "ja": "おとしより", "ex_en": "Elderly woman.", "ex_ja": "おとしよりの女性。"}, {"en": "empty", "pos": "形", "ja": "からの", "ex_en": "Empty box.", "ex_ja": "からのはこ。"}, {"en": "equal", "pos": "形", "ja": "おなじ", "ex_en": "Equal rights.", "ex_ja": "びょうどう。"}, {"en": "excellent", "pos": "形", "ja": "すばらしい", "ex_en": "Excellent work.", "ex_ja": "すばらしい。"}, {"en": "exciting", "pos": "形", "ja": "ワクワクする", "ex_en": "Exciting game.", "ex_ja": "ワクワクするゲーム。"}, {"en": "fair", "pos": "形", "ja": "こうへい", "ex_en": "Fair rule.", "ex_ja": "こうへいなルール。"}, {"en": "favorite", "pos": "形", "ja": "おきにいり", "ex_en": "Favorite color.", "ex_ja": "おきにいりのいろ。"}, {"en": "foreign", "pos": "形", "ja": "がいこくの", "ex_en": "Foreign country.", "ex_ja": "がいこく。"}, {"en": "gentle", "pos": "形", "ja": "やさしい", "ex_en": "Gentle touch.", "ex_ja": "やさしいてざわり。"}, {"en": "glad", "pos": "形", "ja": "うれしい", "ex_en": "Glad to see you.", "ex_ja": "あえてうれしい。"}, {"en": "global", "pos": "形", "ja": "せかいの", "ex_en": "Global issue.", "ex_ja": "せかいのもんだい。"}, {"en": "helpful", "pos": "形", "ja": "やくにたつ", "ex_en": "Helpful advice.", "ex_ja": "やくにたつアドバイス。"}, {"en": "honest", "pos": "形", "ja": "しょうじき", "ex_en": "Honest boy.", "ex_ja": "しょうじきな子。"}, {"en": "huge", "pos": "形", "ja": "とてつもなく大きい", "ex_en": "Huge cake.", "ex_ja": "でっかいケーキ。"}, {"en": "ideal", "pos": "形", "ja": "りそうてき", "ex_en": "Ideal weather.", "ex_ja": "りそうてきな天気。"}]}, {"name": "けいようし ③ ＆ 副詞", "words": [{"en": "ill", "pos": "形", "ja": "びょうきの", "ex_en": "Feel ill.", "ex_ja": "びょうき。"}, {"en": "impossible", "pos": "形", "ja": "ふかのう", "ex_en": "It's impossible.", "ex_ja": "ふかのう。"}, {"en": "incredible", "pos": "形", "ja": "しんじられない", "ex_en": "Incredible view!", "ex_ja": "すごいけしき！"}, {"en": "informal", "pos": "形", "ja": "くだけた", "ex_en": "Informal party.", "ex_ja": "カジュアルなパーティ。"}, {"en": "intelligent", "pos": "形", "ja": "ちてきな", "ex_en": "Intelligent dog.", "ex_ja": "かしこい犬。"}, {"en": "international", "pos": "形", "ja": "こくさいてき", "ex_en": "International event.", "ex_ja": "こくさいイベント。"}, {"en": "lazy", "pos": "形", "ja": "なまけ", "ex_en": "Lazy cat.", "ex_ja": "なまけねこ。"}, {"en": "local", "pos": "形", "ja": "じもとの", "ex_en": "Local food.", "ex_ja": "じもとの食べ物。"}, {"en": "lovely", "pos": "形", "ja": "すてきな", "ex_en": "Lovely dress.", "ex_ja": "すてきなドレス。"}, {"en": "lucky", "pos": "形", "ja": "うんがいい", "ex_en": "Lucky day.", "ex_ja": "うんのいい日。"}, {"en": "main", "pos": "形", "ja": "おもな", "ex_en": "Main idea.", "ex_ja": "しゅよう。"}, {"en": "modern", "pos": "形", "ja": "げんだい", "ex_en": "Modern art.", "ex_ja": "げんだいアート。"}, {"en": "mysterious", "pos": "形", "ja": "しんぴ", "ex_en": "Mysterious story.", "ex_ja": "ふしぎな話。"}, {"en": "narrow", "pos": "形", "ja": "せまい", "ex_en": "Narrow road.", "ex_ja": "せまい道。"}, {"en": "native", "pos": "形", "ja": "ほんばの", "ex_en": "Native speaker.", "ex_ja": "ほんばのひと。"}, {"en": "natural", "pos": "形", "ja": "しぜんの", "ex_en": "Natural food.", "ex_ja": "てんねん食。"}, {"en": "nervous", "pos": "形", "ja": "ドキドキする", "ex_en": "I'm nervous.", "ex_ja": "ドキドキする。"}, {"en": "noisy", "pos": "形", "ja": "うるさい", "ex_en": "Noisy room.", "ex_ja": "うるさい部屋。"}, {"en": "normal", "pos": "形", "ja": "ふつう", "ex_en": "Normal day.", "ex_ja": "ふつうの日。"}, {"en": "obvious", "pos": "形", "ja": "あきらか", "ex_en": "Obvious answer.", "ex_ja": "あきらか。"}, {"en": "official", "pos": "形", "ja": "こうしき", "ex_en": "Official letter.", "ex_ja": "こうしきな手紙。"}, {"en": "original", "pos": "形", "ja": "オリジナル", "ex_en": "Original idea.", "ex_ja": "オリジナル。"}, {"en": "painful", "pos": "形", "ja": "いたい", "ex_en": "Painful injury.", "ex_ja": "いたいけが。"}, {"en": "peaceful", "pos": "形", "ja": "へいわな", "ex_en": "Peaceful village.", "ex_ja": "へいわな村。"}, {"en": "perfect", "pos": "形", "ja": "かんぺき", "ex_en": "Perfect score.", "ex_ja": "まんてん。"}, {"en": "polite", "pos": "形", "ja": "ていねい", "ex_en": "Polite child.", "ex_ja": "ていねいな子。"}, {"en": "poor", "pos": "形", "ja": "まずしい/かわいそう", "ex_en": "Poor cat.", "ex_ja": "かわいそうなねこ。"}, {"en": "powerful", "pos": "形", "ja": "つよい/きょうりょく", "ex_en": "Powerful engine.", "ex_ja": "パワフルなエンジン。"}, {"en": "private", "pos": "形", "ja": "プライベート", "ex_en": "Private room.", "ex_ja": "こしつ。"}, {"en": "proud", "pos": "形", "ja": "ほこりがある", "ex_en": "Proud parents.", "ex_ja": "じまんのおや。"}, {"en": "quick", "pos": "形", "ja": "すばやい", "ex_en": "Quick run.", "ex_ja": "すばやいラン。"}, {"en": "rare", "pos": "形", "ja": "まれ", "ex_en": "Rare animal.", "ex_ja": "まれなどうぶつ。"}, {"en": "ready", "pos": "形", "ja": "じゅんびかんりょう", "ex_en": "Ready?", "ex_ja": "じゅんびOK？"}, {"en": "real", "pos": "形", "ja": "ほんもの", "ex_en": "Real gold.", "ex_ja": "ほんもののきん。"}, {"en": "regular", "pos": "形", "ja": "ていきの", "ex_en": "Regular size.", "ex_ja": "ふつうサイズ。"}, {"en": "responsible", "pos": "形", "ja": "せきにんがある", "ex_en": "Responsible kid.", "ex_ja": "せきにんかんあり。"}, {"en": "rough", "pos": "形", "ja": "あらい", "ex_en": "Rough surface.", "ex_ja": "あらいひょうめん。"}, {"en": "rude", "pos": "形", "ja": "ぶれい", "ex_en": "Rude behavior.", "ex_ja": "ぶれいなたいど。"}, {"en": "silly", "pos": "形", "ja": "ばかげた", "ex_en": "Silly idea.", "ex_ja": "ばかげたアイデア。"}, {"en": "similar", "pos": "形", "ja": "にている", "ex_en": "Similar style.", "ex_ja": "にているスタイル。"}, {"en": "always", "pos": "副", "ja": "いつも", "ex_en": "Always smile.", "ex_ja": "いつもえがお。"}, {"en": "sometimes", "pos": "副", "ja": "ときどき", "ex_en": "Sometimes I run.", "ex_ja": "ときどきはしる。"}, {"en": "usually", "pos": "副", "ja": "たいてい", "ex_en": "I usually walk.", "ex_ja": "たいていあるく。"}, {"en": "often", "pos": "副", "ja": "よく", "ex_en": "I often read.", "ex_ja": "よく本をよむ。"}, {"en": "never", "pos": "副", "ja": "けっして〜ない", "ex_en": "Never give up.", "ex_ja": "あきらめない。"}]}, {"name": "名詞: 学校・勉強", "words": [{"en": "classroom", "pos": "名", "ja": "きょうしつ", "ex_en": "Big classroom.", "ex_ja": "おおきなきょうしつ。"}, {"en": "homework", "pos": "名", "ja": "しゅくだい", "ex_en": "Do homework.", "ex_ja": "しゅくだいする。"}, {"en": "science", "pos": "名", "ja": "りか", "ex_en": "Science class.", "ex_ja": "りかのじゅぎょう。"}, {"en": "history", "pos": "名", "ja": "れきし", "ex_en": "Japanese history.", "ex_ja": "にほんし。"}, {"en": "language", "pos": "名", "ja": "ことば", "ex_en": "Foreign language.", "ex_ja": "がいこくご。"}, {"en": "library", "pos": "名", "ja": "としょかん", "ex_en": "Quiet library.", "ex_ja": "しずかなとしょかん。"}, {"en": "dictionary", "pos": "名", "ja": "じしょ", "ex_en": "Use a dictionary.", "ex_ja": "じしょをつかう。"}, {"en": "teacher", "pos": "名", "ja": "せんせい", "ex_en": "Math teacher.", "ex_ja": "すうがくの先生。"}, {"en": "student", "pos": "名", "ja": "せいと", "ex_en": "High school student.", "ex_ja": "こうこうせい。"}, {"en": "school", "pos": "名", "ja": "がっこう", "ex_en": "Go to school.", "ex_ja": "学校へいく。"}, {"en": "subject", "pos": "名", "ja": "かもく", "ex_en": "Favorite subject.", "ex_ja": "おきにいりのかもく。"}, {"en": "test", "pos": "名", "ja": "テスト", "ex_en": "Math test.", "ex_ja": "すうがくテスト。"}, {"en": "exam", "pos": "名", "ja": "しけん", "ex_en": "Final exam.", "ex_ja": "きまつしけん。"}, {"en": "textbook", "pos": "名", "ja": "きょうかしょ", "ex_en": "Open the textbook.", "ex_ja": "きょうかしょをあけて。"}, {"en": "notebook", "pos": "名", "ja": "ノート", "ex_en": "New notebook.", "ex_ja": "あたらしいノート。"}, {"en": "pencil", "pos": "名", "ja": "えんぴつ", "ex_en": "Sharp pencil.", "ex_ja": "とがったえんぴつ。"}, {"en": "eraser", "pos": "名", "ja": "けしごむ", "ex_en": "Lose the eraser.", "ex_ja": "けしゴムなくした。"}, {"en": "ruler", "pos": "名", "ja": "じょうぎ", "ex_en": "Use a ruler.", "ex_ja": "じょうぎをつかう。"}, {"en": "blackboard", "pos": "名", "ja": "こくばん", "ex_en": "Write on the blackboard.", "ex_ja": "こくばんにかく。"}, {"en": "chalk", "pos": "名", "ja": "チョーク", "ex_en": "White chalk.", "ex_ja": "白いチョーク。"}, {"en": "desk", "pos": "名", "ja": "つくえ", "ex_en": "Clean desk.", "ex_ja": "きれいなつくえ。"}, {"en": "chair", "pos": "名", "ja": "いす", "ex_en": "Comfy chair.", "ex_ja": "ふかふかのいす。"}, {"en": "schedule", "pos": "名", "ja": "じかんわり", "ex_en": "Class schedule.", "ex_ja": "じゅぎょうのよてい。"}, {"en": "lesson", "pos": "名", "ja": "レッスン", "ex_en": "Piano lesson.", "ex_ja": "ピアノレッスン。"}, {"en": "class", "pos": "名", "ja": "クラス", "ex_en": "Math class.", "ex_ja": "すうがくのクラス。"}, {"en": "grade", "pos": "名", "ja": "せいせき/学年", "ex_en": "Good grade.", "ex_ja": "いいせいせき。"}, {"en": "score", "pos": "名", "ja": "てんすう", "ex_en": "High score.", "ex_ja": "こうとくてん。"}, {"en": "question", "pos": "名", "ja": "しつもん", "ex_en": "Good question.", "ex_ja": "いいしつもん。"}, {"en": "answer", "pos": "名", "ja": "こたえ", "ex_en": "Right answer.", "ex_ja": "せいかい。"}, {"en": "essay", "pos": "名", "ja": "エッセイ", "ex_en": "Write an essay.", "ex_ja": "エッセイをかく。"}, {"en": "speech", "pos": "名", "ja": "スピーチ", "ex_en": "Give a speech.", "ex_ja": "スピーチする。"}, {"en": "project", "pos": "名", "ja": "プロジェクト", "ex_en": "Group project.", "ex_ja": "グループプロジェクト。"}, {"en": "research", "pos": "名/動", "ja": "けんきゅう", "ex_en": "Do research.", "ex_ja": "けんきゅうする。"}, {"en": "experiment", "pos": "名", "ja": "じっけん", "ex_en": "Science experiment.", "ex_ja": "りかじっけん。"}, {"en": "club", "pos": "名", "ja": "クラブ", "ex_en": "Tennis club.", "ex_ja": "テニスクラブ。"}, {"en": "uniform", "pos": "名", "ja": "せいふく", "ex_en": "School uniform.", "ex_ja": "せいふく。"}, {"en": "locker", "pos": "名", "ja": "ロッカー", "ex_en": "School locker.", "ex_ja": "学校のロッカー。"}, {"en": "bell", "pos": "名", "ja": "ベル", "ex_en": "School bell.", "ex_ja": "学校のチャイム。"}, {"en": "art", "pos": "名", "ja": "びじゅつ", "ex_en": "Art class.", "ex_ja": "びじゅつのじゅぎょう。"}, {"en": "math", "pos": "名", "ja": "さんすう/すうがく", "ex_en": "Math problem.", "ex_ja": "すうがくのもんだい。"}, {"en": "English", "pos": "名", "ja": "えいご", "ex_en": "Learn English.", "ex_ja": "えいごをまなぶ。"}, {"en": "Japanese", "pos": "名", "ja": "にほんご", "ex_en": "Speak Japanese.", "ex_ja": "にほんごをはなす。"}, {"en": "music", "pos": "名", "ja": "おんがく", "ex_en": "Music class.", "ex_ja": "おんがくのクラス。"}, {"en": "PE", "pos": "名", "ja": "たいいく", "ex_en": "PE lesson.", "ex_ja": "たいいくのじゅぎょう。"}, {"en": "group", "pos": "名", "ja": "グループ", "ex_en": "My group.", "ex_ja": "わたしのグループ。"}]}, {"name": "名詞: 食べもの・飲みもの", "words": [{"en": "breakfast", "pos": "名", "ja": "あさごはん", "ex_en": "Eat breakfast.", "ex_ja": "あさごはんを食べる。"}, {"en": "lunch", "pos": "名", "ja": "ひるごはん", "ex_en": "Have lunch.", "ex_ja": "ひるごはんを食べる。"}, {"en": "dinner", "pos": "名", "ja": "ばんごはん", "ex_en": "Family dinner.", "ex_ja": "かぞくでばんごはん。"}, {"en": "vegetable", "pos": "名", "ja": "やさい", "ex_en": "Eat vegetables.", "ex_ja": "やさいを食べて。"}, {"en": "fruit", "pos": "名", "ja": "くだもの", "ex_en": "Sweet fruit.", "ex_ja": "あまいくだもの。"}, {"en": "meat", "pos": "名", "ja": "にく", "ex_en": "Cook meat.", "ex_ja": "にくをやく。"}, {"en": "bread", "pos": "名", "ja": "パン", "ex_en": "Fresh bread.", "ex_ja": "やきたてのパン。"}, {"en": "juice", "pos": "名", "ja": "ジュース", "ex_en": "Apple juice.", "ex_ja": "りんごジュース。"}, {"en": "snack", "pos": "名", "ja": "おやつ", "ex_en": "Healthy snack.", "ex_ja": "ヘルシーおやつ。"}, {"en": "restaurant", "pos": "名", "ja": "レストラン", "ex_en": "Japanese restaurant.", "ex_ja": "にほんりょうりや。"}, {"en": "cake", "pos": "名", "ja": "ケーキ", "ex_en": "Birthday cake.", "ex_ja": "たんじょうびケーキ。"}, {"en": "cookie", "pos": "名", "ja": "クッキー", "ex_en": "Choco cookie.", "ex_ja": "チョコクッキー。"}, {"en": "candy", "pos": "名", "ja": "あめ", "ex_en": "Sweet candy.", "ex_ja": "あまいあめ。"}, {"en": "chocolate", "pos": "名", "ja": "チョコ", "ex_en": "Dark chocolate.", "ex_ja": "ダークチョコ。"}, {"en": "ice cream", "pos": "名", "ja": "アイス", "ex_en": "Vanilla ice cream.", "ex_ja": "バニラアイス。"}, {"en": "rice", "pos": "名", "ja": "ごはん", "ex_en": "Steamed rice.", "ex_ja": "むしごはん。"}, {"en": "noodle", "pos": "名", "ja": "めん", "ex_en": "Hot noodles.", "ex_ja": "あつあつのめん。"}, {"en": "pasta", "pos": "名", "ja": "パスタ", "ex_en": "Tomato pasta.", "ex_ja": "トマトパスタ。"}, {"en": "soup", "pos": "名", "ja": "スープ", "ex_en": "Hot soup.", "ex_ja": "あついスープ。"}, {"en": "salad", "pos": "名", "ja": "サラダ", "ex_en": "Fresh salad.", "ex_ja": "しんせんなサラダ。"}, {"en": "egg", "pos": "名", "ja": "たまご", "ex_en": "Boiled egg.", "ex_ja": "ゆでたまご。"}, {"en": "milk", "pos": "名", "ja": "ぎゅうにゅう", "ex_en": "Cold milk.", "ex_ja": "つめたいぎゅうにゅう。"}, {"en": "water", "pos": "名", "ja": "みず", "ex_en": "Drink water.", "ex_ja": "みずをのむ。"}, {"en": "tea", "pos": "名", "ja": "おちゃ", "ex_en": "Green tea.", "ex_ja": "おちゃ。"}, {"en": "coffee", "pos": "名", "ja": "コーヒー", "ex_en": "Black coffee.", "ex_ja": "ブラックコーヒー。"}, {"en": "sugar", "pos": "名", "ja": "さとう", "ex_en": "Add sugar.", "ex_ja": "さとうをたす。"}, {"en": "salt", "pos": "名", "ja": "しお", "ex_en": "Less salt.", "ex_ja": "しおすくなめ。"}, {"en": "pepper", "pos": "名", "ja": "こしょう", "ex_en": "Black pepper.", "ex_ja": "くろこしょう。"}, {"en": "butter", "pos": "名", "ja": "バター", "ex_en": "Soft butter.", "ex_ja": "やわらかいバター。"}, {"en": "cheese", "pos": "名", "ja": "チーズ", "ex_en": "Yellow cheese.", "ex_ja": "きいろいチーズ。"}, {"en": "apple", "pos": "名", "ja": "りんご", "ex_en": "Red apple.", "ex_ja": "あかいりんご。"}, {"en": "banana", "pos": "名", "ja": "バナナ", "ex_en": "Yellow banana.", "ex_ja": "きいろいバナナ。"}, {"en": "orange", "pos": "名", "ja": "オレンジ", "ex_en": "Sweet orange.", "ex_ja": "あまいオレンジ。"}, {"en": "strawberry", "pos": "名", "ja": "いちご", "ex_en": "Strawberry jam.", "ex_ja": "いちごジャム。"}, {"en": "grape", "pos": "名", "ja": "ぶどう", "ex_en": "Purple grapes.", "ex_ja": "むらさきのぶどう。"}, {"en": "watermelon", "pos": "名", "ja": "すいか", "ex_en": "Big watermelon.", "ex_ja": "おおきいすいか。"}, {"en": "tomato", "pos": "名", "ja": "トマト", "ex_en": "Red tomato.", "ex_ja": "あかいトマト。"}, {"en": "carrot", "pos": "名", "ja": "にんじん", "ex_en": "Orange carrot.", "ex_ja": "オレンジのにんじん。"}, {"en": "potato", "pos": "名", "ja": "じゃがいも", "ex_en": "Boiled potato.", "ex_ja": "ゆでじゃが。"}, {"en": "onion", "pos": "名", "ja": "たまねぎ", "ex_en": "Cut onion.", "ex_ja": "たまねぎをきる。"}, {"en": "chicken", "pos": "名", "ja": "とり", "ex_en": "Fried chicken.", "ex_ja": "からあげ。"}, {"en": "beef", "pos": "名", "ja": "ぎゅうにく", "ex_en": "Grilled beef.", "ex_ja": "ぎゅうのやきにく。"}, {"en": "pork", "pos": "名", "ja": "ぶたにく", "ex_en": "Pork dish.", "ex_ja": "ぶたにくりょうり。"}, {"en": "fish", "pos": "名", "ja": "さかな", "ex_en": "Cook fish.", "ex_ja": "さかなを焼く。"}, {"en": "dessert", "pos": "名", "ja": "デザート", "ex_en": "Sweet dessert.", "ex_ja": "あまいデザート。"}]}, {"name": "名詞: 人・しごと", "words": [{"en": "doctor", "pos": "名", "ja": "いしゃ", "ex_en": "See a doctor.", "ex_ja": "いしゃに行く。"}, {"en": "nurse", "pos": "名", "ja": "かんごし", "ex_en": "Kind nurse.", "ex_ja": "やさしいかんごし。"}, {"en": "farmer", "pos": "名", "ja": "のうか", "ex_en": "Hard-working farmer.", "ex_ja": "がんばるのうか。"}, {"en": "police", "pos": "名", "ja": "けいさつ", "ex_en": "Call police.", "ex_ja": "けいさつをよぶ。"}, {"en": "singer", "pos": "名", "ja": "かしゅ", "ex_en": "Pop singer.", "ex_ja": "ポップしんがー。"}, {"en": "writer", "pos": "名", "ja": "さっか", "ex_en": "Famous writer.", "ex_ja": "ゆうめいさっか。"}, {"en": "artist", "pos": "名", "ja": "げいじゅつか", "ex_en": "Talented artist.", "ex_ja": "さいのうあるアーティスト。"}, {"en": "neighbor", "pos": "名", "ja": "となりのひと", "ex_en": "Friendly neighbor.", "ex_ja": "やさしいおとなり。"}, {"en": "family", "pos": "名", "ja": "かぞく", "ex_en": "Big family.", "ex_ja": "だいかぞく。"}, {"en": "friend", "pos": "名", "ja": "ともだち", "ex_en": "Best friend.", "ex_ja": "しんゆう。"}, {"en": "father", "pos": "名", "ja": "ちち", "ex_en": "My father.", "ex_ja": "わたしのちち。"}, {"en": "mother", "pos": "名", "ja": "はは", "ex_en": "Loving mother.", "ex_ja": "やさしいはは。"}, {"en": "brother", "pos": "名", "ja": "あに/おとうと", "ex_en": "Older brother.", "ex_ja": "あに。"}, {"en": "sister", "pos": "名", "ja": "あね/いもうと", "ex_en": "Little sister.", "ex_ja": "いもうと。"}, {"en": "grandfather", "pos": "名", "ja": "おじいちゃん", "ex_en": "Old grandfather.", "ex_ja": "おじいちゃん。"}, {"en": "grandmother", "pos": "名", "ja": "おばあちゃん", "ex_en": "Sweet grandmother.", "ex_ja": "やさしいおばあちゃん。"}, {"en": "uncle", "pos": "名", "ja": "おじ", "ex_en": "My uncle.", "ex_ja": "わたしのおじ。"}, {"en": "aunt", "pos": "名", "ja": "おば", "ex_en": "Cool aunt.", "ex_ja": "おば。"}, {"en": "cousin", "pos": "名", "ja": "いとこ", "ex_en": "Best cousin.", "ex_ja": "だいすきないとこ。"}, {"en": "baby", "pos": "名", "ja": "あかちゃん", "ex_en": "Cute baby.", "ex_ja": "かわいいあかちゃん。"}, {"en": "child", "pos": "名", "ja": "こども", "ex_en": "Happy child.", "ex_ja": "しあわせなこども。"}, {"en": "man", "pos": "名", "ja": "おとこ", "ex_en": "Tall man.", "ex_ja": "せがたかいおとこ。"}, {"en": "woman", "pos": "名", "ja": "おんな", "ex_en": "Kind woman.", "ex_ja": "やさしいおんな。"}, {"en": "boy", "pos": "名", "ja": "男の子", "ex_en": "Young boy.", "ex_ja": "わかい男の子。"}, {"en": "girl", "pos": "名", "ja": "女の子", "ex_en": "Smart girl.", "ex_ja": "かしこい女の子。"}, {"en": "people", "pos": "名", "ja": "ひとびと", "ex_en": "Many people.", "ex_ja": "たくさんのひと。"}, {"en": "dentist", "pos": "名", "ja": "はいしゃ", "ex_en": "Visit a dentist.", "ex_ja": "はいしゃへ。"}, {"en": "scientist", "pos": "名", "ja": "かがくしゃ", "ex_en": "Famous scientist.", "ex_ja": "かがくしゃ。"}, {"en": "engineer", "pos": "名", "ja": "ぎし", "ex_en": "Software engineer.", "ex_ja": "ソフトエンジニア。"}, {"en": "astronaut", "pos": "名", "ja": "うちゅうひこうし", "ex_en": "Brave astronaut.", "ex_ja": "ゆうかんなうちゅうひこうし。"}, {"en": "athlete", "pos": "名", "ja": "せんしゅ", "ex_en": "Top athlete.", "ex_ja": "いちりゅうせんしゅ。"}, {"en": "actor", "pos": "名", "ja": "はいゆう", "ex_en": "Famous actor.", "ex_ja": "ゆうめいはいゆう。"}, {"en": "actress", "pos": "名", "ja": "じょゆう", "ex_en": "Pretty actress.", "ex_ja": "きれいなじょゆう。"}, {"en": "musician", "pos": "名", "ja": "おんがくか", "ex_en": "Great musician.", "ex_ja": "すごいおんがくか。"}, {"en": "director", "pos": "名", "ja": "かんとく", "ex_en": "Movie director.", "ex_ja": "えいがかんとく。"}, {"en": "president", "pos": "名", "ja": "しゃちょう/だいとうりょう", "ex_en": "School president.", "ex_ja": "校長。"}, {"en": "officer", "pos": "名", "ja": "しょうこう/警官", "ex_en": "Police officer.", "ex_ja": "けいさつかん。"}, {"en": "clerk", "pos": "名", "ja": "てんいん", "ex_en": "Friendly clerk.", "ex_ja": "しんせつなてんいん。"}, {"en": "driver", "pos": "名", "ja": "うんてんしゅ", "ex_en": "Bus driver.", "ex_ja": "バスのうんてんしゅ。"}, {"en": "pilot", "pos": "名", "ja": "パイロット", "ex_en": "Pilot of a plane.", "ex_ja": "ひこうきのパイロット。"}, {"en": "captain", "pos": "名", "ja": "せんちょう/きゃぷてん", "ex_en": "Team captain.", "ex_ja": "キャプテン。"}, {"en": "guest", "pos": "名", "ja": "おきゃくさま", "ex_en": "Welcome the guest.", "ex_ja": "おきゃくさまをかんげい。"}, {"en": "stranger", "pos": "名", "ja": "しらないひと", "ex_en": "Talk to stranger.", "ex_ja": "しらないひとと話す。"}, {"en": "partner", "pos": "名", "ja": "パートナー", "ex_en": "Dance partner.", "ex_ja": "ダンスパートナー。"}, {"en": "expert", "pos": "名", "ja": "エキスパート", "ex_en": "Math expert.", "ex_ja": "すうがくのプロ。"}]}, {"name": "名詞: 自然・天気", "words": [{"en": "mountain", "pos": "名", "ja": "やま", "ex_en": "High mountain.", "ex_ja": "たかい山。"}, {"en": "river", "pos": "名", "ja": "かわ", "ex_en": "Long river.", "ex_ja": "ながい川。"}, {"en": "ocean", "pos": "名", "ja": "うみ", "ex_en": "Blue ocean.", "ex_ja": "あおいうみ。"}, {"en": "forest", "pos": "名", "ja": "もり", "ex_en": "Dark forest.", "ex_ja": "くらいもり。"}, {"en": "island", "pos": "名", "ja": "しま", "ex_en": "Small island.", "ex_ja": "小さいしま。"}, {"en": "earth", "pos": "名", "ja": "ちきゅう", "ex_en": "Save the Earth.", "ex_ja": "ちきゅうをまもる。"}, {"en": "weather", "pos": "名", "ja": "てんき", "ex_en": "Nice weather.", "ex_ja": "いいてんき。"}, {"en": "snow", "pos": "名", "ja": "ゆき", "ex_en": "White snow.", "ex_ja": "白いゆき。"}, {"en": "wind", "pos": "名", "ja": "かぜ", "ex_en": "Strong wind.", "ex_ja": "つよい風。"}, {"en": "sky", "pos": "名", "ja": "そら", "ex_en": "Blue sky.", "ex_ja": "あおいそら。"}, {"en": "sun", "pos": "名", "ja": "たいよう", "ex_en": "Bright sun.", "ex_ja": "まぶしいたいよう。"}, {"en": "moon", "pos": "名", "ja": "つき", "ex_en": "Full moon.", "ex_ja": "まんげつ。"}, {"en": "star", "pos": "名", "ja": "ほし", "ex_en": "Twinkling star.", "ex_ja": "きらめくほし。"}, {"en": "cloud", "pos": "名", "ja": "くも", "ex_en": "White cloud.", "ex_ja": "白いくも。"}, {"en": "rain", "pos": "名", "ja": "あめ", "ex_en": "Heavy rain.", "ex_ja": "おおあめ。"}, {"en": "storm", "pos": "名", "ja": "あらし", "ex_en": "Big storm.", "ex_ja": "おおあらし。"}, {"en": "thunder", "pos": "名", "ja": "かみなり", "ex_en": "Loud thunder.", "ex_ja": "おおきなかみなり。"}, {"en": "lightning", "pos": "名", "ja": "いなずま", "ex_en": "Bright lightning.", "ex_ja": "あかるいいなずま。"}, {"en": "typhoon", "pos": "名", "ja": "たいふう", "ex_en": "Typhoon coming.", "ex_ja": "たいふうがくる。"}, {"en": "rainbow", "pos": "名", "ja": "にじ", "ex_en": "Beautiful rainbow.", "ex_ja": "きれいなにじ。"}, {"en": "flood", "pos": "名", "ja": "こうずい", "ex_en": "Flood damage.", "ex_ja": "こうずいひがい。"}, {"en": "earthquake", "pos": "名", "ja": "じしん", "ex_en": "Big earthquake.", "ex_ja": "おおきなじしん。"}, {"en": "volcano", "pos": "名", "ja": "かざん", "ex_en": "Active volcano.", "ex_ja": "かつかざん。"}, {"en": "desert", "pos": "名", "ja": "さばく", "ex_en": "Hot desert.", "ex_ja": "あついさばく。"}, {"en": "jungle", "pos": "名", "ja": "ジャングル", "ex_en": "Deep jungle.", "ex_ja": "おくぶかいジャングル。"}, {"en": "hill", "pos": "名", "ja": "おか", "ex_en": "Green hill.", "ex_ja": "みどりのおか。"}, {"en": "valley", "pos": "名", "ja": "たに", "ex_en": "Deep valley.", "ex_ja": "ふかいたに。"}, {"en": "lake", "pos": "名", "ja": "みずうみ", "ex_en": "Calm lake.", "ex_ja": "しずかなみずうみ。"}, {"en": "pond", "pos": "名", "ja": "いけ", "ex_en": "Small pond.", "ex_ja": "ちいさいいけ。"}, {"en": "waterfall", "pos": "名", "ja": "たき", "ex_en": "Tall waterfall.", "ex_ja": "たかいたき。"}, {"en": "beach", "pos": "名", "ja": "ビーチ", "ex_en": "Sandy beach.", "ex_ja": "すなはま。"}, {"en": "coast", "pos": "名", "ja": "かいがん", "ex_en": "Rocky coast.", "ex_ja": "いわのかいがん。"}, {"en": "nature", "pos": "名", "ja": "しぜん", "ex_en": "Love nature.", "ex_ja": "しぜんがすき。"}, {"en": "environment", "pos": "名", "ja": "かんきょう", "ex_en": "Protect the environment.", "ex_ja": "かんきょうをまもる。"}, {"en": "season", "pos": "名", "ja": "きせつ", "ex_en": "Four seasons.", "ex_ja": "しきせつ。"}, {"en": "spring", "pos": "名", "ja": "はる", "ex_en": "Warm spring.", "ex_ja": "あたたかいはる。"}, {"en": "summer", "pos": "名", "ja": "なつ", "ex_en": "Hot summer.", "ex_ja": "あついなつ。"}, {"en": "autumn", "pos": "名", "ja": "あき", "ex_en": "Cool autumn.", "ex_ja": "すずしいあき。"}, {"en": "winter", "pos": "名", "ja": "ふゆ", "ex_en": "Cold winter.", "ex_ja": "さむいふゆ。"}, {"en": "temperature", "pos": "名", "ja": "おんど", "ex_en": "High temperature.", "ex_ja": "たかいきおん。"}, {"en": "climate", "pos": "名", "ja": "きこう", "ex_en": "Tropical climate.", "ex_ja": "ねったいきこう。"}, {"en": "smoke", "pos": "名", "ja": "けむり", "ex_en": "Black smoke.", "ex_ja": "くろいけむり。"}, {"en": "fog", "pos": "名", "ja": "きり", "ex_en": "Thick fog.", "ex_ja": "こいきり。"}, {"en": "ice", "pos": "名", "ja": "こおり", "ex_en": "Cold ice.", "ex_ja": "つめたいこおり。"}, {"en": "rock", "pos": "名", "ja": "いわ", "ex_en": "Big rock.", "ex_ja": "おおきないわ。"}]}, {"name": "名詞: どうぶつ・しょくぶつ・もの", "words": [{"en": "animal", "pos": "名", "ja": "どうぶつ", "ex_en": "Wild animal.", "ex_ja": "やせいどうぶつ。"}, {"en": "butterfly", "pos": "名", "ja": "ちょうちょ", "ex_en": "Yellow butterfly.", "ex_ja": "きいろいちょう。"}, {"en": "insect", "pos": "名", "ja": "こんちゅう", "ex_en": "Tiny insect.", "ex_ja": "小さなこんちゅう。"}, {"en": "plant", "pos": "名", "ja": "しょくぶつ", "ex_en": "Green plant.", "ex_ja": "みどりのしょくぶつ。"}, {"en": "flower", "pos": "名", "ja": "花", "ex_en": "Pretty flower.", "ex_ja": "きれいな花。"}, {"en": "tree", "pos": "名", "ja": "木", "ex_en": "Old tree.", "ex_ja": "古い木。"}, {"en": "grass", "pos": "名", "ja": "くさ", "ex_en": "Green grass.", "ex_ja": "みどりのくさ。"}, {"en": "leaf", "pos": "名", "ja": "はっぱ", "ex_en": "Red leaf.", "ex_ja": "あかいはっぱ。"}, {"en": "rose", "pos": "名", "ja": "バラ", "ex_en": "Red rose.", "ex_ja": "あかいバラ。"}, {"en": "seed", "pos": "名", "ja": "たね", "ex_en": "Plant a seed.", "ex_ja": "たねをまく。"}, {"en": "dog", "pos": "名", "ja": "いぬ", "ex_en": "Pet dog.", "ex_ja": "ペットの犬。"}, {"en": "cat", "pos": "名", "ja": "ねこ", "ex_en": "Black cat.", "ex_ja": "くろいねこ。"}, {"en": "bird", "pos": "名", "ja": "とり", "ex_en": "Sing bird.", "ex_ja": "うたうとり。"}, {"en": "fish", "pos": "名", "ja": "さかな", "ex_en": "Goldfish.", "ex_ja": "きんぎょ。"}, {"en": "mouse", "pos": "名", "ja": "ねずみ", "ex_en": "Tiny mouse.", "ex_ja": "ちいさいねずみ。"}, {"en": "rabbit", "pos": "名", "ja": "うさぎ", "ex_en": "Cute rabbit.", "ex_ja": "かわいいうさぎ。"}, {"en": "horse", "pos": "名", "ja": "うま", "ex_en": "Brown horse.", "ex_ja": "ちゃいろいうま。"}, {"en": "cow", "pos": "名", "ja": "うし", "ex_en": "Big cow.", "ex_ja": "おおきいうし。"}, {"en": "pig", "pos": "名", "ja": "ぶた", "ex_en": "Pink pig.", "ex_ja": "ピンクのぶた。"}, {"en": "sheep", "pos": "名", "ja": "ひつじ", "ex_en": "White sheep.", "ex_ja": "しろいひつじ。"}, {"en": "monkey", "pos": "名", "ja": "さる", "ex_en": "Smart monkey.", "ex_ja": "かしこいさる。"}, {"en": "elephant", "pos": "名", "ja": "ぞう", "ex_en": "Huge elephant.", "ex_ja": "でっかいぞう。"}, {"en": "lion", "pos": "名", "ja": "ライオン", "ex_en": "King lion.", "ex_ja": "ライオンの王。"}, {"en": "tiger", "pos": "名", "ja": "とら", "ex_en": "Striped tiger.", "ex_ja": "しまもようのとら。"}, {"en": "bear", "pos": "名", "ja": "くま", "ex_en": "Brown bear.", "ex_ja": "ちゃいろいくま。"}, {"en": "wolf", "pos": "名", "ja": "おおかみ", "ex_en": "Wild wolf.", "ex_ja": "やせいのおおかみ。"}, {"en": "fox", "pos": "名", "ja": "きつね", "ex_en": "Quick fox.", "ex_ja": "すばしっこいきつね。"}, {"en": "snake", "pos": "名", "ja": "へび", "ex_en": "Long snake.", "ex_ja": "ながいへび。"}, {"en": "frog", "pos": "名", "ja": "かえる", "ex_en": "Jumping frog.", "ex_ja": "とぶかえる。"}, {"en": "dolphin", "pos": "名", "ja": "いるか", "ex_en": "Smart dolphin.", "ex_ja": "かしこいいるか。"}, {"en": "whale", "pos": "名", "ja": "くじら", "ex_en": "Big whale.", "ex_ja": "おおきなくじら。"}, {"en": "shark", "pos": "名", "ja": "さめ", "ex_en": "Scary shark.", "ex_ja": "こわいさめ。"}, {"en": "penguin", "pos": "名", "ja": "ペンギン", "ex_en": "Cute penguin.", "ex_ja": "かわいいペンギン。"}, {"en": "ant", "pos": "名", "ja": "あり", "ex_en": "Working ant.", "ex_ja": "はたらきあり。"}, {"en": "bee", "pos": "名", "ja": "はち", "ex_en": "Busy bee.", "ex_ja": "いそがしいハチ。"}, {"en": "spider", "pos": "名", "ja": "くも(虫)", "ex_en": "Big spider.", "ex_ja": "おおきいクモ。"}, {"en": "machine", "pos": "名", "ja": "きかい", "ex_en": "New machine.", "ex_ja": "あたらしいきかい。"}, {"en": "computer", "pos": "名", "ja": "パソコン", "ex_en": "Use computer.", "ex_ja": "パソコンをつかう。"}, {"en": "camera", "pos": "名", "ja": "カメラ", "ex_en": "Old camera.", "ex_ja": "ふるいカメラ。"}, {"en": "newspaper", "pos": "名", "ja": "しんぶん", "ex_en": "Read newspaper.", "ex_ja": "しんぶんをよむ。"}, {"en": "present", "pos": "名", "ja": "プレゼント", "ex_en": "Birthday present.", "ex_ja": "たんじょうびプレゼント。"}, {"en": "gift", "pos": "名", "ja": "おくりもの", "ex_en": "Special gift.", "ex_ja": "とくべつなおくりもの。"}, {"en": "ball", "pos": "名", "ja": "ボール", "ex_en": "Round ball.", "ex_ja": "まるいボール。"}, {"en": "toy", "pos": "名", "ja": "おもちゃ", "ex_en": "Plastic toy.", "ex_ja": "プラスチックのおもちゃ。"}, {"en": "doll", "pos": "名", "ja": "にんぎょう", "ex_en": "Old doll.", "ex_ja": "ふるい人形。"}]}, {"name": "名詞: 町・建物", "words": [{"en": "airport", "pos": "名", "ja": "くうこう", "ex_en": "International airport.", "ex_ja": "こくさいくうこう。"}, {"en": "station", "pos": "名", "ja": "えき", "ex_en": "Train station.", "ex_ja": "えき。"}, {"en": "hospital", "pos": "名", "ja": "びょういん", "ex_en": "Big hospital.", "ex_ja": "おおきいびょういん。"}, {"en": "hotel", "pos": "名", "ja": "ホテル", "ex_en": "Nice hotel.", "ex_ja": "いいホテル。"}, {"en": "museum", "pos": "名", "ja": "はくぶつかん", "ex_en": "Visit museum.", "ex_ja": "はくぶつかん。"}, {"en": "bank", "pos": "名", "ja": "ぎんこう", "ex_en": "Big bank.", "ex_ja": "ぎんこう。"}, {"en": "factory", "pos": "名", "ja": "こうじょう", "ex_en": "Car factory.", "ex_ja": "車のこうじょう。"}, {"en": "office", "pos": "名", "ja": "じむしょ", "ex_en": "My office.", "ex_ja": "じむしょ。"}, {"en": "city", "pos": "名", "ja": "とし", "ex_en": "Big city.", "ex_ja": "だいとし。"}, {"en": "country", "pos": "名", "ja": "くに", "ex_en": "Foreign country.", "ex_ja": "がいこく。"}, {"en": "park", "pos": "名", "ja": "こうえん", "ex_en": "Local park.", "ex_ja": "じもとのこうえん。"}, {"en": "zoo", "pos": "名", "ja": "どうぶつえん", "ex_en": "Zoo trip.", "ex_ja": "どうぶつえん。"}, {"en": "aquarium", "pos": "名", "ja": "すいぞくかん", "ex_en": "Visit aquarium.", "ex_ja": "すいぞくかん。"}, {"en": "temple", "pos": "名", "ja": "てら", "ex_en": "Old temple.", "ex_ja": "ふるいてら。"}, {"en": "shrine", "pos": "名", "ja": "じんじゃ", "ex_en": "Visit shrine.", "ex_ja": "じんじゃへ。"}, {"en": "church", "pos": "名", "ja": "きょうかい", "ex_en": "Old church.", "ex_ja": "ふるいきょうかい。"}, {"en": "castle", "pos": "名", "ja": "しろ", "ex_en": "Stone castle.", "ex_ja": "いしのしろ。"}, {"en": "tower", "pos": "名", "ja": "とう", "ex_en": "Tokyo Tower.", "ex_ja": "とうきょうタワー。"}, {"en": "bridge", "pos": "名", "ja": "はし", "ex_en": "Long bridge.", "ex_ja": "ながいはし。"}, {"en": "road", "pos": "名", "ja": "みち", "ex_en": "Wide road.", "ex_ja": "ひろいみち。"}, {"en": "street", "pos": "名", "ja": "とおり", "ex_en": "Busy street.", "ex_ja": "にぎやかなとおり。"}, {"en": "path", "pos": "名", "ja": "こみち", "ex_en": "Forest path.", "ex_ja": "もりのこみち。"}, {"en": "highway", "pos": "名", "ja": "こうそく", "ex_en": "Highway speed.", "ex_ja": "こうそくスピード。"}, {"en": "village", "pos": "名", "ja": "むら", "ex_en": "Small village.", "ex_ja": "ちいさなむら。"}, {"en": "town", "pos": "名", "ja": "まち", "ex_en": "Quiet town.", "ex_ja": "しずかなまち。"}, {"en": "supermarket", "pos": "名", "ja": "スーパー", "ex_en": "Local supermarket.", "ex_ja": "じもとのスーパー。"}, {"en": "store", "pos": "名", "ja": "みせ", "ex_en": "Grocery store.", "ex_ja": "しょくりょうてん。"}, {"en": "shop", "pos": "名", "ja": "ショップ", "ex_en": "Toy shop.", "ex_ja": "おもちゃ屋さん。"}, {"en": "mall", "pos": "名", "ja": "モール", "ex_en": "Shopping mall.", "ex_ja": "ショッピングモール。"}, {"en": "market", "pos": "名", "ja": "しじょう", "ex_en": "Fish market.", "ex_ja": "うおいちば。"}, {"en": "library", "pos": "名", "ja": "としょかん", "ex_en": "Quiet library.", "ex_ja": "しずかなとしょかん。"}, {"en": "theater", "pos": "名", "ja": "げきじょう", "ex_en": "Movie theater.", "ex_ja": "えいがかん。"}, {"en": "cinema", "pos": "名", "ja": "えいがかん", "ex_en": "Go to cinema.", "ex_ja": "えいがかんへ。"}, {"en": "stadium", "pos": "名", "ja": "スタジアム", "ex_en": "Soccer stadium.", "ex_ja": "サッカースタジアム。"}, {"en": "gym", "pos": "名", "ja": "たいいくかん", "ex_en": "School gym.", "ex_ja": "学校のたいいくかん。"}, {"en": "swimming pool", "pos": "名", "ja": "プール", "ex_en": "Outdoor pool.", "ex_ja": "やがいプール。"}, {"en": "playground", "pos": "名", "ja": "あそびば", "ex_en": "Fun playground.", "ex_ja": "たのしいあそびば。"}, {"en": "garage", "pos": "名", "ja": "ガレージ", "ex_en": "Two-car garage.", "ex_ja": "2台ガレージ。"}, {"en": "garden", "pos": "名", "ja": "にわ", "ex_en": "Pretty garden.", "ex_ja": "きれいなにわ。"}, {"en": "yard", "pos": "名", "ja": "にわ/ヤード", "ex_en": "Front yard.", "ex_ja": "まえにわ。"}, {"en": "entrance", "pos": "名", "ja": "いりぐち", "ex_en": "Main entrance.", "ex_ja": "メインゲート。"}, {"en": "exit", "pos": "名", "ja": "でぐち", "ex_en": "Exit door.", "ex_ja": "でぐちのドア。"}, {"en": "elevator", "pos": "名", "ja": "エレベーター", "ex_en": "Take the elevator.", "ex_ja": "エレベーターでいく。"}, {"en": "escalator", "pos": "名", "ja": "エスカレーター", "ex_en": "Use escalator.", "ex_ja": "エスカレーター。"}, {"en": "corner", "pos": "名", "ja": "かど", "ex_en": "Street corner.", "ex_ja": "まちかど。"}]}, {"name": "名詞: 家・身のまわりのもの", "words": [{"en": "kitchen", "pos": "名", "ja": "だいどころ", "ex_en": "Clean kitchen.", "ex_ja": "きれいなだいどころ。"}, {"en": "bathroom", "pos": "名", "ja": "おふろば", "ex_en": "Use bathroom.", "ex_ja": "おふろば。"}, {"en": "bedroom", "pos": "名", "ja": "しんしつ", "ex_en": "My bedroom.", "ex_ja": "わたしのしんしつ。"}, {"en": "living room", "pos": "名", "ja": "リビング", "ex_en": "Big living room.", "ex_ja": "おおきいリビング。"}, {"en": "window", "pos": "名", "ja": "まど", "ex_en": "Open window.", "ex_ja": "あいているまど。"}, {"en": "floor", "pos": "名", "ja": "ゆか", "ex_en": "Wooden floor.", "ex_ja": "木のゆか。"}, {"en": "ceiling", "pos": "名", "ja": "てんじょう", "ex_en": "High ceiling.", "ex_ja": "たかいてんじょう。"}, {"en": "wall", "pos": "名", "ja": "かべ", "ex_en": "White wall.", "ex_ja": "しろいかべ。"}, {"en": "door", "pos": "名", "ja": "ドア", "ex_en": "Wooden door.", "ex_ja": "木のドア。"}, {"en": "roof", "pos": "名", "ja": "やね", "ex_en": "Red roof.", "ex_ja": "あかいやね。"}, {"en": "clock", "pos": "名", "ja": "とけい", "ex_en": "Wall clock.", "ex_ja": "かべのとけい。"}, {"en": "watch", "pos": "名", "ja": "うで時計", "ex_en": "New watch.", "ex_ja": "あたらしいうで時計。"}, {"en": "key", "pos": "名", "ja": "かぎ", "ex_en": "House key.", "ex_ja": "いえのかぎ。"}, {"en": "map", "pos": "名", "ja": "ちず", "ex_en": "World map.", "ex_ja": "せかいちず。"}, {"en": "calendar", "pos": "名", "ja": "カレンダー", "ex_en": "Wall calendar.", "ex_ja": "かべのカレンダー。"}, {"en": "phone", "pos": "名", "ja": "でんわ", "ex_en": "Smart phone.", "ex_ja": "スマホ。"}, {"en": "mirror", "pos": "名", "ja": "かがみ", "ex_en": "Big mirror.", "ex_ja": "おおきなかがみ。"}, {"en": "table", "pos": "名", "ja": "テーブル", "ex_en": "Long table.", "ex_ja": "ながいテーブル。"}, {"en": "sofa", "pos": "名", "ja": "ソファ", "ex_en": "Soft sofa.", "ex_ja": "ふわふわソファ。"}, {"en": "bed", "pos": "名", "ja": "ベッド", "ex_en": "Soft bed.", "ex_ja": "ふわふわベッド。"}, {"en": "blanket", "pos": "名", "ja": "もうふ", "ex_en": "Warm blanket.", "ex_ja": "あたたかいもうふ。"}, {"en": "pillow", "pos": "名", "ja": "まくら", "ex_en": "Soft pillow.", "ex_ja": "やわらかいまくら。"}, {"en": "towel", "pos": "名", "ja": "タオル", "ex_en": "Clean towel.", "ex_ja": "きれいなタオル。"}, {"en": "soap", "pos": "名", "ja": "せっけん", "ex_en": "Wash with soap.", "ex_ja": "せっけんであらう。"}, {"en": "fork", "pos": "名", "ja": "フォーク", "ex_en": "Use a fork.", "ex_ja": "フォークをつかう。"}, {"en": "spoon", "pos": "名", "ja": "スプーン", "ex_en": "Big spoon.", "ex_ja": "おおきなスプーン。"}, {"en": "knife", "pos": "名", "ja": "ナイフ", "ex_en": "Sharp knife.", "ex_ja": "するどいナイフ。"}, {"en": "dish", "pos": "名", "ja": "おさら", "ex_en": "Wash dishes.", "ex_ja": "おさらをあらう。"}, {"en": "plate", "pos": "名", "ja": "プレート", "ex_en": "Dinner plate.", "ex_ja": "ばんごはん用のさら。"}, {"en": "cup", "pos": "名", "ja": "コップ", "ex_en": "Coffee cup.", "ex_ja": "コーヒーカップ。"}, {"en": "glass", "pos": "名", "ja": "コップ(ガラス)", "ex_en": "Glass of water.", "ex_ja": "コップ1ぱいの水。"}, {"en": "bottle", "pos": "名", "ja": "びん", "ex_en": "Empty bottle.", "ex_ja": "からのびん。"}, {"en": "bag", "pos": "名", "ja": "かばん", "ex_en": "School bag.", "ex_ja": "ランドセル。"}, {"en": "box", "pos": "名", "ja": "はこ", "ex_en": "Big box.", "ex_ja": "おおきなはこ。"}, {"en": "basket", "pos": "名", "ja": "かご", "ex_en": "Picnic basket.", "ex_ja": "ピクニックかご。"}, {"en": "umbrella", "pos": "名", "ja": "かさ", "ex_en": "Open umbrella.", "ex_ja": "かさをひらく。"}, {"en": "hat", "pos": "名", "ja": "ぼうし", "ex_en": "Red hat.", "ex_ja": "あかいぼうし。"}, {"en": "cap", "pos": "名", "ja": "ぼうし(つば付)", "ex_en": "Baseball cap.", "ex_ja": "やきゅうのぼうし。"}, {"en": "shoe", "pos": "名", "ja": "くつ", "ex_en": "New shoes.", "ex_ja": "あたらしいくつ。"}, {"en": "sock", "pos": "名", "ja": "くつした", "ex_en": "Warm sock.", "ex_ja": "あたたかいくつした。"}, {"en": "shirt", "pos": "名", "ja": "シャツ", "ex_en": "White shirt.", "ex_ja": "しろいシャツ。"}, {"en": "pants", "pos": "名", "ja": "ズボン", "ex_en": "Long pants.", "ex_ja": "ながいズボン。"}, {"en": "dress", "pos": "名", "ja": "ドレス", "ex_en": "Pretty dress.", "ex_ja": "きれいなドレス。"}, {"en": "coat", "pos": "名", "ja": "コート", "ex_en": "Winter coat.", "ex_ja": "ふゆのコート。"}, {"en": "jacket", "pos": "名", "ja": "ジャケット", "ex_en": "Light jacket.", "ex_ja": "かるいジャケット。"}]}, {"name": "名詞: 体・健康・気持ち", "words": [{"en": "body", "pos": "名", "ja": "からだ", "ex_en": "Healthy body.", "ex_ja": "けんこうなからだ。"}, {"en": "head", "pos": "名", "ja": "あたま", "ex_en": "Hit my head.", "ex_ja": "あたまをぶつけた。"}, {"en": "face", "pos": "名", "ja": "かお", "ex_en": "Round face.", "ex_ja": "まるい顔。"}, {"en": "hair", "pos": "名", "ja": "かみ", "ex_en": "Long hair.", "ex_ja": "ながいかみ。"}, {"en": "eye", "pos": "名", "ja": "め", "ex_en": "Big eyes.", "ex_ja": "おおきいめ。"}, {"en": "nose", "pos": "名", "ja": "はな", "ex_en": "Cute nose.", "ex_ja": "かわいいはな。"}, {"en": "mouth", "pos": "名", "ja": "くち", "ex_en": "Open mouth.", "ex_ja": "くちをあけて。"}, {"en": "ear", "pos": "名", "ja": "みみ", "ex_en": "Big ear.", "ex_ja": "おおきいみみ。"}, {"en": "teeth", "pos": "名", "ja": "は", "ex_en": "White teeth.", "ex_ja": "しろいは。"}, {"en": "tongue", "pos": "名", "ja": "した", "ex_en": "Pink tongue.", "ex_ja": "ピンクのした。"}, {"en": "neck", "pos": "名", "ja": "くび", "ex_en": "Long neck.", "ex_ja": "ながいくび。"}, {"en": "shoulder", "pos": "名", "ja": "かた", "ex_en": "Sore shoulder.", "ex_ja": "かたがいたい。"}, {"en": "arm", "pos": "名", "ja": "うで", "ex_en": "Strong arm.", "ex_ja": "つよいうで。"}, {"en": "hand", "pos": "名", "ja": "て", "ex_en": "Wash hand.", "ex_ja": "てをあらう。"}, {"en": "finger", "pos": "名", "ja": "ゆび", "ex_en": "Small finger.", "ex_ja": "ちいさいゆび。"}, {"en": "leg", "pos": "名", "ja": "あし", "ex_en": "Long leg.", "ex_ja": "ながいあし。"}, {"en": "foot", "pos": "名", "ja": "あし(足首から下)", "ex_en": "Sore foot.", "ex_ja": "あしがいたい。"}, {"en": "knee", "pos": "名", "ja": "ひざ", "ex_en": "Hurt knee.", "ex_ja": "ひざをけが。"}, {"en": "toe", "pos": "名", "ja": "つまさき", "ex_en": "Toe pain.", "ex_ja": "つまさきがいたい。"}, {"en": "stomach", "pos": "名", "ja": "おなか", "ex_en": "Stomachache.", "ex_ja": "おなかがいたい。"}, {"en": "heart", "pos": "名", "ja": "こころ/しんぞう", "ex_en": "Kind heart.", "ex_ja": "やさしいこころ。"}, {"en": "brain", "pos": "名", "ja": "のう", "ex_en": "Smart brain.", "ex_ja": "かしこいのう。"}, {"en": "blood", "pos": "名", "ja": "ち", "ex_en": "Red blood.", "ex_ja": "あかいち。"}, {"en": "bone", "pos": "名", "ja": "ほね", "ex_en": "Strong bone.", "ex_ja": "つよいほね。"}, {"en": "skin", "pos": "名", "ja": "はだ", "ex_en": "Soft skin.", "ex_ja": "やわらかいはだ。"}, {"en": "muscle", "pos": "名", "ja": "きんにく", "ex_en": "Strong muscle.", "ex_ja": "つよいきんにく。"}, {"en": "health", "pos": "名", "ja": "けんこう", "ex_en": "Good health.", "ex_ja": "けんこう。"}, {"en": "medicine", "pos": "名", "ja": "くすり", "ex_en": "Take medicine.", "ex_ja": "くすりをのむ。"}, {"en": "disease", "pos": "名", "ja": "びょうき", "ex_en": "Serious disease.", "ex_ja": "じゅうとくなびょうき。"}, {"en": "fever", "pos": "名", "ja": "ねつ", "ex_en": "High fever.", "ex_ja": "こうねつ。"}, {"en": "cold", "pos": "名", "ja": "かぜ", "ex_en": "Catch a cold.", "ex_ja": "かぜをひく。"}, {"en": "flu", "pos": "名", "ja": "インフル", "ex_en": "Flu shot.", "ex_ja": "インフルワクチン。"}, {"en": "headache", "pos": "名", "ja": "ずつう", "ex_en": "Bad headache.", "ex_ja": "ひどいずつう。"}, {"en": "pain", "pos": "名", "ja": "いたみ", "ex_en": "Sharp pain.", "ex_ja": "するどいいたみ。"}, {"en": "injury", "pos": "名", "ja": "けが", "ex_en": "Minor injury.", "ex_ja": "ちょっとしたけが。"}, {"en": "happiness", "pos": "名", "ja": "しあわせ", "ex_en": "True happiness.", "ex_ja": "ほんとうのしあわせ。"}, {"en": "sadness", "pos": "名", "ja": "かなしみ", "ex_en": "Deep sadness.", "ex_ja": "ふかいかなしみ。"}, {"en": "anger", "pos": "名", "ja": "いかり", "ex_en": "Hide anger.", "ex_ja": "いかりをかくす。"}, {"en": "fear", "pos": "名", "ja": "おそれ", "ex_en": "Face fear.", "ex_ja": "おそれをのりこえる。"}, {"en": "love", "pos": "名", "ja": "あい", "ex_en": "True love.", "ex_ja": "ほんとうのあい。"}, {"en": "hope", "pos": "名", "ja": "きぼう", "ex_en": "New hope.", "ex_ja": "あたらしいきぼう。"}, {"en": "worry", "pos": "名", "ja": "しんぱい", "ex_en": "No worry.", "ex_ja": "しんぱいなし。"}, {"en": "smile", "pos": "名", "ja": "えがお", "ex_en": "Big smile.", "ex_ja": "おおきなえがお。"}, {"en": "laugh", "pos": "名", "ja": "わらい", "ex_en": "Loud laugh.", "ex_ja": "おおきなわらい。"}, {"en": "dream", "pos": "名", "ja": "ゆめ", "ex_en": "Sweet dream.", "ex_ja": "いいゆめ。"}]}, {"name": "熟語・句どうし ①", "words": [{"en": "a lot of", "pos": "句", "ja": "たくさんの", "ex_en": "A lot of fun.", "ex_ja": "たくさんのたのしみ。"}, {"en": "each other", "pos": "句", "ja": "おたがい", "ex_en": "Help each other.", "ex_ja": "たがいに助け合う。"}, {"en": "for example", "pos": "句", "ja": "たとえば", "ex_en": "For example, apples.", "ex_ja": "たとえばりんご。"}, {"en": "in front of", "pos": "句", "ja": "のまえに", "ex_en": "In front of the door.", "ex_ja": "ドアのまえ。"}, {"en": "look for", "pos": "句", "ja": "さがす", "ex_en": "Look for the key.", "ex_ja": "かぎをさがす。"}, {"en": "look forward to", "pos": "句", "ja": "たのしみにする", "ex_en": "Look forward to it.", "ex_ja": "たのしみ。"}, {"en": "take care of", "pos": "句", "ja": "せわをする", "ex_en": "Take care of the dog.", "ex_ja": "犬のせわ。"}, {"en": "be good at", "pos": "句", "ja": "がじょうずだ", "ex_en": "Good at math.", "ex_ja": "さんすうがとくい。"}, {"en": "be interested in", "pos": "句", "ja": "にきょうみがある", "ex_en": "Interested in space.", "ex_ja": "うちゅうにきょうみ。"}, {"en": "have to", "pos": "句", "ja": "しなくてはいけない", "ex_en": "I have to go.", "ex_ja": "行かなきゃ。"}, {"en": "according to", "pos": "句", "ja": "によると", "ex_en": "According to news.", "ex_ja": "ニュースによると。"}, {"en": "as soon as", "pos": "句", "ja": "するとすぐに", "ex_en": "As soon as I came.", "ex_ja": "つくとすぐに。"}, {"en": "because of", "pos": "句", "ja": "のせいで", "ex_en": "Because of rain.", "ex_ja": "あめのせいで。"}, {"en": "by the way", "pos": "句", "ja": "ところで", "ex_en": "By the way, hi.", "ex_ja": "ところでやあ。"}, {"en": "give up", "pos": "句", "ja": "あきらめる", "ex_en": "Don't give up.", "ex_ja": "あきらめないで。"}, {"en": "grow up", "pos": "句", "ja": "せいちょうする", "ex_en": "Grew up here.", "ex_ja": "ここでそだった。"}, {"en": "put on", "pos": "句", "ja": "身につける", "ex_en": "Put on your hat.", "ex_ja": "ぼうしをかぶる。"}, {"en": "take off", "pos": "句", "ja": "ぬぐ/はなれる", "ex_en": "Take off shoes.", "ex_ja": "くつをぬぐ。"}, {"en": "turn on", "pos": "句", "ja": "スイッチを入れる", "ex_en": "Turn on the light.", "ex_ja": "でんきをつけて。"}, {"en": "turn off", "pos": "句", "ja": "スイッチを切る", "ex_en": "Turn off TV.", "ex_ja": "テレビをけして。"}, {"en": "get up", "pos": "句", "ja": "おきる", "ex_en": "Get up early.", "ex_ja": "はやくおきる。"}, {"en": "go to bed", "pos": "句", "ja": "ねる", "ex_en": "Go to bed.", "ex_ja": "ねる。"}, {"en": "stand up", "pos": "句", "ja": "たつ", "ex_en": "Stand up.", "ex_ja": "たって。"}, {"en": "sit down", "pos": "句", "ja": "すわる", "ex_en": "Sit down.", "ex_ja": "すわって。"}, {"en": "come back", "pos": "句", "ja": "もどる", "ex_en": "Come back soon.", "ex_ja": "すぐにもどる。"}, {"en": "go out", "pos": "句", "ja": "でかける", "ex_en": "Go out today.", "ex_ja": "きょうはでかける。"}, {"en": "hurry up", "pos": "句", "ja": "いそぐ", "ex_en": "Hurry up!", "ex_ja": "いそいで！"}, {"en": "wake up", "pos": "句", "ja": "おきる", "ex_en": "Wake up!", "ex_ja": "おきて！"}, {"en": "look at", "pos": "句", "ja": "見る", "ex_en": "Look at this.", "ex_ja": "これを見て。"}, {"en": "listen to", "pos": "句", "ja": "きく", "ex_en": "Listen to music.", "ex_ja": "おんがくをきく。"}, {"en": "talk to", "pos": "句", "ja": "はなす", "ex_en": "Talk to me.", "ex_ja": "はなしかけて。"}, {"en": "write to", "pos": "句", "ja": "てがみをかく", "ex_en": "Write to me.", "ex_ja": "てがみをかいてね。"}, {"en": "wait for", "pos": "句", "ja": "まつ", "ex_en": "Wait for me.", "ex_ja": "まってて。"}, {"en": "ask for", "pos": "句", "ja": "たのむ", "ex_en": "Ask for help.", "ex_ja": "たすけをたのむ。"}, {"en": "pay for", "pos": "句", "ja": "しはらう", "ex_en": "Pay for lunch.", "ex_ja": "ランチだい。"}, {"en": "look like", "pos": "句", "ja": "ににている", "ex_en": "Looks like rain.", "ex_ja": "あめがふりそう。"}, {"en": "feel like", "pos": "句", "ja": "したいきぶん", "ex_en": "Feel like sleeping.", "ex_ja": "ねむい。"}, {"en": "be afraid of", "pos": "句", "ja": "をこわがる", "ex_en": "Afraid of dogs.", "ex_ja": "犬がこわい。"}, {"en": "be tired of", "pos": "句", "ja": "あきる", "ex_en": "Tired of rain.", "ex_ja": "あめにあきた。"}, {"en": "be famous for", "pos": "句", "ja": "でゆうめい", "ex_en": "Famous for sushi.", "ex_ja": "すしでゆうめい。"}, {"en": "be late for", "pos": "句", "ja": "におくれる", "ex_en": "Late for school.", "ex_ja": "学校におくれる。"}, {"en": "be ready for", "pos": "句", "ja": "のじゅんびOK", "ex_en": "Ready for the test.", "ex_ja": "テストのじゅんびOK。"}, {"en": "be proud of", "pos": "句", "ja": "をほこりにする", "ex_en": "Proud of you.", "ex_ja": "あなたがじまん。"}, {"en": "instead of", "pos": "句", "ja": "のかわりに", "ex_en": "Tea instead of coffee.", "ex_ja": "コーヒーじゃなくおちゃ。"}, {"en": "at first", "pos": "句", "ja": "さいしょは", "ex_en": "Hard at first.", "ex_ja": "さいしょはたいへん。"}]}, {"name": "熟語・句どうし ②", "words": [{"en": "at last", "pos": "句", "ja": "ついに", "ex_en": "At last, done!", "ex_ja": "ついにかんせい。"}, {"en": "at least", "pos": "句", "ja": "すくなくとも", "ex_en": "At least 5.", "ex_ja": "すくなくとも5。"}, {"en": "at most", "pos": "句", "ja": "せいぜい", "ex_en": "At most 10.", "ex_ja": "せいぜい10。"}, {"en": "after all", "pos": "句", "ja": "けっきょく", "ex_en": "After all, fun.", "ex_ja": "けっきょくたのしい。"}, {"en": "all day", "pos": "句", "ja": "いちにちじゅう", "ex_en": "Played all day.", "ex_ja": "一日中あそんだ。"}, {"en": "all the time", "pos": "句", "ja": "ずっと", "ex_en": "Smile all the time.", "ex_ja": "ずっとえがお。"}, {"en": "all over", "pos": "句", "ja": "じゅう", "ex_en": "All over Japan.", "ex_ja": "にほんじゅう。"}, {"en": "right now", "pos": "句", "ja": "いますぐ", "ex_en": "Do it right now.", "ex_ja": "いますぐやって。"}, {"en": "right away", "pos": "句", "ja": "すぐに", "ex_en": "Reply right away.", "ex_ja": "すぐへんじして。"}, {"en": "over there", "pos": "句", "ja": "あそこに", "ex_en": "Over there.", "ex_ja": "あそこ。"}, {"en": "for the first time", "pos": "句", "ja": "はじめて", "ex_en": "For the first time.", "ex_ja": "はじめて。"}, {"en": "a few", "pos": "句", "ja": "すこし", "ex_en": "A few minutes.", "ex_ja": "すこし。"}, {"en": "a little", "pos": "句", "ja": "ちょっと", "ex_en": "A little salt.", "ex_ja": "しおをすこし。"}, {"en": "a kind of", "pos": "句", "ja": "のいっしゅ", "ex_en": "A kind of game.", "ex_ja": "ゲームのいっしゅ。"}, {"en": "a piece of", "pos": "句", "ja": "ひときれの", "ex_en": "A piece of cake.", "ex_ja": "ケーキひときれ。"}, {"en": "a couple of", "pos": "句", "ja": "2〜3の", "ex_en": "A couple of days.", "ex_ja": "2,3日。"}, {"en": "such as", "pos": "句", "ja": "のような", "ex_en": "Sports such as soccer.", "ex_ja": "サッカーなどのスポーツ。"}, {"en": "most of", "pos": "句", "ja": "のたいてい", "ex_en": "Most of the time.", "ex_ja": "たいてい。"}, {"en": "some of", "pos": "句", "ja": "のなかには", "ex_en": "Some of them.", "ex_ja": "それらのなかの一部。"}, {"en": "plenty of", "pos": "句", "ja": "たくさんの", "ex_en": "Plenty of food.", "ex_ja": "たくさんの食料。"}, {"en": "a number of", "pos": "句", "ja": "いくつかの", "ex_en": "A number of cars.", "ex_ja": "なんだいかの車。"}, {"en": "be used to", "pos": "句", "ja": "になれる", "ex_en": "Used to noise.", "ex_ja": "おとになれる。"}, {"en": "used to", "pos": "句", "ja": "かつて〜した", "ex_en": "I used to swim.", "ex_ja": "むかしはおよいだ。"}, {"en": "had better", "pos": "句", "ja": "のほうがよい", "ex_en": "Better stay.", "ex_ja": "とどまったほうがいい。"}, {"en": "would like", "pos": "句", "ja": "がほしい", "ex_en": "Would like tea.", "ex_ja": "おちゃがほしい。"}, {"en": "would like to", "pos": "句", "ja": "したい", "ex_en": "Like to go.", "ex_ja": "行きたい。"}, {"en": "had to", "pos": "句", "ja": "しなければならなかった", "ex_en": "Had to go.", "ex_ja": "行かなくてはいけなかった。"}, {"en": "be able to", "pos": "句", "ja": "できる", "ex_en": "Able to swim.", "ex_ja": "およげる。"}, {"en": "be going to", "pos": "句", "ja": "する予定", "ex_en": "Going to study.", "ex_ja": "べんきょうするよてい。"}, {"en": "would rather", "pos": "句", "ja": "のほうがいい", "ex_en": "Rather stay home.", "ex_ja": "家にいたほうがいい。"}, {"en": "not only", "pos": "句", "ja": "だけでなく", "ex_en": "Not only kids.", "ex_ja": "こどもだけじゃない。"}, {"en": "both of", "pos": "句", "ja": "のどちらも", "ex_en": "Both of us.", "ex_ja": "わたしたちの両方。"}, {"en": "either of", "pos": "句", "ja": "どちらか", "ex_en": "Either of them.", "ex_ja": "どちらか一方。"}, {"en": "neither of", "pos": "句", "ja": "どちらも〜ない", "ex_en": "Neither of them.", "ex_ja": "どちらも〜ない。"}, {"en": "not yet", "pos": "句", "ja": "まだ", "ex_en": "Not yet done.", "ex_ja": "まだ。"}, {"en": "no longer", "pos": "句", "ja": "もはや〜ない", "ex_en": "No longer young.", "ex_ja": "もうわかくない。"}, {"en": "in time", "pos": "句", "ja": "まにあう", "ex_en": "In time for class.", "ex_ja": "じゅぎょうにまにあう。"}, {"en": "on time", "pos": "句", "ja": "じかんどおり", "ex_en": "On time, please.", "ex_ja": "じかんどおりに。"}, {"en": "be supposed to", "pos": "句", "ja": "のはずだ", "ex_en": "Supposed to come.", "ex_ja": "くるはず。"}, {"en": "get along with", "pos": "句", "ja": "なかよくする", "ex_en": "Get along with him.", "ex_ja": "なかよくする。"}, {"en": "look up", "pos": "句", "ja": "しらべる", "ex_en": "Look up the word.", "ex_ja": "ことばをしらべる。"}, {"en": "look out", "pos": "句", "ja": "気をつけて", "ex_en": "Look out!", "ex_ja": "あぶない！"}, {"en": "look after", "pos": "句", "ja": "せわをする", "ex_en": "Look after the cat.", "ex_ja": "ねこのせわ。"}, {"en": "come from", "pos": "句", "ja": "しゅっしんは", "ex_en": "I come from Japan.", "ex_ja": "にほんしゅっしん。"}, {"en": "be made of", "pos": "句", "ja": "でつくられる", "ex_en": "Made of wood.", "ex_ja": "木でできてる。"}]}, {"name": "総ふくしゅう・応用", "words": [{"en": "information", "pos": "名", "ja": "じょうほう", "ex_en": "More info, please.", "ex_ja": "もっとじょうほう。"}, {"en": "experience", "pos": "名", "ja": "けいけん", "ex_en": "New experience.", "ex_ja": "あたらしいけいけん。"}, {"en": "chance", "pos": "名", "ja": "きかい", "ex_en": "Last chance.", "ex_ja": "ラストチャンス。"}, {"en": "problem", "pos": "名", "ja": "もんだい", "ex_en": "Big problem.", "ex_ja": "おおきなもんだい。"}, {"en": "reason", "pos": "名", "ja": "りゆう", "ex_en": "Good reason.", "ex_ja": "ちゃんとしたりゆう。"}, {"en": "trip", "pos": "名", "ja": "りょこう", "ex_en": "Long trip.", "ex_ja": "ながいたび。"}, {"en": "vacation", "pos": "名", "ja": "きゅうか", "ex_en": "Summer vacation.", "ex_ja": "なつやすみ。"}, {"en": "event", "pos": "名", "ja": "イベント", "ex_en": "Big event.", "ex_ja": "おおきなイベント。"}, {"en": "future", "pos": "名", "ja": "みらい", "ex_en": "Bright future.", "ex_ja": "あかるいみらい。"}, {"en": "world", "pos": "名", "ja": "せかい", "ex_en": "Wide world.", "ex_ja": "ひろいせかい。"}, {"en": "environment", "pos": "名", "ja": "かんきょう", "ex_en": "Save environment.", "ex_ja": "かんきょうほご。"}, {"en": "culture", "pos": "名", "ja": "ぶんか", "ex_en": "Japanese culture.", "ex_ja": "にほんぶんか。"}, {"en": "health", "pos": "名", "ja": "けんこう", "ex_en": "Good health.", "ex_ja": "けんこう。"}, {"en": "energy", "pos": "名", "ja": "エネルギー", "ex_en": "Save energy.", "ex_ja": "エネルギーをせつやく。"}, {"en": "recycle", "pos": "動", "ja": "リサイクルする", "ex_en": "Recycle paper.", "ex_ja": "かみをリサイクル。"}, {"en": "reduce", "pos": "動", "ja": "へらす", "ex_en": "Reduce waste.", "ex_ja": "ごみをへらす。"}, {"en": "increase", "pos": "動", "ja": "ふえる", "ex_en": "Numbers increase.", "ex_ja": "ふえる。"}, {"en": "however", "pos": "副", "ja": "しかしながら", "ex_en": "However, it's hard.", "ex_ja": "しかしむずかしい。"}, {"en": "although", "pos": "接", "ja": "だけれども", "ex_en": "Although it rained.", "ex_ja": "あめだったけど。"}, {"en": "instead", "pos": "副", "ja": "かわりに", "ex_en": "Tea, instead.", "ex_ja": "かわりにおちゃ。"}, {"en": "opportunity", "pos": "名", "ja": "チャンス", "ex_en": "Great opportunity.", "ex_ja": "すばらしいチャンス。"}, {"en": "knowledge", "pos": "名", "ja": "ちしき", "ex_en": "Useful knowledge.", "ex_ja": "やくにたつちしき。"}, {"en": "technology", "pos": "名", "ja": "ぎじゅつ", "ex_en": "Modern technology.", "ex_ja": "げんだいぎじゅつ。"}, {"en": "society", "pos": "名", "ja": "しゃかい", "ex_en": "Modern society.", "ex_ja": "げんだいしゃかい。"}, {"en": "government", "pos": "名", "ja": "せいふ", "ex_en": "Strong government.", "ex_ja": "つよいせいふ。"}, {"en": "university", "pos": "名", "ja": "だいがく", "ex_en": "Big university.", "ex_ja": "おおきなだいがく。"}, {"en": "education", "pos": "名", "ja": "きょういく", "ex_en": "Good education.", "ex_ja": "いいきょういく。"}, {"en": "communication", "pos": "名", "ja": "コミュニケーション", "ex_en": "Daily communication.", "ex_ja": "にちじょうコミュニケーション。"}, {"en": "relationship", "pos": "名", "ja": "かんけい", "ex_en": "Good relationship.", "ex_ja": "よいかんけい。"}, {"en": "development", "pos": "名", "ja": "はってん", "ex_en": "Fast development.", "ex_ja": "はやいはってん。"}, {"en": "solution", "pos": "名", "ja": "かいけつ", "ex_en": "Quick solution.", "ex_ja": "はやいかいけつ。"}, {"en": "decision", "pos": "名", "ja": "けってい", "ex_en": "Big decision.", "ex_ja": "おおきなけってい。"}, {"en": "argument", "pos": "名", "ja": "ぎろん", "ex_en": "Heated argument.", "ex_ja": "あつい議論。"}, {"en": "agreement", "pos": "名", "ja": "ごうい", "ex_en": "Reach agreement.", "ex_ja": "ごういにいたる。"}, {"en": "attitude", "pos": "名", "ja": "たいど", "ex_en": "Positive attitude.", "ex_ja": "まえむきなたいど。"}, {"en": "behavior", "pos": "名", "ja": "ふるまい", "ex_en": "Good behavior.", "ex_ja": "いいふるまい。"}, {"en": "ability", "pos": "名", "ja": "のうりょく", "ex_en": "Great ability.", "ex_ja": "すごいのうりょく。"}, {"en": "skill", "pos": "名", "ja": "スキル", "ex_en": "Cooking skill.", "ex_ja": "りょうりのスキル。"}, {"en": "effort", "pos": "名", "ja": "どりょく", "ex_en": "Make effort.", "ex_ja": "どりょくする。"}, {"en": "goal", "pos": "名", "ja": "もくひょう", "ex_en": "Reach the goal.", "ex_ja": "ゴールにつく。"}, {"en": "success", "pos": "名", "ja": "せいこう", "ex_en": "Great success.", "ex_ja": "だいせいこう。"}, {"en": "failure", "pos": "名", "ja": "しっぱい", "ex_en": "Learn from failure.", "ex_ja": "しっぱいからまなぶ。"}, {"en": "courage", "pos": "名", "ja": "ゆうき", "ex_en": "Show courage.", "ex_ja": "ゆうきをだす。"}, {"en": "patience", "pos": "名", "ja": "しんぼう", "ex_en": "Need patience.", "ex_ja": "しんぼうがひつよう。"}, {"en": "attention", "pos": "名", "ja": "ちゅうい", "ex_en": "Pay attention.", "ex_ja": "ちゅういして。"}]}];
 /* ============================================================
-   Eiken Pre-2 vocabulary curriculum (22 days × ~10 words = 220)
-   Each entry: { en, pos, ipa, ja (with furigana ruby), ex_en, ex_ja }
+   App Logic — Eiken Pre-2 Kid Edition (1,000 words / 22 days)
+   CURRICULUM is loaded as window.CURRICULUM = [{name,words:[{en,pos,ja,ex_en,ex_ja}]}]
    ============================================================ */
-const CURRICULUM = [
-  /* Day 1: 基本どうし (1) */
-  [
-    {en:"arrive",pos:"動",ipa:"/əˈraɪv/",ja:"<ruby>到<rt>とう</rt>着<rt>ちゃく</rt></ruby>する",ex_en:"We arrive at school at eight.",ex_ja:"わたしたちは8<ruby>時<rt>じ</rt></ruby>に学校に<ruby>着<rt>つ</rt></ruby>く。"},
-    {en:"agree",pos:"動",ipa:"/əˈɡriː/",ja:"<ruby>同<rt>どう</rt>意<rt>い</rt></ruby>する",ex_en:"I agree with you.",ex_ja:"<ruby>君<rt>きみ</rt></ruby>に<ruby>賛<rt>さん</rt>成<rt>せい</rt></ruby>だよ。"},
-    {en:"answer",pos:"動/名",ipa:"/ˈænsər/",ja:"<ruby>答<rt>こた</rt></ruby>える / <ruby>答<rt>こた</rt></ruby>え",ex_en:"Please answer my question.",ex_ja:"わたしの<ruby>質<rt>しつ</rt>問<rt>もん</rt></ruby>に<ruby>答<rt>こた</rt></ruby>えてね。"},
-    {en:"believe",pos:"動",ipa:"/bɪˈliːv/",ja:"<ruby>信<rt>しん</rt></ruby>じる",ex_en:"I believe you.",ex_ja:"あなたを<ruby>信<rt>しん</rt></ruby>じる。"},
-    {en:"borrow",pos:"動",ipa:"/ˈbɒroʊ/",ja:"<ruby>借<rt>か</rt></ruby>りる",ex_en:"Can I borrow your pen?",ex_ja:"ペンを<ruby>借<rt>か</rt></ruby>りてもいい？"},
-    {en:"bring",pos:"動",ipa:"/brɪŋ/",ja:"<ruby>持<rt>も</rt></ruby>ってくる",ex_en:"Bring your lunch tomorrow.",ex_ja:"あした おべんとうを<ruby>持<rt>も</rt></ruby>ってきて。"},
-    {en:"build",pos:"動",ipa:"/bɪld/",ja:"<ruby>建<rt>た</rt></ruby>てる",ex_en:"They build houses.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>らは<ruby>家<rt>いえ</rt></ruby>を<ruby>建<rt>た</rt></ruby>てる。"},
-    {en:"carry",pos:"動",ipa:"/ˈkæri/",ja:"<ruby>運<rt>はこ</rt></ruby>ぶ",ex_en:"I'll carry your bag.",ex_ja:"カバンを<ruby>運<rt>はこ</rt></ruby>ぶよ。"},
-    {en:"catch",pos:"動",ipa:"/kætʃ/",ja:"つかまえる",ex_en:"Catch the ball!",ex_ja:"ボールをキャッチして！"},
-    {en:"change",pos:"動/名",ipa:"/tʃeɪndʒ/",ja:"かえる / へんか",ex_en:"Change your shoes here.",ex_ja:"ここでくつをはきかえてね。"},
-  ],
-  /* Day 2: 基本どうし (2) */
-  [
-    {en:"choose",pos:"動",ipa:"/tʃuːz/",ja:"<ruby>選<rt>えら</rt></ruby>ぶ",ex_en:"Choose your favorite color.",ex_ja:"すきな<ruby>色<rt>いろ</rt></ruby>を<ruby>選<rt>えら</rt></ruby>んでね。"},
-    {en:"close",pos:"動/形",ipa:"/kloʊz/",ja:"<ruby>閉<rt>と</rt></ruby>じる / <ruby>近<rt>ちか</rt></ruby>い",ex_en:"Close the door, please.",ex_ja:"ドアをしめてください。"},
-    {en:"continue",pos:"動",ipa:"/kənˈtɪnjuː/",ja:"<ruby>続<rt>つづ</rt></ruby>ける",ex_en:"Let's continue the game.",ex_ja:"ゲームを<ruby>続<rt>つづ</rt></ruby>けよう。"},
-    {en:"cost",pos:"動/名",ipa:"/kɒst/",ja:"（おかねが）かかる / ねだん",ex_en:"How much does it cost?",ex_ja:"いくらしますか？"},
-    {en:"decide",pos:"動",ipa:"/dɪˈsaɪd/",ja:"<ruby>決<rt>き</rt></ruby>める",ex_en:"I decided to study English.",ex_ja:"えいごをべんきょうすると<ruby>決<rt>き</rt></ruby>めた。"},
-    {en:"drop",pos:"動",ipa:"/drɒp/",ja:"おとす",ex_en:"Don't drop the cup.",ex_ja:"コップをおとさないで。"},
-    {en:"enjoy",pos:"動",ipa:"/ɪnˈdʒɔɪ/",ja:"たのしむ",ex_en:"I enjoy soccer.",ex_ja:"サッカーをたのしむ。"},
-    {en:"explain",pos:"動",ipa:"/ɪkˈspleɪn/",ja:"せつめいする",ex_en:"Please explain this word.",ex_ja:"このたんごを せつめいしてね。"},
-    {en:"finish",pos:"動",ipa:"/ˈfɪnɪʃ/",ja:"おわる",ex_en:"Finish your homework first.",ex_ja:"さきに しゅくだいをおえよう。"},
-    {en:"follow",pos:"動",ipa:"/ˈfɒloʊ/",ja:"ついていく",ex_en:"Follow me, please.",ex_ja:"ついてきてね。"},
-  ],
-  /* Day 3: 基本どうし (3) */
-  [
-    {en:"forget",pos:"動",ipa:"/fərˈɡet/",ja:"わすれる",ex_en:"Don't forget your key.",ex_ja:"かぎをわすれないで。"},
-    {en:"happen",pos:"動",ipa:"/ˈhæpən/",ja:"おこる",ex_en:"What happened?",ex_ja:"どうしたの？"},
-    {en:"hold",pos:"動",ipa:"/hoʊld/",ja:"もつ・かかえる",ex_en:"Hold my hand.",ex_ja:"わたしの<ruby>手<rt>て</rt></ruby>をにぎって。"},
-    {en:"hurt",pos:"動",ipa:"/hɜːrt/",ja:"いたい / きずつける",ex_en:"My leg hurts.",ex_ja:"<ruby>足<rt>あし</rt></ruby>がいたい。"},
-    {en:"invite",pos:"動",ipa:"/ɪnˈvaɪt/",ja:"しょうたいする",ex_en:"I'll invite you to my party.",ex_ja:"パーティーにしょうたいするね。"},
-    {en:"join",pos:"動",ipa:"/dʒɔɪn/",ja:"さんかする",ex_en:"Join our team!",ex_ja:"チームにはいろう！"},
-    {en:"keep",pos:"動",ipa:"/kiːp/",ja:"たもつ",ex_en:"Keep the room clean.",ex_ja:"へやをきれいにたもとう。"},
-    {en:"laugh",pos:"動",ipa:"/læf/",ja:"わらう",ex_en:"We all laughed.",ex_ja:"みんなわらった。"},
-    {en:"learn",pos:"動",ipa:"/lɜːrn/",ja:"まなぶ",ex_en:"I learn English every day.",ex_ja:"まいにち えいごを<ruby>学<rt>まな</rt></ruby>ぶ。"},
-    {en:"leave",pos:"動",ipa:"/liːv/",ja:"でる・はなれる",ex_en:"I leave home at seven.",ex_ja:"7<ruby>時<rt>じ</rt></ruby>に<ruby>家<rt>いえ</rt></ruby>を出る。"},
-  ],
-  /* Day 4: 基本どうし (4) */
-  [
-    {en:"lend",pos:"動",ipa:"/lend/",ja:"かす",ex_en:"Lend me a book, please.",ex_ja:"<ruby>本<rt>ほん</rt></ruby>をかしてね。"},
-    {en:"lose",pos:"動",ipa:"/luːz/",ja:"なくす・まける",ex_en:"Don't lose your ticket.",ex_ja:"きっぷをなくさないで。"},
-    {en:"miss",pos:"動",ipa:"/mɪs/",ja:"のがす・こいしい",ex_en:"I miss my friend.",ex_ja:"ともだちが こいしい。"},
-    {en:"move",pos:"動",ipa:"/muːv/",ja:"うごく・ひっこす",ex_en:"We will move next month.",ex_ja:"らいげつ ひっこすよ。"},
-    {en:"notice",pos:"動",ipa:"/ˈnoʊtɪs/",ja:"きづく",ex_en:"I didn't notice you.",ex_ja:"あなたに きづかなかった。"},
-    {en:"offer",pos:"動",ipa:"/ˈɒfər/",ja:"もうしでる",ex_en:"He offered me some tea.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はおちゃをすすめてくれた。"},
-    {en:"order",pos:"動/名",ipa:"/ˈɔːrdər/",ja:"ちゅうもんする",ex_en:"I'll order pizza.",ex_ja:"ピザをちゅうもんするね。"},
-    {en:"pay",pos:"動",ipa:"/peɪ/",ja:"はらう",ex_en:"I'll pay later.",ex_ja:"あとで はらうね。"},
-    {en:"plan",pos:"動/名",ipa:"/plæn/",ja:"けいかく（する）",ex_en:"What's your plan?",ex_ja:"けいかくは<ruby>何<rt>なに</rt></ruby>？"},
-    {en:"prepare",pos:"動",ipa:"/prɪˈpeər/",ja:"じゅんびする",ex_en:"Prepare for the test.",ex_ja:"テストのじゅんびをしよう。"},
-  ],
-  /* Day 5: 基本どうし (5) */
-  [
-    {en:"receive",pos:"動",ipa:"/rɪˈsiːv/",ja:"うけとる",ex_en:"I received a gift.",ex_ja:"プレゼントをうけとった。"},
-    {en:"remember",pos:"動",ipa:"/rɪˈmembər/",ja:"おぼえている",ex_en:"Remember my name.",ex_ja:"<ruby>名<rt>な</rt></ruby>まえをおぼえてね。"},
-    {en:"return",pos:"動",ipa:"/rɪˈtɜːrn/",ja:"かえる・かえす",ex_en:"Return the book to me.",ex_ja:"<ruby>本<rt>ほん</rt></ruby>を かえしてね。"},
-    {en:"save",pos:"動",ipa:"/seɪv/",ja:"たすける・ためる",ex_en:"Save your money.",ex_ja:"おかねを ためよう。"},
-    {en:"share",pos:"動",ipa:"/ʃeər/",ja:"わけあう",ex_en:"Share the cake.",ex_ja:"ケーキをわけあおう。"},
-    {en:"send",pos:"動",ipa:"/send/",ja:"おくる",ex_en:"I'll send you a message.",ex_ja:"メッセージを おくるね。"},
-    {en:"solve",pos:"動",ipa:"/sɒlv/",ja:"とく",ex_en:"Solve this problem.",ex_ja:"このもんだいをといて。"},
-    {en:"spend",pos:"動",ipa:"/spend/",ja:"つかう（おかね・じかん）",ex_en:"I spend an hour reading.",ex_ja:"<ruby>本<rt>ほん</rt></ruby>を1<ruby>時<rt>じ</rt>間<rt>かん</rt></ruby>よむ。"},
-    {en:"suggest",pos:"動",ipa:"/səˈdʒest/",ja:"ていあんする",ex_en:"I suggest we go now.",ex_ja:"いまいくのがいいとおもう。"},
-    {en:"travel",pos:"動",ipa:"/ˈtrævəl/",ja:"りょこうする",ex_en:"I travel by train.",ex_ja:"でんしゃで<ruby>旅<rt>たび</rt></ruby>する。"},
-  ],
-  /* Day 6: 基本どうし (6) */
-  [
-    {en:"try",pos:"動",ipa:"/traɪ/",ja:"ためす",ex_en:"Try this cake.",ex_ja:"このケーキをためしてみて。"},
-    {en:"wait",pos:"動",ipa:"/weɪt/",ja:"まつ",ex_en:"Wait here.",ex_ja:"ここでまってて。"},
-    {en:"wear",pos:"動",ipa:"/weər/",ja:"きる・みにつける",ex_en:"Wear a coat.",ex_ja:"コートをきよう。"},
-    {en:"check",pos:"動",ipa:"/tʃek/",ja:"たしかめる",ex_en:"Check your homework.",ex_ja:"しゅくだいをたしかめて。"},
-    {en:"collect",pos:"動",ipa:"/kəˈlekt/",ja:"あつめる",ex_en:"I collect stamps.",ex_ja:"きってを あつめている。"},
-    {en:"draw",pos:"動",ipa:"/drɔː/",ja:"えをかく",ex_en:"Draw a cat.",ex_ja:"ねこをかいてね。"},
-    {en:"forget",pos:"動",ipa:"/fərˈɡet/",ja:"わすれる",ex_en:"I forgot my umbrella.",ex_ja:"かさをわすれた。"},
-    {en:"grow",pos:"動",ipa:"/ɡroʊ/",ja:"そだつ",ex_en:"Plants grow in spring.",ex_ja:"はなははるにそだつ。"},
-    {en:"introduce",pos:"動",ipa:"/ˌɪntrəˈdjuːs/",ja:"しょうかいする",ex_en:"I'll introduce my friend.",ex_ja:"ともだちをしょうかいするね。"},
-    {en:"protect",pos:"動",ipa:"/prəˈtekt/",ja:"まもる",ex_en:"We protect the earth.",ex_ja:"<ruby>地<rt>ち</rt>球<rt>きゅう</rt></ruby>をまもる。"},
-  ],
-  /* Day 7: けいようし(1) */
-  [
-    {en:"afraid",pos:"形",ipa:"/əˈfreɪd/",ja:"こわい",ex_en:"I'm afraid of dogs.",ex_ja:"いぬが こわい。"},
-    {en:"angry",pos:"形",ipa:"/ˈæŋɡri/",ja:"おこっている",ex_en:"Mom is angry.",ex_ja:"ママはおこってる。"},
-    {en:"beautiful",pos:"形",ipa:"/ˈbjuːtɪfʊl/",ja:"うつくしい",ex_en:"What a beautiful flower!",ex_ja:"なんて うつくしい<ruby>花<rt>はな</rt></ruby>！"},
-    {en:"busy",pos:"形",ipa:"/ˈbɪzi/",ja:"いそがしい",ex_en:"I'm busy today.",ex_ja:"きょうはいそがしい。"},
-    {en:"careful",pos:"形",ipa:"/ˈkeərfʊl/",ja:"ちゅういぶかい",ex_en:"Be careful!",ex_ja:"きをつけて！"},
-    {en:"cheap",pos:"形",ipa:"/tʃiːp/",ja:"やすい",ex_en:"This bag is cheap.",ex_ja:"このカバンはやすい。"},
-    {en:"clean",pos:"形/動",ipa:"/kliːn/",ja:"きれいな",ex_en:"Keep your room clean.",ex_ja:"へやをきれいにたもとう。"},
-    {en:"dangerous",pos:"形",ipa:"/ˈdeɪndʒərəs/",ja:"きけんな",ex_en:"It's dangerous here.",ex_ja:"ここは あぶないよ。"},
-    {en:"delicious",pos:"形",ipa:"/dɪˈlɪʃəs/",ja:"とてもおいしい",ex_en:"This cake is delicious.",ex_ja:"このケーキはおいしい。"},
-    {en:"different",pos:"形",ipa:"/ˈdɪfərənt/",ja:"ちがう",ex_en:"They are different.",ex_ja:"それらはちがう。"},
-  ],
-  /* Day 8: けいようし(2) */
-  [
-    {en:"difficult",pos:"形",ipa:"/ˈdɪfɪkəlt/",ja:"むずかしい",ex_en:"This is difficult.",ex_ja:"これはむずかしい。"},
-    {en:"easy",pos:"形",ipa:"/ˈiːzi/",ja:"かんたんな",ex_en:"That's easy!",ex_ja:"それはかんたん！"},
-    {en:"expensive",pos:"形",ipa:"/ɪkˈspensɪv/",ja:"たかい（ねだん）",ex_en:"This watch is expensive.",ex_ja:"このとけいはたかい。"},
-    {en:"famous",pos:"形",ipa:"/ˈfeɪməs/",ja:"ゆうめいな",ex_en:"He is a famous singer.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はゆうめいな<ruby>歌<rt>か</rt>手<rt>しゅ</rt></ruby>。"},
-    {en:"free",pos:"形",ipa:"/friː/",ja:"ひまな・ただの",ex_en:"Are you free now?",ex_ja:"いま ひま？"},
-    {en:"fresh",pos:"形",ipa:"/freʃ/",ja:"しんせんな",ex_en:"Fresh fruit is sweet.",ex_ja:"しんせんなくだものはあまい。"},
-    {en:"friendly",pos:"形",ipa:"/ˈfrendli/",ja:"したしい",ex_en:"He is friendly.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>は やさしい。"},
-    {en:"happy",pos:"形",ipa:"/ˈhæpi/",ja:"しあわせな",ex_en:"I'm so happy.",ex_ja:"とてもうれしい。"},
-    {en:"healthy",pos:"形",ipa:"/ˈhelθi/",ja:"けんこうな",ex_en:"Vegetables are healthy.",ex_ja:"<ruby>野<rt>や</rt>菜<rt>さい</rt></ruby>はけんこうにいい。"},
-    {en:"important",pos:"形",ipa:"/ɪmˈpɔːrtnt/",ja:"だいじな",ex_en:"This is important.",ex_ja:"これはだいじだよ。"},
-  ],
-  /* Day 9: けいようし(3) */
-  [
-    {en:"interesting",pos:"形",ipa:"/ˈɪntrəstɪŋ/",ja:"おもしろい",ex_en:"This book is interesting.",ex_ja:"この<ruby>本<rt>ほん</rt></ruby>はおもしろい。"},
-    {en:"kind",pos:"形",ipa:"/kaɪnd/",ja:"しんせつな",ex_en:"She is kind.",ex_ja:"<ruby>彼<rt>かの</rt>女<rt>じょ</rt></ruby>はやさしい。"},
-    {en:"large",pos:"形",ipa:"/lɑːrdʒ/",ja:"おおきい",ex_en:"A large tree.",ex_ja:"おおきな木。"},
-    {en:"late",pos:"形",ipa:"/leɪt/",ja:"おそい",ex_en:"Don't be late.",ex_ja:"おくれないで。"},
-    {en:"popular",pos:"形",ipa:"/ˈpɒpjələr/",ja:"にんきがある",ex_en:"This game is popular.",ex_ja:"このゲームはにんきがある。"},
-    {en:"quiet",pos:"形",ipa:"/ˈkwaɪət/",ja:"しずかな",ex_en:"Be quiet, please.",ex_ja:"しずかにしてね。"},
-    {en:"safe",pos:"形",ipa:"/seɪf/",ja:"あんぜんな",ex_en:"This park is safe.",ex_ja:"このこうえんはあんぜん。"},
-    {en:"sick",pos:"形",ipa:"/sɪk/",ja:"びょうきの",ex_en:"I feel sick.",ex_ja:"ぐあいがわるい。"},
-    {en:"special",pos:"形",ipa:"/ˈspeʃəl/",ja:"とくべつな",ex_en:"Today is special.",ex_ja:"きょうはとくべつ。"},
-    {en:"strong",pos:"形",ipa:"/strɒŋ/",ja:"つよい",ex_en:"He is strong.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はつよい。"},
-  ],
-  /* Day 10: けいようし(4) ＋ ふくし */
-  [
-    {en:"useful",pos:"形",ipa:"/ˈjuːsfəl/",ja:"やくにたつ",ex_en:"This app is useful.",ex_ja:"このアプリはべんり。"},
-    {en:"wonderful",pos:"形",ipa:"/ˈwʌndərfʊl/",ja:"すばらしい",ex_en:"What a wonderful day!",ex_ja:"なんてすばらしい日！"},
-    {en:"young",pos:"形",ipa:"/jʌŋ/",ja:"わかい",ex_en:"He is young.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はわかい。"},
-    {en:"always",pos:"副",ipa:"/ˈɔːlweɪz/",ja:"いつも",ex_en:"I always read at night.",ex_ja:"いつも<ruby>夜<rt>よる</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>をよむ。"},
-    {en:"sometimes",pos:"副",ipa:"/ˈsʌmtaɪmz/",ja:"ときどき",ex_en:"Sometimes I run.",ex_ja:"ときどき はしる。"},
-    {en:"usually",pos:"副",ipa:"/ˈjuːʒuəli/",ja:"たいてい",ex_en:"I usually wake up at 7.",ex_ja:"たいてい7<ruby>時<rt>じ</rt></ruby>におきる。"},
-    {en:"early",pos:"副/形",ipa:"/ˈɜːrli/",ja:"はやく",ex_en:"Get up early.",ex_ja:"はやくおきよう。"},
-    {en:"finally",pos:"副",ipa:"/ˈfaɪnəli/",ja:"ついに",ex_en:"Finally, I won!",ex_ja:"ついにかった！"},
-    {en:"maybe",pos:"副",ipa:"/ˈmeɪbi/",ja:"たぶん",ex_en:"Maybe it'll rain.",ex_ja:"たぶん あめがふる。"},
-    {en:"already",pos:"副",ipa:"/ɔːlˈredi/",ja:"もう・すでに",ex_en:"I already finished.",ex_ja:"もうおわった。"},
-  ],
-  /* Day 11: 名詞: 学校・生活 */
-  [
-    {en:"classroom",pos:"名",ipa:"/ˈklæsruːm/",ja:"きょうしつ",ex_en:"Our classroom is big.",ex_ja:"きょうしつはひろい。"},
-    {en:"homework",pos:"名",ipa:"/ˈhoʊmwɜːrk/",ja:"しゅくだい",ex_en:"Do your homework.",ex_ja:"しゅくだいをしよう。"},
-    {en:"science",pos:"名",ipa:"/ˈsaɪəns/",ja:"<ruby>理<rt>り</rt>科<rt>か</rt></ruby>",ex_en:"I like science.",ex_ja:"りかがすき。"},
-    {en:"history",pos:"名",ipa:"/ˈhɪstri/",ja:"れきし",ex_en:"History is fun.",ex_ja:"れきしはたのしい。"},
-    {en:"language",pos:"名",ipa:"/ˈlæŋɡwɪdʒ/",ja:"ことば",ex_en:"English is a language.",ex_ja:"えいごはことばだ。"},
-    {en:"library",pos:"名",ipa:"/ˈlaɪbreri/",ja:"としょかん",ex_en:"Let's go to the library.",ex_ja:"としょかんへいこう。"},
-    {en:"dictionary",pos:"名",ipa:"/ˈdɪkʃəneri/",ja:"じしょ",ex_en:"Use a dictionary.",ex_ja:"じしょをつかおう。"},
-    {en:"teacher",pos:"名",ipa:"/ˈtiːtʃər/",ja:"せんせい",ex_en:"Our teacher is kind.",ex_ja:"せんせいはやさしい。"},
-    {en:"student",pos:"名",ipa:"/ˈstuːdənt/",ja:"せいと",ex_en:"I'm a student.",ex_ja:"わたしは<ruby>生<rt>せい</rt>徒<rt>と</rt></ruby>。"},
-    {en:"school",pos:"名",ipa:"/skuːl/",ja:"がっこう",ex_en:"I go to school.",ex_ja:"がっこうへいく。"},
-  ],
-  /* Day 12: 名詞: たべもの */
-  [
-    {en:"breakfast",pos:"名",ipa:"/ˈbrekfəst/",ja:"あさごはん",ex_en:"I eat breakfast at 7.",ex_ja:"7<ruby>時<rt>じ</rt></ruby>にあさごはん。"},
-    {en:"lunch",pos:"名",ipa:"/lʌntʃ/",ja:"ひるごはん",ex_en:"Lunch is ready.",ex_ja:"ひるごはん できたよ。"},
-    {en:"dinner",pos:"名",ipa:"/ˈdɪnər/",ja:"ばんごはん",ex_en:"Dinner is at 7.",ex_ja:"ばんごはんは7<ruby>時<rt>じ</rt></ruby>。"},
-    {en:"vegetable",pos:"名",ipa:"/ˈvedʒtəbl/",ja:"やさい",ex_en:"Eat vegetables.",ex_ja:"やさいをたべよう。"},
-    {en:"fruit",pos:"名",ipa:"/fruːt/",ja:"くだもの",ex_en:"I love fruit.",ex_ja:"くだものだいすき。"},
-    {en:"meat",pos:"名",ipa:"/miːt/",ja:"にく",ex_en:"He doesn't eat meat.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はにくをたべない。"},
-    {en:"bread",pos:"名",ipa:"/bred/",ja:"パン",ex_en:"Bread is fresh.",ex_ja:"パンはやきたて。"},
-    {en:"juice",pos:"名",ipa:"/dʒuːs/",ja:"ジュース",ex_en:"Apple juice, please.",ex_ja:"りんごジュースください。"},
-    {en:"snack",pos:"名",ipa:"/snæk/",ja:"おやつ",ex_en:"Have a snack.",ex_ja:"おやつをたべよう。"},
-    {en:"restaurant",pos:"名",ipa:"/ˈrestrɒnt/",ja:"レストラン",ex_en:"Let's eat at a restaurant.",ex_ja:"レストランでたべよう。"},
-  ],
-  /* Day 13: 名詞: しごと・人 */
-  [
-    {en:"doctor",pos:"名",ipa:"/ˈdɒktər/",ja:"いしゃ",ex_en:"My mom is a doctor.",ex_ja:"ママはいしゃだ。"},
-    {en:"nurse",pos:"名",ipa:"/nɜːrs/",ja:"かんごし",ex_en:"The nurse is kind.",ex_ja:"かんごしさんはやさしい。"},
-    {en:"farmer",pos:"名",ipa:"/ˈfɑːrmər/",ja:"のうか",ex_en:"He is a farmer.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はのうかだ。"},
-    {en:"police",pos:"名",ipa:"/pəˈliːs/",ja:"けいさつ",ex_en:"Call the police!",ex_ja:"けいさつをよんで！"},
-    {en:"singer",pos:"名",ipa:"/ˈsɪŋər/",ja:"かしゅ",ex_en:"She is a great singer.",ex_ja:"<ruby>彼<rt>かの</rt>女<rt>じょ</rt></ruby>はすばらしいかしゅ。"},
-    {en:"writer",pos:"名",ipa:"/ˈraɪtər/",ja:"さっか",ex_en:"He is a writer.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はさっかだ。"},
-    {en:"artist",pos:"名",ipa:"/ˈɑːrtɪst/",ja:"げいじゅつか",ex_en:"She is an artist.",ex_ja:"<ruby>彼<rt>かの</rt>女<rt>じょ</rt></ruby>はげいじゅつか。"},
-    {en:"neighbor",pos:"名",ipa:"/ˈneɪbər/",ja:"きんじょのひと",ex_en:"My neighbor is nice.",ex_ja:"おとなりさんはやさしい。"},
-    {en:"family",pos:"名",ipa:"/ˈfæməli/",ja:"かぞく",ex_en:"My family is big.",ex_ja:"わが家はにぎやか。"},
-    {en:"friend",pos:"名",ipa:"/frend/",ja:"ともだち",ex_en:"He is my friend.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はともだち。"},
-  ],
-  /* Day 14: 名詞: しぜん */
-  [
-    {en:"mountain",pos:"名",ipa:"/ˈmaʊntn/",ja:"やま",ex_en:"That mountain is high.",ex_ja:"あの山はたかい。"},
-    {en:"river",pos:"名",ipa:"/ˈrɪvər/",ja:"かわ",ex_en:"The river is long.",ex_ja:"かわはながい。"},
-    {en:"ocean",pos:"名",ipa:"/ˈoʊʃən/",ja:"うみ",ex_en:"The ocean is blue.",ex_ja:"うみはあおい。"},
-    {en:"forest",pos:"名",ipa:"/ˈfɒrɪst/",ja:"もり",ex_en:"A bear lives in the forest.",ex_ja:"くまはもりにすむ。"},
-    {en:"island",pos:"名",ipa:"/ˈaɪlənd/",ja:"しま",ex_en:"This is a small island.",ex_ja:"これは小さなしま。"},
-    {en:"earth",pos:"名",ipa:"/ɜːrθ/",ja:"ちきゅう",ex_en:"We live on Earth.",ex_ja:"わたしたちはちきゅうにすむ。"},
-    {en:"weather",pos:"名",ipa:"/ˈweðər/",ja:"てんき",ex_en:"How's the weather?",ex_ja:"てんきはどう？"},
-    {en:"snow",pos:"名/動",ipa:"/snoʊ/",ja:"ゆき / ゆきがふる",ex_en:"It's snowing.",ex_ja:"ゆきがふっている。"},
-    {en:"wind",pos:"名",ipa:"/wɪnd/",ja:"かぜ",ex_en:"The wind is strong.",ex_ja:"かぜがつよい。"},
-    {en:"sky",pos:"名",ipa:"/skaɪ/",ja:"そら",ex_en:"The sky is blue.",ex_ja:"そらはあおい。"},
-  ],
-  /* Day 15: 名詞: どうぶつ・もの */
-  [
-    {en:"animal",pos:"名",ipa:"/ˈænɪməl/",ja:"どうぶつ",ex_en:"I love animals.",ex_ja:"どうぶつだいすき。"},
-    {en:"butterfly",pos:"名",ipa:"/ˈbʌtərflaɪ/",ja:"ちょうちょ",ex_en:"A butterfly is flying.",ex_ja:"ちょうちょがとぶ。"},
-    {en:"insect",pos:"名",ipa:"/ˈɪnsekt/",ja:"こんちゅう",ex_en:"That's a small insect.",ex_ja:"小さなこんちゅうだ。"},
-    {en:"plant",pos:"名/動",ipa:"/plænt/",ja:"しょくぶつ / うえる",ex_en:"Plant a tree.",ex_ja:"<ruby>木<rt>き</rt></ruby>をうえよう。"},
-    {en:"flower",pos:"名",ipa:"/ˈflaʊər/",ja:"はな",ex_en:"A red flower.",ex_ja:"あかいはな。"},
-    {en:"machine",pos:"名",ipa:"/məˈʃiːn/",ja:"きかい",ex_en:"A new machine.",ex_ja:"あたらしいきかい。"},
-    {en:"computer",pos:"名",ipa:"/kəmˈpjuːtər/",ja:"パソコン",ex_en:"Use the computer.",ex_ja:"パソコンをつかう。"},
-    {en:"camera",pos:"名",ipa:"/ˈkæmərə/",ja:"カメラ",ex_en:"My camera is new.",ex_ja:"わたしのカメラはあたらしい。"},
-    {en:"newspaper",pos:"名",ipa:"/ˈnuːzpeɪpər/",ja:"しんぶん",ex_en:"Read the newspaper.",ex_ja:"しんぶんをよむ。"},
-    {en:"present",pos:"名",ipa:"/ˈpreznt/",ja:"プレゼント",ex_en:"I got a present.",ex_ja:"プレゼントをもらった。"},
-  ],
-  /* Day 16: 名詞: まち・たてもの */
-  [
-    {en:"airport",pos:"名",ipa:"/ˈeərpɔːrt/",ja:"くうこう",ex_en:"Go to the airport.",ex_ja:"くうこうへ行く。"},
-    {en:"station",pos:"名",ipa:"/ˈsteɪʃn/",ja:"えき",ex_en:"Meet at the station.",ex_ja:"えきであおう。"},
-    {en:"hospital",pos:"名",ipa:"/ˈhɒspɪtl/",ja:"びょういん",ex_en:"He is in the hospital.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はびょういんにいる。"},
-    {en:"hotel",pos:"名",ipa:"/hoʊˈtel/",ja:"ホテル",ex_en:"Stay at the hotel.",ex_ja:"ホテルにとまる。"},
-    {en:"museum",pos:"名",ipa:"/mjuːˈziːəm/",ja:"はくぶつかん",ex_en:"Visit the museum.",ex_ja:"はくぶつかんをみよう。"},
-    {en:"bank",pos:"名",ipa:"/bæŋk/",ja:"ぎんこう",ex_en:"Go to the bank.",ex_ja:"ぎんこうにいく。"},
-    {en:"factory",pos:"名",ipa:"/ˈfæktri/",ja:"こうじょう",ex_en:"He works at a factory.",ex_ja:"<ruby>彼<rt>かれ</rt></ruby>はこうじょうではたらく。"},
-    {en:"office",pos:"名",ipa:"/ˈɒfɪs/",ja:"じむしょ",ex_en:"My dad's office is big.",ex_ja:"パパのじむしょはおおきい。"},
-    {en:"city",pos:"名",ipa:"/ˈsɪti/",ja:"とし",ex_en:"Tokyo is a big city.",ex_ja:"とうきょうは大きなとし。"},
-    {en:"country",pos:"名",ipa:"/ˈkʌntri/",ja:"くに",ex_en:"Japan is my country.",ex_ja:"にほんはわたしのくに。"},
-  ],
-  /* Day 17: 名詞: いえ・もの */
-  [
-    {en:"kitchen",pos:"名",ipa:"/ˈkɪtʃɪn/",ja:"だいどころ",ex_en:"Mom is in the kitchen.",ex_ja:"ママはだいどころにいる。"},
-    {en:"bathroom",pos:"名",ipa:"/ˈbæθruːm/",ja:"おふろば",ex_en:"Where's the bathroom?",ex_ja:"おふろばはどこ？"},
-    {en:"garden",pos:"名",ipa:"/ˈɡɑːrdn/",ja:"にわ",ex_en:"The garden is beautiful.",ex_ja:"にわはきれい。"},
-    {en:"window",pos:"名",ipa:"/ˈwɪndoʊ/",ja:"まど",ex_en:"Open the window.",ex_ja:"まどをあけて。"},
-    {en:"floor",pos:"名",ipa:"/flɔːr/",ja:"ゆか・かい",ex_en:"On the second floor.",ex_ja:"2かいです。"},
-    {en:"chair",pos:"名",ipa:"/tʃeər/",ja:"いす",ex_en:"Sit on the chair.",ex_ja:"いすにすわって。"},
-    {en:"clock",pos:"名",ipa:"/klɒk/",ja:"とけい",ex_en:"The clock is new.",ex_ja:"そのとけいはあたらしい。"},
-    {en:"key",pos:"名",ipa:"/kiː/",ja:"かぎ",ex_en:"Where's my key?",ex_ja:"かぎはどこ？"},
-    {en:"toy",pos:"名",ipa:"/tɔɪ/",ja:"おもちゃ",ex_en:"I love this toy.",ex_ja:"このおもちゃだいすき。"},
-    {en:"map",pos:"名",ipa:"/mæp/",ja:"ちず",ex_en:"Show me the map.",ex_ja:"ちずをみせて。"},
-  ],
-  /* Day 18: ぶんけい・じゅくご(1) */
-  [
-    {en:"a lot of",pos:"句",ipa:"/ə lɒt əv/",ja:"たくさんの",ex_en:"A lot of people came.",ex_ja:"たくさんの<ruby>人<rt>ひと</rt></ruby>がきた。"},
-    {en:"each other",pos:"句",ipa:"/iːtʃ ˈʌðər/",ja:"おたがい",ex_en:"We help each other.",ex_ja:"おたがい たすけあう。"},
-    {en:"for example",pos:"句",ipa:"/fər ɪɡˈzæmpl/",ja:"たとえば",ex_en:"For example, apples.",ex_ja:"たとえば りんご。"},
-    {en:"in front of",pos:"句",ipa:"/ɪn frʌnt əv/",ja:"〜のまえに",ex_en:"In front of the door.",ex_ja:"ドアのまえ。"},
-    {en:"look for",pos:"句",ipa:"/lʊk fɔːr/",ja:"さがす",ex_en:"I'm looking for my hat.",ex_ja:"ぼうしをさがしてる。"},
-    {en:"look forward to",pos:"句",ipa:"/lʊk ˈfɔːrwərd tə/",ja:"たのしみにする",ex_en:"I look forward to it.",ex_ja:"たのしみにしてる。"},
-    {en:"take care of",pos:"句",ipa:"/teɪk keər əv/",ja:"せわをする",ex_en:"Take care of the cat.",ex_ja:"ねこのせわをして。"},
-    {en:"be good at",pos:"句",ipa:"/bi ɡʊd æt/",ja:"〜がじょうずだ",ex_en:"I'm good at math.",ex_ja:"さんすうがとくい。"},
-    {en:"be interested in",pos:"句",ipa:"/bi ˈɪntrəstɪd ɪn/",ja:"〜にきょうみがある",ex_en:"I'm interested in space.",ex_ja:"うちゅうにきょうみがある。"},
-    {en:"have to",pos:"句",ipa:"/hæv tə/",ja:"〜しなければ",ex_en:"I have to go now.",ex_ja:"もういかなきゃ。"},
-  ],
-  /* Day 19: ぶんけい・じゅくご(2) */
-  [
-    {en:"according to",pos:"句",ipa:"/əˈkɔːrdɪŋ tə/",ja:"〜によると",ex_en:"According to the news…",ex_ja:"ニュースによると…"},
-    {en:"as soon as",pos:"句",ipa:"/əz suːn əz/",ja:"〜するとすぐに",ex_en:"As soon as I arrived…",ex_ja:"ついてすぐに…"},
-    {en:"because of",pos:"句",ipa:"/bɪˈkɒz əv/",ja:"〜のせいで",ex_en:"Because of the rain.",ex_ja:"あめのせいで。"},
-    {en:"by the way",pos:"句",ipa:"/baɪ ðə weɪ/",ja:"ところで",ex_en:"By the way, hi!",ex_ja:"ところで、やあ！"},
-    {en:"give up",pos:"句",ipa:"/ɡɪv ʌp/",ja:"あきらめる",ex_en:"Don't give up.",ex_ja:"あきらめないで。"},
-    {en:"grow up",pos:"句",ipa:"/ɡroʊ ʌp/",ja:"せいちょうする",ex_en:"I grew up here.",ex_ja:"ここでそだった。"},
-    {en:"put on",pos:"句",ipa:"/pʊt ɒn/",ja:"みにつける",ex_en:"Put on your jacket.",ex_ja:"ジャケットをきて。"},
-    {en:"take off",pos:"句",ipa:"/teɪk ɔːf/",ja:"ぬぐ・りりくする",ex_en:"Take off your shoes.",ex_ja:"くつをぬいで。"},
-    {en:"turn on",pos:"句",ipa:"/tɜːrn ɒn/",ja:"スイッチをいれる",ex_en:"Turn on the light.",ex_ja:"でんきをつけて。"},
-    {en:"turn off",pos:"句",ipa:"/tɜːrn ɔːf/",ja:"スイッチをきる",ex_en:"Turn off the TV.",ex_ja:"テレビをけして。"},
-  ],
-  /* Day 20: 動詞・じゅうよう (高ひんしゅつ) */
-  [
-    {en:"recommend",pos:"動",ipa:"/ˌrekəˈmend/",ja:"すすめる",ex_en:"I recommend this book.",ex_ja:"この<ruby>本<rt>ほん</rt></ruby>をおすすめ。"},
-    {en:"realize",pos:"動",ipa:"/ˈriːəlaɪz/",ja:"きづく",ex_en:"I realized my mistake.",ex_ja:"まちがいに きづいた。"},
-    {en:"reply",pos:"動",ipa:"/rɪˈplaɪ/",ja:"へんじする",ex_en:"Please reply soon.",ex_ja:"はやくへんじしてね。"},
-    {en:"hope",pos:"動",ipa:"/hoʊp/",ja:"のぞむ",ex_en:"I hope to see you.",ex_ja:"あえるといいな。"},
-    {en:"wish",pos:"動",ipa:"/wɪʃ/",ja:"ねがう",ex_en:"I wish you luck.",ex_ja:"うんがいいことをいのる。"},
-    {en:"worry",pos:"動",ipa:"/ˈwɜːri/",ja:"しんぱいする",ex_en:"Don't worry.",ex_ja:"しんぱいしないで。"},
-    {en:"surprise",pos:"動/名",ipa:"/sərˈpraɪz/",ja:"おどろかす",ex_en:"What a surprise!",ex_ja:"びっくり！"},
-    {en:"appear",pos:"動",ipa:"/əˈpɪər/",ja:"あらわれる",ex_en:"A rainbow appeared.",ex_ja:"にじがあらわれた。"},
-    {en:"happen",pos:"動",ipa:"/ˈhæpən/",ja:"おこる",ex_en:"What happened today?",ex_ja:"きょう なにがあった？"},
-    {en:"agree",pos:"動",ipa:"/əˈɡriː/",ja:"さんせいする",ex_en:"I agree with you.",ex_ja:"あなたにさんせい。"},
-  ],
-  /* Day 21: テストでよくでる名詞 */
-  [
-    {en:"information",pos:"名",ipa:"/ˌɪnfərˈmeɪʃn/",ja:"じょうほう",ex_en:"More information, please.",ex_ja:"もっとじょうほうをください。"},
-    {en:"experience",pos:"名",ipa:"/ɪkˈspɪriəns/",ja:"けいけん",ex_en:"It was a fun experience.",ex_ja:"たのしいけいけん。"},
-    {en:"chance",pos:"名",ipa:"/tʃæns/",ja:"きかい",ex_en:"Give me a chance.",ex_ja:"きかいをちょうだい。"},
-    {en:"problem",pos:"名",ipa:"/ˈprɒbləm/",ja:"もんだい",ex_en:"No problem.",ex_ja:"もんだいないよ。"},
-    {en:"reason",pos:"名",ipa:"/ˈriːzn/",ja:"りゆう",ex_en:"What's the reason?",ex_ja:"りゆうは何？"},
-    {en:"trip",pos:"名",ipa:"/trɪp/",ja:"りょこう",ex_en:"Have a nice trip.",ex_ja:"よいたびを。"},
-    {en:"vacation",pos:"名",ipa:"/veɪˈkeɪʃn/",ja:"きゅうか",ex_en:"Summer vacation is fun.",ex_ja:"なつやすみはたのしい。"},
-    {en:"event",pos:"名",ipa:"/ɪˈvent/",ja:"イベント",ex_en:"A big event today.",ex_ja:"きょうはおおきなイベント。"},
-    {en:"future",pos:"名",ipa:"/ˈfjuːtʃər/",ja:"みらい",ex_en:"In the future…",ex_ja:"みらいでは…"},
-    {en:"world",pos:"名",ipa:"/wɜːrld/",ja:"せかい",ex_en:"The world is big.",ex_ja:"せかいはひろい。"},
-  ],
-  /* Day 22: そうふくしゅう (高ひんしゅつ・やや上) */
-  [
-    {en:"environment",pos:"名",ipa:"/ɪnˈvaɪrənmənt/",ja:"かんきょう",ex_en:"Protect the environment.",ex_ja:"かんきょうをまもろう。"},
-    {en:"culture",pos:"名",ipa:"/ˈkʌltʃər/",ja:"ぶんか",ex_en:"Japanese culture is rich.",ex_ja:"にほんのぶんかはゆたか。"},
-    {en:"health",pos:"名",ipa:"/helθ/",ja:"けんこう",ex_en:"Health is important.",ex_ja:"けんこうはだいじ。"},
-    {en:"energy",pos:"名",ipa:"/ˈenərdʒi/",ja:"エネルギー",ex_en:"Save energy.",ex_ja:"エネルギーをせつやく。"},
-    {en:"recycle",pos:"動",ipa:"/ˌriːˈsaɪkl/",ja:"リサイクルする",ex_en:"We recycle paper.",ex_ja:"かみをリサイクルする。"},
-    {en:"reduce",pos:"動",ipa:"/rɪˈduːs/",ja:"へらす",ex_en:"Reduce plastic.",ex_ja:"プラスチックをへらそう。"},
-    {en:"increase",pos:"動",ipa:"/ɪnˈkriːs/",ja:"ふえる",ex_en:"Prices increase.",ex_ja:"ねだんがあがる。"},
-    {en:"however",pos:"副",ipa:"/haʊˈevər/",ja:"しかしながら",ex_en:"However, it's hard.",ex_ja:"しかし、むずかしい。"},
-    {en:"although",pos:"接",ipa:"/ɔːlˈðoʊ/",ja:"〜だけれども",ex_en:"Although it rained, we played.",ex_ja:"あめだったけど あそんだ。"},
-    {en:"instead",pos:"副",ipa:"/ɪnˈsted/",ja:"そのかわりに",ex_en:"Tea, instead of coffee.",ex_ja:"コーヒーじゃなくおちゃ。"},
-  ],
-];
-
+const CURRICULUM = window.CURRICULUM;
 const TOTAL_DAYS = CURRICULUM.length;
-const STORAGE_KEY = "eiken_pre2_kid_v1";
+const STORAGE_KEY = "eiken_pre2_kid_v2";
 
-/* Storage */
-function load(){
-  try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ return {}; }
-}
+/* --- Storage --- */
+function load(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ return {}; } }
 function save(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
 let state = load();
 state.start = state.start || new Date().toISOString().slice(0,10);
@@ -534,6 +163,7 @@ state.days = state.days || {};       // dayIdx -> {learned:[idx], quizBest:0..10
 state.streak = state.streak || 0;
 state.lastDay = state.lastDay || null;
 state.points = state.points || 0;
+state.mistakes = state.mistakes || {}; // {en: {dayIdx, idx, count, last}}
 save(state);
 
 function todayIdx(){
@@ -543,7 +173,28 @@ function todayIdx(){
   return Math.max(0, Math.min(TOTAL_DAYS-1, diff));
 }
 
-/* Speech */
+/* Build word lookup index */
+const WORD_INDEX = {}; // en -> {dayIdx, idx, word}
+CURRICULUM.forEach((d,di)=> d.words.forEach((w,wi)=>{ WORD_INDEX[w.en]={dayIdx:di,idx:wi,word:w}; }));
+const ALL_WORDS = CURRICULUM.flatMap(d=>d.words);
+
+/* --- Mistakes tracking --- */
+function addMistake(en){
+  const info = WORD_INDEX[en]; if(!info) return;
+  const m = state.mistakes[en] || {dayIdx:info.dayIdx, idx:info.idx, count:0};
+  m.count = (m.count||0) + 1;
+  m.last = Date.now();
+  state.mistakes[en] = m; save(state);
+}
+function reduceMistake(en){
+  if(!state.mistakes[en]) return;
+  state.mistakes[en].count -= 1;
+  if(state.mistakes[en].count <= 0) delete state.mistakes[en];
+  save(state);
+}
+function mistakeCount(){ return Object.keys(state.mistakes).length; }
+
+/* --- Speech --- */
 function speak(text){
   if(!('speechSynthesis' in window)) return;
   try{
@@ -554,25 +205,17 @@ function speak(text){
   }catch(e){}
 }
 
-/* Feedback */
+/* --- Feedback / modal --- */
 function feedback(emoji, ms=700){
   const el = document.getElementById('feedback');
   document.getElementById('fbEmoji').textContent = emoji;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), ms);
+  el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), ms);
 }
-
-/* Modal */
-function openModal(html){
-  document.getElementById('sheet').innerHTML = html;
-  document.getElementById('modal').classList.add('show');
-}
+function openModal(html){ document.getElementById('sheet').innerHTML = html; document.getElementById('modal').classList.add('show'); }
 function closeModal(){ document.getElementById('modal').classList.remove('show'); }
-document.getElementById('modal').addEventListener('click', (e)=>{
-  if(e.target.id==='modal') closeModal();
-});
+document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
 
-/* Header info */
+/* --- Header --- */
 function refreshHeader(){
   const start = new Date(state.start);
   const exam = new Date(start); exam.setDate(exam.getDate() + TOTAL_DAYS);
@@ -582,55 +225,65 @@ function refreshHeader(){
   document.getElementById('todayGoal').textContent = todayIdx()+1;
 }
 
-/* ----- Views ----- */
 const app = document.getElementById('app');
 
+/* --- Home --- */
 function viewHome(){
   refreshHeader();
-  const total = TOTAL_DAYS*10;
+  const wpd = CURRICULUM[0].words.length;
+  const total = TOTAL_DAYS * wpd;
   let learned = 0;
   for(const k in state.days){ learned += (state.days[k].learned||[]).length; }
   const t = todayIdx();
+  const mc = mistakeCount();
 
   let daysHTML = "";
   for(let i=0;i<TOTAL_DAYS;i++){
     const d = state.days[i] || {};
     const ln = (d.learned||[]).length;
-    const pct = Math.round(ln/10*100);
-    const star = (d.quizBest||0) >= 8 ? "⭐" : (ln>=10? "✅" : (ln>0?"✏️":""));
+    const pct = Math.round(ln/wpd*100);
+    const star = (d.quizBest||0)>=8 ? "⭐" : (ln>=wpd? "✅" : (ln>0?"✏️":""));
     const cls = ["day"];
-    if(ln>=10 && (d.quizBest||0)>=8) cls.push("done");
+    if(ln>=wpd && (d.quizBest||0)>=8) cls.push("done");
     if(i===t) cls.push("today");
     daysHTML += `<div class="${cls.join(' ')}" data-day="${i}">
-      <div class="star">${star}</div>
-      <div class="n">Day</div>
-      <div class="d">${i+1}</div>
-      <div class="pct">${pct}%</div>
-    </div>`;
+      <div class="star">${star}</div><div class="n">Day</div>
+      <div class="d">${i+1}</div><div class="pct">${pct}%</div></div>`;
   }
+
+  const mistakeBlock = mc>0 ? `
+    <div class="alert-pill" style="margin-top:12px">
+      <div style="font-size:24px">🔥</div>
+      <div style="flex:1">
+        <div style="font-weight:800">じゃくてんリピート</div>
+        <div style="font-size:11px;color:var(--sub)">まちがえた <span class="num">${mc}</span> 語をふくしゅう</div>
+      </div>
+      <button class="btn warn small" onclick="viewWeakQuiz()">スタート</button>
+    </div>` : "";
 
   app.innerHTML = `
     <div class="row" style="margin-bottom:10px">
-      <div class="stat"><div class="n">${learned}/${total}</div><div class="l">おぼえたたんご</div></div>
-      <div class="stat"><div class="n">${state.streak}🔥</div><div class="l">れんぞくにっすう</div></div>
+      <div class="stat"><div class="n">${learned}/${total}</div><div class="l">おぼえた語</div></div>
+      <div class="stat"><div class="n">${state.streak}🔥</div><div class="l">れんぞく日数</div></div>
       <div class="stat"><div class="n">${state.points}✨</div><div class="l">ポイント</div></div>
     </div>
     <div class="card">
-      <div style="display:flex; align-items:center; justify-content:space-between">
+      <div style="display:flex;align-items:center;justify-content:space-between">
         <div style="font-weight:800">🌸 きょうのチャレンジ</div>
-        <span class="pill">Day ${t+1} / 22</span>
+        <span class="pill">Day ${t+1} / ${TOTAL_DAYS}・${wpd}語</span>
       </div>
-      <div style="margin-top:10px; color:var(--sub); font-size:13px">
-        まずは「フラッシュカード」でたんごをおぼえて、つぎに「クイズ」でちょうせんしてみよう！
+      <div style="margin-top:8px;color:var(--sub);font-size:13px">
+        ${CURRICULUM[t].name} ｜ まずカードでおぼえて、つぎにクイズ！
       </div>
+      ${mistakeBlock}
       <div class="nav">
         <button class="btn" onclick="viewDay(${t})">きょうのDayをはじめる ▶</button>
       </div>
     </div>
-    <div style="margin-top:14px; font-weight:800; padding-left:6px">22にちカレンダー</div>
+    <div style="margin-top:14px;font-weight:800;padding-left:6px">22日カレンダー</div>
     <div class="days">${daysHTML}</div>
     <div class="row" style="margin-top:16px">
-      <button class="btn ghost full" onclick="viewMixedQuiz()">💪 これまで全部から ミックスクイズ</button>
+      <button class="btn ghost full" onclick="viewMixedQuiz()">💪 学習ずみ全部から ミックスクイズ</button>
     </div>
     <div class="row" style="margin-top:8px">
       <button class="btn ghost small" onclick="resetAll()">🔄 きろくをリセット</button>
@@ -641,48 +294,45 @@ function viewHome(){
   });
 }
 
+/* --- Day list --- */
 function viewDay(idx){
-  const day = CURRICULUM[idx];
+  const day = CURRICULUM[idx].words;
   const dstate = state.days[idx] || (state.days[idx]={learned:[], quizBest:0});
   let html = `
     <div class="toolbar">
       <button class="btn ghost small" onclick="viewHome()">← もどる</button>
-      <div class="pill">Day ${idx+1}・${day.length}たんご</div>
+      <div class="pill">Day ${idx+1}・${day.length}語</div>
       <button class="btn small" onclick="viewFlash(${idx},0)">🃏 カード</button>
     </div>
     <div class="card">
-      <div style="display:flex; justify-content:space-between; align-items:center">
-        <div style="font-weight:800">📖 きょうのたんご</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:800">📖 ${CURRICULUM[idx].name}</div>
         <div class="pill">${(dstate.learned||[]).length}/${day.length}</div>
       </div>
       <div class="wlist">
   `;
   day.forEach((w,i)=>{
     const checked = (dstate.learned||[]).includes(i);
-    html += `
-      <div class="wrow">
-        <div>
-          <div class="en">${w.en} <span style="font-size:11px;color:var(--sub)">${w.pos}</span></div>
-          <div class="ja">${w.ja}</div>
-        </div>
-        <button class="speak" onclick="speak('${w.en.replace(/'/g,"\\'")}')">🔊</button>
-        <button class="check ${checked?'on':''}" data-i="${i}" data-d="${idx}">${checked?'✓':''}</button>
+    html += `<div class="wrow">
+      <div>
+        <div class="en">${w.en} <span style="font-size:10px;color:var(--sub)">${w.pos}</span></div>
+        <div class="ja">${w.ja}</div>
       </div>
-    `;
+      <button class="speak" onclick="speak(${JSON.stringify(w.en)})">🔊</button>
+      <button class="check ${checked?'on':''}" data-i="${i}" data-d="${idx}">${checked?'✓':''}</button>
+    </div>`;
   });
   html += `</div></div>
     <div class="nav">
-      <button class="btn secondary" onclick="viewFlash(${idx},0)">🃏 フラッシュカード</button>
-      <button class="btn" onclick="viewQuiz(${idx})">📝 クイズ ${dstate.quizBest? '🏆 ベスト'+dstate.quizBest+'/10':''}</button>
+      <button class="btn secondary" onclick="viewFlash(${idx},0)">🃏 フラッシュ</button>
+      <button class="btn" onclick="viewQuiz(${idx})">📝 クイズ ${dstate.quizBest? '🏆'+dstate.quizBest+'/10':''}</button>
     </div>
   `;
   app.innerHTML = html;
   document.querySelectorAll('.check').forEach(el=>{
     el.addEventListener('click', ()=>{
-      const i = parseInt(el.dataset.i);
-      const d = parseInt(el.dataset.d);
-      const ds = state.days[d];
-      ds.learned = ds.learned || [];
+      const i = parseInt(el.dataset.i), d = parseInt(el.dataset.d);
+      const ds = state.days[d]; ds.learned = ds.learned || [];
       const k = ds.learned.indexOf(i);
       if(k===-1){ ds.learned.push(i); state.points+=1; el.classList.add('on'); el.textContent='✓'; }
       else { ds.learned.splice(k,1); el.classList.remove('on'); el.textContent=''; }
@@ -691,27 +341,23 @@ function viewDay(idx){
   });
 }
 
-/* Flashcard */
+/* --- Flashcards --- */
 function viewFlash(dayIdx, i){
-  const day = CURRICULUM[dayIdx];
-  if(i>=day.length){
-    feedback("🎊", 900);
-    setTimeout(()=>viewDayResult(dayIdx, "カードコンプリート！"),700);
-    return;
-  }
+  const day = CURRICULUM[dayIdx].words;
+  if(i>=day.length){ feedback("🎊",900); setTimeout(()=>viewDayResult(dayIdx,"カードコンプリート！"),700); return; }
   const w = day[i];
   app.innerHTML = `
     <div class="toolbar">
       <button class="btn ghost small" onclick="viewDay(${dayIdx})">← もどる</button>
       <div class="pill">Day ${dayIdx+1}・${i+1}/${day.length}</div>
-      <button class="btn small secondary" onclick="speak('${w.en.replace(/'/g,"\\'")}')">🔊</button>
+      <button class="btn small secondary" onclick="speak(${JSON.stringify(w.en)})">🔊</button>
     </div>
     <div class="progress"><div style="width:${(i/day.length)*100}%"></div></div>
     <div class="flash-wrap">
       <div class="flash" id="flash">
         <div class="face front">
           <div class="word">${w.en}</div>
-          <div class="pos">${w.pos} ${w.ipa||""}</div>
+          <div class="pos">${w.pos}</div>
           <div class="hint">タップでこたえをみる</div>
         </div>
         <div class="face back">
@@ -721,50 +367,45 @@ function viewFlash(dayIdx, i){
       </div>
     </div>
     <div class="nav">
-      <button class="btn ghost" onclick="flashAnswer(${dayIdx},${i},false)">😵 まだまだ</button>
+      <button class="btn ghost" onclick="flashAnswer(${dayIdx},${i},false)">😵 まだ</button>
       <button class="btn gold" onclick="flashAnswer(${dayIdx},${i},true)">😄 おぼえた！</button>
     </div>
   `;
-  const fl = document.getElementById('flash');
-  fl.addEventListener('click', ()=> fl.classList.toggle('flip'));
+  document.getElementById('flash').addEventListener('click', e=> e.currentTarget.classList.toggle('flip'));
   speak(w.en);
 }
 function flashAnswer(dayIdx, i, learned){
   const ds = state.days[dayIdx] || (state.days[dayIdx]={learned:[],quizBest:0});
   ds.learned = ds.learned || [];
   if(learned && !ds.learned.includes(i)){ ds.learned.push(i); state.points+=2; }
-  save(state);
-  feedback(learned?"⭐":"💪", 500);
-  setTimeout(()=>viewFlash(dayIdx, i+1), 350);
+  save(state); feedback(learned?"⭐":"💪",500);
+  setTimeout(()=>viewFlash(dayIdx,i+1),350);
 }
 
-/* Quiz */
+/* --- Quiz --- */
 function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
 
-function buildQuestions(words, allWords){
-  // 10 questions, alternating E->J and J->E
-  const qs = shuffle([...words]).slice(0,10).map((w,i)=>{
-    const wrong = shuffle(allWords.filter(x=>x.en!==w.en)).slice(0,3);
+function buildQuestions(words, pool, n){
+  n = n || 10;
+  const sample = shuffle([...words]).slice(0, Math.min(n, words.length));
+  return sample.map((w,i)=>{
+    const wrong = shuffle(pool.filter(x=>x.en!==w.en)).slice(0,3);
     const dirEJ = i%2===0;
+    const opts = shuffle([w, ...wrong]);
     if(dirEJ){
-      const opts = shuffle([w, ...wrong]);
-      return {prompt:w.en, sub:w.pos+" "+(w.ipa||""), options:opts.map(o=>o.ja), answer:opts.findIndex(o=>o.en===w.en), speak:w.en};
+      return {prompt:w.en, sub:w.pos, options:opts.map(o=>o.ja), answer:opts.findIndex(o=>o.en===w.en), speak:w.en, en:w.en};
     }else{
-      const opts = shuffle([w, ...wrong]);
-      return {prompt:w.ja, sub:"日本語→英語", options:opts.map(o=>o.en), answer:opts.findIndex(o=>o.en===w.en), speak:null};
+      return {prompt:w.ja, sub:"日本語→英語", options:opts.map(o=>o.en), answer:opts.findIndex(o=>o.en===w.en), speak:null, en:w.en};
     }
   });
-  return qs;
 }
 
 function viewQuiz(dayIdx){
-  const allWords = CURRICULUM.flat();
-  const qs = buildQuestions(CURRICULUM[dayIdx], allWords);
-  runQuiz(qs, (score)=>{
+  const qs = buildQuestions(CURRICULUM[dayIdx].words, ALL_WORDS, 10);
+  runQuiz(qs, score=>{
     const ds = state.days[dayIdx] || (state.days[dayIdx]={learned:[],quizBest:0});
     ds.quizBest = Math.max(ds.quizBest||0, score);
     state.points += score;
-    // streak
     const today = new Date().toISOString().slice(0,10);
     if(state.lastDay !== today){
       const y = new Date(); y.setDate(y.getDate()-1);
@@ -779,14 +420,18 @@ function viewQuiz(dayIdx){
 function viewMixedQuiz(){
   const t = todayIdx();
   const learned = [];
-  for(let i=0;i<=t;i++){ learned.push(...CURRICULUM[i]); }
-  if(learned.length<4){ openModal(`<h3>まだたんごがすくないよ</h3><p>Day1からはじめよう！</p><button class='btn' onclick='closeModal()'>OK</button>`); return; }
-  const qs = buildQuestions(learned, CURRICULUM.flat());
-  runQuiz(qs, (score)=>{
-    state.points += score;
-    save(state);
-    showResult(-1, score, qs.length);
-  });
+  for(let i=0;i<=t;i++){ learned.push(...CURRICULUM[i].words); }
+  if(learned.length<4){ openModal(`<h3>たんごがすくないよ</h3><p>Day1からはじめよう！</p><button class='btn' onclick='closeModal()'>OK</button>`); return; }
+  const qs = buildQuestions(learned, ALL_WORDS, 10);
+  runQuiz(qs, score=>{ state.points+=score; save(state); showResult(-1,score,qs.length); });
+}
+
+function viewWeakQuiz(){
+  const ens = Object.keys(state.mistakes);
+  if(ens.length===0){ openModal(`<h3>🎉 じゃくてんゼロ！</h3><p>まちがえた語がありません。<br>クイズに ちょうせんしてふやしてみよう。</p><button class='btn' onclick='closeModal()'>OK</button>`); return; }
+  const words = ens.map(en=>WORD_INDEX[en]?WORD_INDEX[en].word:null).filter(Boolean);
+  const qs = buildQuestions(words, ALL_WORDS, Math.min(10, words.length));
+  runQuiz(qs, score=>{ state.points+=score*2; save(state); showResult(-2,score,qs.length); });
 }
 
 function runQuiz(qs, onDone){
@@ -798,15 +443,13 @@ function runQuiz(qs, onDone){
       <div class="toolbar">
         <button class="btn ghost small" onclick="viewHome()">← やめる</button>
         <div class="pill">${i+1}/${qs.length}・${score}せいかい</div>
-        ${q.speak?`<button class="btn small secondary" onclick="speak('${q.speak.replace(/'/g,"\\'")}')">🔊</button>`:'<div></div>'}
+        ${q.speak?`<button class="btn small secondary" onclick="speak(${JSON.stringify(q.speak)})">🔊</button>`:'<div></div>'}
       </div>
       <div class="progress"><div style="width:${(i/qs.length)*100}%"></div></div>
       <div class="qbox">
         <div class="q-en">${q.prompt}</div>
         <div class="q-sub">${q.sub}</div>
-        <div class="choices">
-          ${q.options.map((o,k)=>`<div class="choice" data-k="${k}">${o}</div>`).join('')}
-        </div>
+        <div class="choices">${q.options.map((o,k)=>`<div class="choice" data-k="${k}">${o}</div>`).join('')}</div>
       </div>
     `;
     if(q.speak) speak(q.speak);
@@ -815,13 +458,15 @@ function runQuiz(qs, onDone){
         const k = parseInt(el.dataset.k);
         if(k===q.answer){
           el.classList.add('correct'); score++; feedback("⭕",450);
+          reduceMistake(q.en);
         }else{
           el.classList.add('wrong');
           document.querySelectorAll('.choice')[q.answer].classList.add('correct');
           feedback("❌",550);
+          addMistake(q.en);
         }
         document.querySelectorAll('.choice').forEach(c=>c.style.pointerEvents='none');
-        setTimeout(()=>{ i++; render(); }, 750);
+        setTimeout(()=>{ i++; render(); }, 800);
       });
     });
   };
@@ -829,18 +474,20 @@ function runQuiz(qs, onDone){
 }
 
 function showResult(dayIdx, score, total){
-  const stars = score>=9? "⭐⭐⭐" : score>=7? "⭐⭐" : score>=4? "⭐" : "💪";
-  const msg = score>=9? "かんぺき！" : score>=7? "じょうずだね！" : score>=4? "もうちょっと！" : "もう一どチャレンジ！";
-  feedback(score>=7?"🎉":"💪", 800);
+  const stars = score>=9?"⭐⭐⭐":score>=7?"⭐⭐":score>=4?"⭐":"💪";
+  const msg = score>=9?"かんぺき！":score>=7?"じょうずだね！":score>=4?"もうちょっと！":"もう一どチャレンジ！";
+  feedback(score>=7?"🎉":"💪",800);
+  const retryBtn = dayIdx===-2 ? `<button class="btn warn" onclick="viewWeakQuiz()">🔁 もう一回</button>` :
+                   dayIdx>=0 ? `<button class="btn secondary" onclick="viewQuiz(${dayIdx})">🔁 もう一回</button>` : "";
   app.innerHTML = `
     <div class="card result">
       <div class="stars">${stars}</div>
-      <div style="font-weight:800; font-size:18px; margin-top:6px">${msg}</div>
+      <div style="font-weight:800;font-size:18px;margin-top:6px">${msg}</div>
       <div class="big">${score}<span style="font-size:24px;color:var(--sub)">/${total}</span></div>
-      <div style="color:var(--sub); margin-bottom:14px">+${score} ポイント ✨</div>
+      <div style="color:var(--sub);margin-bottom:14px">+${dayIdx===-2?score*2:score} ポイント ✨</div>
       <div class="row" style="justify-content:center">
-        ${dayIdx>=0?`<button class="btn secondary" onclick="viewQuiz(${dayIdx})">🔁 もういちど</button>`:''}
-        <button class="btn" onclick="viewHome()">🏠 ホームへ</button>
+        ${retryBtn}
+        <button class="btn" onclick="viewHome()">🏠 ホーム</button>
       </div>
     </div>
   `;
@@ -850,8 +497,8 @@ function viewDayResult(dayIdx, message){
   app.innerHTML = `
     <div class="card result">
       <div class="big">🎊</div>
-      <div style="font-weight:800; font-size:18px">${message}</div>
-      <div style="margin-top:14px" class="row" style="justify-content:center">
+      <div style="font-weight:800;font-size:18px">${message}</div>
+      <div class="row" style="justify-content:center;margin-top:14px">
         <button class="btn secondary" onclick="viewQuiz(${dayIdx})">📝 クイズへ</button>
         <button class="btn" onclick="viewHome()">🏠 ホーム</button>
       </div>
@@ -861,9 +508,9 @@ function viewDayResult(dayIdx, message){
 
 function resetAll(){
   openModal(`
-    <h3>🔄 きろくをぜんぶけしますか？</h3>
-    <p style="color:var(--sub); font-size:13px">おぼえたチェック・ポイント・れんぞくにっすうがゼロにもどります。</p>
-    <div class="row" style="justify-content:center; margin-top:10px">
+    <h3>🔄 きろくを ぜんぶけしますか？</h3>
+    <p style="color:var(--sub);font-size:13px">チェック・ポイント・れんぞく日数・じゃくてんがゼロにもどります。</p>
+    <div class="row" style="justify-content:center;margin-top:10px">
       <button class="btn ghost" onclick="closeModal()">やめる</button>
       <button class="btn" onclick="doReset()">けす</button>
     </div>
@@ -873,14 +520,10 @@ function doReset(){
   localStorage.removeItem(STORAGE_KEY);
   state = load();
   state.start = new Date().toISOString().slice(0,10);
-  state.days = {}; state.streak=0; state.lastDay=null; state.points=0;
-  save(state);
-  closeModal();
-  viewHome();
+  state.days={}; state.streak=0; state.lastDay=null; state.points=0; state.mistakes={};
+  save(state); closeModal(); viewHome();
 }
 
-/* Init */
+/* --- Init --- */
 viewHome();
-</script>
-</body>
-</html>
+</script></body></html>
