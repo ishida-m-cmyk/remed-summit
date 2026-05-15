@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>英検2級 単語チャレンジ</title>
+<style>
+  :root{
+    --bg:#f4f7fb; --card:#ffffff;
+    --primary:#4f7cff; --primary-d:#3a5fd0;
+    --accent:#21c7a8; --accent-d:#16a085;
+    --good:#43c66b; --bad:#ff6b6b;
+    --gold:#ffc545; --warn:#ff8a3d;
+    --ink:#1f2937; --sub:#6b7280;
+    --shadow:0 6px 0 rgba(31,41,55,.08), 0 10px 22px rgba(31,41,55,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic UI","Meiryo",sans-serif;
+    -webkit-tap-highlight-color:transparent;overflow-x:hidden;}
+  header{padding:18px 16px 6px;text-align:center}
+  h1{margin:0;font-size:22px;
+    background:linear-gradient(180deg,#4f7cff,#3a5fd0);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    letter-spacing:.02em;font-weight:800;}
+  .sub{color:var(--sub);font-size:12px;margin-top:4px}
+  main{max-width:760px;margin:0 auto;padding:8px 14px 100px}
+  .card{background:#fff;border-radius:18px;padding:18px;box-shadow:var(--shadow);border:1px solid #eef1f7}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .stat{flex:1 1 0;min-width:90px;background:#fff;border-radius:14px;padding:10px 12px;
+    box-shadow:var(--shadow);border:1px solid #eef1f7;text-align:center}
+  .stat .n{font-size:22px;font-weight:800;color:var(--primary-d)}
+  .stat .l{font-size:11px;color:var(--sub);margin-top:2px}
+  .days{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:10px;margin-top:14px}
+  .day{aspect-ratio:1/1;border-radius:14px;background:#fff;border:1px solid #eef1f7;
+    box-shadow:var(--shadow);display:flex;flex-direction:column;
+    align-items:center;justify-content:center;cursor:pointer;
+    transition:transform .12s ease;position:relative;overflow:hidden}
+  .day:active{transform:translateY(2px)}
+  .day .n{font-size:11px;color:var(--sub)}
+  .day .d{font-size:22px;font-weight:900;color:var(--ink)}
+  .day .pct{font-size:10px;color:var(--sub);margin-top:2px}
+  .day.done{background:linear-gradient(180deg,#e6f7ee,#bfead0);border-color:#bfead0}
+  .day.done .d{color:#1b6b3a}
+  .day.today{outline:2px solid var(--primary);outline-offset:-2px}
+  .day .star{position:absolute;top:4px;right:6px;font-size:13px}
+  .pill{background:#fff;border-radius:999px;padding:6px 12px;font-size:12px;box-shadow:var(--shadow);border:1px solid #eef1f7}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+  .btn{appearance:none;border:none;cursor:pointer;user-select:none;
+    border-radius:14px;padding:13px 20px;font-weight:700;font-size:15px;
+    color:#fff;background:var(--primary);
+    box-shadow:0 3px 0 var(--primary-d),0 8px 18px rgba(58,95,208,.22);
+    transition:transform .08s ease,box-shadow .08s ease}
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--primary-d)}
+  .btn.secondary{background:var(--accent);box-shadow:0 3px 0 var(--accent-d),0 8px 18px rgba(22,160,133,.22)}
+  .btn.secondary:active{box-shadow:0 1px 0 var(--accent-d)}
+  .btn.warn{background:var(--warn);box-shadow:0 3px 0 #cc6b21,0 8px 18px rgba(255,138,61,.22)}
+  .btn.warn:active{box-shadow:0 1px 0 #cc6b21}
+  .btn.ghost{background:#fff;color:var(--ink);box-shadow:0 3px 0 #dbe1ec,0 8px 18px rgba(31,41,55,.06);border:1px solid #eef1f7}
+  .btn.ghost:active{box-shadow:0 1px 0 #dbe1ec}
+  .btn.gold{background:linear-gradient(180deg,#ffd56e,#ffc545);color:#6b4d00;box-shadow:0 3px 0 #c79115,0 8px 18px rgba(199,145,21,.22)}
+  .btn.gold:active{box-shadow:0 1px 0 #c79115}
+  .btn.small{padding:8px 14px;font-size:13px}
+  .btn.full{display:block;width:100%}
+  .flash-wrap{perspective:1200px;margin:10px 0}
+  .flash{position:relative;height:300px;transform-style:preserve-3d;
+    transition:transform .55s cubic-bezier(.2,.8,.3,1.2);cursor:pointer}
+  .flash.flip{transform:rotateY(180deg)}
+  .face{position:absolute;inset:0;backface-visibility:hidden;
+    border-radius:18px;padding:18px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;text-align:center;
+    background:#fff;box-shadow:var(--shadow);border:1px solid #eef1f7}
+  .face.back{transform:rotateY(180deg);background:linear-gradient(180deg,#eef4ff,#dbe6ff)}
+  .word{font-size:42px;font-weight:900;color:var(--ink);letter-spacing:.01em}
+  .pos{font-size:13px;color:var(--sub);margin-top:6px}
+  .mean{font-size:26px;font-weight:800;color:var(--primary-d)}
+  .ex{font-size:14px;color:var(--ink);margin-top:12px;line-height:1.6;
+    background:#fffaf0;padding:10px 12px;border-radius:12px;border:1px dashed #ffc545}
+  .hint{font-size:11px;color:var(--sub);margin-top:10px}
+  .qbox{padding:18px;border-radius:18px;background:#fff;box-shadow:var(--shadow);border:1px solid #eef1f7}
+  .q-en{font-size:32px;font-weight:900;text-align:center;margin:6px 0 4px}
+  .q-sub{font-size:12px;color:var(--sub);text-align:center;margin-bottom:14px}
+  .choices{display:grid;gap:10px;grid-template-columns:1fr 1fr}
+  .choice{background:#fff;border:2px solid #e3e8f0;border-radius:14px;
+    padding:14px 10px;font-size:15px;font-weight:700;color:var(--ink);
+    cursor:pointer;box-shadow:0 2px 0 #e3e8f0;
+    transition:transform .08s,background .15s,border-color .15s;min-height:64px;text-align:center}
+  .choice:active{transform:translateY(2px);box-shadow:0 1px 0 #e3e8f0}
+  .choice.correct{background:#e7fae1;border-color:var(--good);color:#1d6a2a}
+  .choice.wrong{background:#ffe5e5;border-color:var(--bad);color:#9d2c2c}
+  .progress{height:10px;border-radius:999px;background:#e9eef7;overflow:hidden;margin-top:8px}
+  .progress>div{height:100%;background:linear-gradient(90deg,#80a3ff,#4f7cff);width:0%;transition:width .3s}
+  .result{text-align:center;padding:18px}
+  .big{font-size:64px;font-weight:900;color:var(--primary-d)}
+  .stars{font-size:36px;color:var(--gold)}
+  .wlist{display:grid;gap:6px;margin-top:10px}
+  .wrow{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:8px;
+    background:#fff;border-radius:12px;padding:8px 10px;
+    box-shadow:0 2px 0 rgba(31,41,55,.04);border:1px solid #eef1f7}
+  .wrow .en{font-weight:700;font-size:16px}
+  .wrow .ja{font-size:12px;color:var(--sub);margin-top:2px}
+  .speak{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;
+    background:var(--accent);color:#fff;font-size:14px;box-shadow:0 2px 0 var(--accent-d)}
+  .speak:active{transform:translateY(2px);box-shadow:0 1px 0 var(--accent-d)}
+  .check{width:28px;height:28px;border-radius:50%;border:2px solid #ddd;
+    background:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+  .check.on{background:var(--good);border-color:var(--good);color:#fff}
+  .nav{display:flex;gap:10px;margin-top:14px}
+  .nav .btn{flex:1}
+  .modal{position:fixed;inset:0;background:rgba(31,41,55,.4);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+  .modal.show{display:flex}
+  .sheet{background:#fff;border-radius:18px;padding:20px;max-width:420px;width:100%;
+    box-shadow:var(--shadow);border:1px solid #eef1f7;text-align:center}
+  .feedback{position:fixed;inset:0;pointer-events:none;display:none;
+    align-items:center;justify-content:center;z-index:40}
+  .feedback.show{display:flex}
+  .feedback .emoji{font-size:120px;animation:pop .6s ease}
+  @keyframes pop{0%{transform:scale(.4);opacity:0}50%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+  footer{position:fixed;left:0;right:0;bottom:0;padding:8px;
+    background:linear-gradient(180deg,transparent,rgba(244,247,251,.95));pointer-events:none;
+    text-align:center;color:var(--sub);font-size:11px}
+  .alert-pill{background:linear-gradient(180deg,#fff,#fff0e1);border:1px solid #ff8a3d;
+    border-radius:14px;padding:10px 14px;display:flex;align-items:center;gap:10px}
+  .alert-pill .num{font-size:22px;font-weight:900;color:#cc4f00}
+  .ja-tag{font-size:10px;color:var(--sub);font-weight:400;margin-left:6px}
+  @media (min-width:520px){.word{font-size:52px}.q-en{font-size:40px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>英検2級 単語チャレンジ</h1>
+  <div class="sub">1日20語 × 全<span id="totalDays">73</span>日 ／ いまDay <span id="todayGoal">1</span></div>
+</header>
+<main id="app"></main>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+<div class="feedback" id="feedback"><div class="emoji" id="fbEmoji">🎉</div></div>
+<footer>単語をタップ＝発音 ／ カードをタップ＝裏返し</footer>
+
+<script>
+__DATA_PLACEHOLDER__
+</script>
+<script>
+/* ============================================================
+   英検2級 単語チャレンジ — 1日20語 × 全単語
+   ============================================================ */
+const CURRICULUM = window.CURRICULUM;
+const TOTAL_DAYS = CURRICULUM.length;
+const STORAGE_KEY = "eiken_grade2_v1";
+
+/* --- Storage --- */
+function load(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }catch(e){ return {}; } }
+function save(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+let state = load();
+state.start = state.start || new Date().toISOString().slice(0,10);
+state.days = state.days || {};       // dayIdx -> {learned:[idx], quizBest:0..10}
+state.streak = state.streak || 0;
+state.lastDay = state.lastDay || null;
+state.points = state.points || 0;
+state.mistakes = state.mistakes || {}; // {en: {dayIdx, idx, count, last}}
+state.currentDay = state.currentDay || 0; // 自分のペース用カーソル
+save(state);
+
+function todayIdx(){
+  // 現在取り組むべきDay = 自分で進めたカーソル
+  return Math.max(0, Math.min(TOTAL_DAYS-1, state.currentDay||0));
+}
+function advanceCurrentDay(){
+  const t = state.currentDay||0;
+  const d = state.days[t]||{};
+  // 学習済み = 20語 かつ クイズ8/10以上で次の日へ
+  if((d.learned||[]).length >= CURRICULUM[t].words.length && (d.quizBest||0) >= 8){
+    state.currentDay = Math.min(TOTAL_DAYS-1, t+1);
+    save(state);
+  }
+}
+
+/* Build word lookup index */
+const WORD_INDEX = {}; // en -> {dayIdx, idx, word}
+CURRICULUM.forEach((d,di)=> d.words.forEach((w,wi)=>{ WORD_INDEX[w.en]={dayIdx:di,idx:wi,word:w}; }));
+const ALL_WORDS = CURRICULUM.flatMap(d=>d.words);
+
+/* --- Mistakes tracking --- */
+function addMistake(en){
+  const info = WORD_INDEX[en]; if(!info) return;
+  const m = state.mistakes[en] || {dayIdx:info.dayIdx, idx:info.idx, count:0};
+  m.count = (m.count||0) + 1;
+  m.last = Date.now();
+  state.mistakes[en] = m; save(state);
+}
+function reduceMistake(en){
+  if(!state.mistakes[en]) return;
+  state.mistakes[en].count -= 1;
+  if(state.mistakes[en].count <= 0) delete state.mistakes[en];
+  save(state);
+}
+function mistakeCount(){ return Object.keys(state.mistakes).length; }
+
+/* --- Speech --- */
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US"; u.rate = 0.9; u.pitch = 1.0;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* --- Feedback / modal --- */
+function feedback(emoji, ms=700){
+  const el = document.getElementById('feedback');
+  document.getElementById('fbEmoji').textContent = emoji;
+  el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), ms);
+}
+function openModal(html){ document.getElementById('sheet').innerHTML = html; document.getElementById('modal').classList.add('show'); }
+function closeModal(){ document.getElementById('modal').classList.remove('show'); }
+document.getElementById('modal').addEventListener('click', e=>{ if(e.target.id==='modal') closeModal(); });
+
+/* --- Header --- */
+function refreshHeader(){
+  document.getElementById('totalDays').textContent = TOTAL_DAYS;
+  document.getElementById('todayGoal').textContent = todayIdx()+1;
+}
+
+const app = document.getElementById('app');
+
+/* --- Home --- */
+function viewHome(){
+  refreshHeader();
+  const wpd = CURRICULUM[0].words.length;
+  const total = ALL_WORDS.length;
+  let learned = 0;
+  for(const k in state.days){ learned += (state.days[k].learned||[]).length; }
+  const t = todayIdx();
+  const mc = mistakeCount();
+
+  let daysHTML = "";
+  for(let i=0;i<TOTAL_DAYS;i++){
+    const d = state.days[i] || {};
+    const ln = (d.learned||[]).length;
+    const dwpd = CURRICULUM[i].words.length;
+    const pct = Math.round(ln/dwpd*100);
+    const star = (d.quizBest||0)>=8 ? "⭐" : (ln>=dwpd? "✅" : (ln>0?"✏️":""));
+    const cls = ["day"];
+    if(ln>=dwpd && (d.quizBest||0)>=8) cls.push("done");
+    if(i===t) cls.push("today");
+    daysHTML += `<div class="${cls.join(' ')}" data-day="${i}">
+      <div class="star">${star}</div><div class="n">Day</div>
+      <div class="d">${i+1}</div><div class="pct">${pct}%</div></div>`;
+  }
+
+  const mistakeBlock = mc>0 ? `
+    <div class="alert-pill" style="margin-top:12px">
+      <div style="font-size:22px">🔥</div>
+      <div style="flex:1;text-align:left">
+        <div style="font-weight:700">弱点リピート</div>
+        <div style="font-size:11px;color:var(--sub)">間違えた <span class="num">${mc}</span> 語を復習</div>
+      </div>
+      <button class="btn warn small" onclick="viewWeakQuiz()">スタート</button>
+    </div>` : "";
+
+  app.innerHTML = `
+    <div class="row" style="margin-bottom:10px">
+      <div class="stat"><div class="n">${learned}/${total}</div><div class="l">習得語</div></div>
+      <div class="stat"><div class="n">${state.streak}🔥</div><div class="l">連続日数</div></div>
+      <div class="stat"><div class="n">${state.points}✨</div><div class="l">ポイント</div></div>
+    </div>
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div style="font-weight:700">📘 今日のチャレンジ</div>
+        <span class="pill">Day ${t+1} / ${TOTAL_DAYS}・${CURRICULUM[t].words.length}語</span>
+      </div>
+      <div style="margin-top:8px;color:var(--sub);font-size:13px">
+        ${CURRICULUM[t].name} ｜ まずカードで覚えて、つぎにクイズで定着！
+      </div>
+      ${mistakeBlock}
+      <div class="nav">
+        <button class="btn" onclick="viewDay(${t})">今日のDayをはじめる ▶</button>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-weight:700;padding-left:6px">📅 ${TOTAL_DAYS}日カリキュラム</div>
+    <div class="days">${daysHTML}</div>
+    <div class="row" style="margin-top:16px">
+      <button class="btn ghost full" onclick="viewMixedQuiz()">💪 これまでの全単語からミックスクイズ</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <button class="btn ghost small" onclick="resetAll()">🔄 記録をリセット</button>
+    </div>
+  `;
+  document.querySelectorAll('.day').forEach(el=>{
+    el.addEventListener('click', ()=> viewDay(parseInt(el.dataset.day)));
+  });
+}
+
+/* --- Day list --- */
+function viewDay(idx){
+  const day = CURRICULUM[idx].words;
+  const dstate = state.days[idx] || (state.days[idx]={learned:[], quizBest:0});
+  let html = `
+    <div class="toolbar">
+      <button class="btn ghost small" onclick="viewHome()">← もどる</button>
+      <div class="pill">Day ${idx+1}・${day.length}語</div>
+      <button class="btn small" onclick="viewFlash(${idx},0)">🃏 カード</button>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="font-weight:700">📖 ${CURRICULUM[idx].name}</div>
+        <div class="pill">${(dstate.learned||[]).length}/${day.length}</div>
+      </div>
+      <div class="wlist">
+  `;
+  day.forEach((w,i)=>{
+    const checked = (dstate.learned||[]).includes(i);
+    html += `<div class="wrow">
+      <div>
+        <div class="en">${w.en}<span class="ja-tag">${w.pos}</span></div>
+        <div class="ja">${w.ja}</div>
+      </div>
+      <button class="speak" onclick='speak(${JSON.stringify(w.en)})'>🔊</button>
+      <button class="check ${checked?'on':''}" data-i="${i}" data-d="${idx}">${checked?'✓':''}</button>
+    </div>`;
+  });
+  html += `</div></div>
+    <div class="nav">
+      <button class="btn secondary" onclick="viewFlash(${idx},0)">🃏 フラッシュ</button>
+      <button class="btn" onclick="viewQuiz(${idx})">📝 クイズ ${dstate.quizBest? '🏆'+dstate.quizBest+'/10':''}</button>
+    </div>
+  `;
+  app.innerHTML = html;
+  document.querySelectorAll('.check').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const i = parseInt(el.dataset.i), d = parseInt(el.dataset.d);
+      const ds = state.days[d]; ds.learned = ds.learned || [];
+      const k = ds.learned.indexOf(i);
+      if(k===-1){ ds.learned.push(i); state.points+=1; el.classList.add('on'); el.textContent='✓'; }
+      else { ds.learned.splice(k,1); el.classList.remove('on'); el.textContent=''; }
+      save(state);
+    });
+  });
+}
+
+/* --- Flashcards --- */
+function viewFlash(dayIdx, i){
+  const day = CURRICULUM[dayIdx].words;
+  if(i>=day.length){ feedback("🎊",900); setTimeout(()=>viewDayResult(dayIdx,"カードコンプリート！"),700); return; }
+  const w = day[i];
+  app.innerHTML = `
+    <div class="toolbar">
+      <button class="btn ghost small" onclick="viewDay(${dayIdx})">← もどる</button>
+      <div class="pill">Day ${dayIdx+1}・${i+1}/${day.length}</div>
+      <button class="btn small secondary" onclick='speak(${JSON.stringify(w.en)})'>🔊</button>
+    </div>
+    <div class="progress"><div style="width:${(i/day.length)*100}%"></div></div>
+    <div class="flash-wrap">
+      <div class="flash" id="flash">
+        <div class="face front">
+          <div class="word">${w.en}</div>
+          <div class="pos">${w.pos}</div>
+          <div class="hint">タップで答えを見る</div>
+        </div>
+        <div class="face back">
+          <div class="mean">${w.ja}</div>
+          <div class="ex">${w.ex_en}<br/><span style="color:var(--sub)">${w.ex_ja}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="nav">
+      <button class="btn ghost" onclick="flashAnswer(${dayIdx},${i},false)">😵 まだ</button>
+      <button class="btn gold" onclick="flashAnswer(${dayIdx},${i},true)">😄 覚えた！</button>
+    </div>
+  `;
+  document.getElementById('flash').addEventListener('click', e=> e.currentTarget.classList.toggle('flip'));
+  speak(w.en);
+}
+function flashAnswer(dayIdx, i, learned){
+  const ds = state.days[dayIdx] || (state.days[dayIdx]={learned:[],quizBest:0});
+  ds.learned = ds.learned || [];
+  if(learned && !ds.learned.includes(i)){ ds.learned.push(i); state.points+=2; }
+  save(state); feedback(learned?"⭐":"💪",500);
+  setTimeout(()=>viewFlash(dayIdx,i+1),350);
+}
+
+/* --- Quiz --- */
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function buildQuestions(words, pool, n){
+  n = n || 10;
+  const sample = shuffle([...words]).slice(0, Math.min(n, words.length));
+  return sample.map((w,i)=>{
+    const wrong = shuffle(pool.filter(x=>x.en!==w.en)).slice(0,3);
+    const dirEJ = i%2===0;
+    const opts = shuffle([w, ...wrong]);
+    if(dirEJ){
+      return {prompt:w.en, sub:w.pos+" ／ 英→日", options:opts.map(o=>o.ja), answer:opts.findIndex(o=>o.en===w.en), speak:w.en, en:w.en};
+    }else{
+      return {prompt:w.ja, sub:"日→英", options:opts.map(o=>o.en), answer:opts.findIndex(o=>o.en===w.en), speak:null, en:w.en};
+    }
+  });
+}
+
+function viewQuiz(dayIdx){
+  const qs = buildQuestions(CURRICULUM[dayIdx].words, ALL_WORDS, 10);
+  runQuiz(qs, score=>{
+    const ds = state.days[dayIdx] || (state.days[dayIdx]={learned:[],quizBest:0});
+    ds.quizBest = Math.max(ds.quizBest||0, score);
+    state.points += score;
+    const today = new Date().toISOString().slice(0,10);
+    if(state.lastDay !== today){
+      const y = new Date(); y.setDate(y.getDate()-1);
+      state.streak = (state.lastDay === y.toISOString().slice(0,10)) ? (state.streak+1) : 1;
+      state.lastDay = today;
+    }
+    save(state);
+    advanceCurrentDay();
+    showResult(dayIdx, score, qs.length);
+  });
+}
+
+function viewMixedQuiz(){
+  const t = todayIdx();
+  const learned = [];
+  for(let i=0;i<=t;i++){ learned.push(...CURRICULUM[i].words); }
+  if(learned.length<4){ openModal(`<h3>単語が少ないよ</h3><p>Day1からはじめよう！</p><button class='btn' onclick='closeModal()'>OK</button>`); return; }
+  const qs = buildQuestions(learned, ALL_WORDS, 10);
+  runQuiz(qs, score=>{ state.points+=score; save(state); showResult(-1,score,qs.length); });
+}
+
+function viewWeakQuiz(){
+  const ens = Object.keys(state.mistakes);
+  if(ens.length===0){ openModal(`<h3>🎉 弱点ゼロ！</h3><p>間違えた語がありません。<br>クイズで挑戦して増やしてみよう。</p><button class='btn' onclick='closeModal()'>OK</button>`); return; }
+  const words = ens.map(en=>WORD_INDEX[en]?WORD_INDEX[en].word:null).filter(Boolean);
+  const qs = buildQuestions(words, ALL_WORDS, Math.min(10, words.length));
+  runQuiz(qs, score=>{ state.points+=score*2; save(state); showResult(-2,score,qs.length); });
+}
+
+function runQuiz(qs, onDone){
+  let i=0, score=0;
+  const render = ()=>{
+    if(i>=qs.length){ onDone(score); return; }
+    const q = qs[i];
+    app.innerHTML = `
+      <div class="toolbar">
+        <button class="btn ghost small" onclick="viewHome()">← やめる</button>
+        <div class="pill">${i+1}/${qs.length}・${score}正解</div>
+        ${q.speak?`<button class="btn small secondary" onclick='speak(${JSON.stringify(q.speak)})'>🔊</button>`:'<div></div>'}
+      </div>
+      <div class="progress"><div style="width:${(i/qs.length)*100}%"></div></div>
+      <div class="qbox">
+        <div class="q-en">${q.prompt}</div>
+        <div class="q-sub">${q.sub}</div>
+        <div class="choices">${q.options.map((o,k)=>`<div class="choice" data-k="${k}">${o}</div>`).join('')}</div>
+      </div>
+    `;
+    if(q.speak) speak(q.speak);
+    document.querySelectorAll('.choice').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const k = parseInt(el.dataset.k);
+        if(k===q.answer){
+          el.classList.add('correct'); score++; feedback("⭕",450);
+          reduceMistake(q.en);
+        }else{
+          el.classList.add('wrong');
+          document.querySelectorAll('.choice')[q.answer].classList.add('correct');
+          feedback("❌",550);
+          addMistake(q.en);
+        }
+        document.querySelectorAll('.choice').forEach(c=>c.style.pointerEvents='none');
+        setTimeout(()=>{ i++; render(); }, 800);
+      });
+    });
+  };
+  render();
+}
+
+function showResult(dayIdx, score, total){
+  const stars = score>=9?"⭐⭐⭐":score>=7?"⭐⭐":score>=4?"⭐":"💪";
+  const msg = score>=9?"かんぺき！":score>=7?"いい調子！":score>=4?"もうひと押し！":"もう一度チャレンジ！";
+  feedback(score>=7?"🎉":"💪",800);
+  const retryBtn = dayIdx===-2 ? `<button class="btn warn" onclick="viewWeakQuiz()">🔁 もう一回</button>` :
+                   dayIdx>=0 ? `<button class="btn secondary" onclick="viewQuiz(${dayIdx})">🔁 もう一回</button>` : "";
+  app.innerHTML = `
+    <div class="card result">
+      <div class="stars">${stars}</div>
+      <div style="font-weight:700;font-size:18px;margin-top:6px">${msg}</div>
+      <div class="big">${score}<span style="font-size:24px;color:var(--sub)">/${total}</span></div>
+      <div style="color:var(--sub);margin-bottom:14px">+${dayIdx===-2?score*2:score} ポイント ✨</div>
+      <div class="row" style="justify-content:center">
+        ${retryBtn}
+        <button class="btn" onclick="viewHome()">🏠 ホーム</button>
+      </div>
+    </div>
+  `;
+}
+
+function viewDayResult(dayIdx, message){
+  app.innerHTML = `
+    <div class="card result">
+      <div class="big">🎊</div>
+      <div style="font-weight:700;font-size:18px">${message}</div>
+      <div class="row" style="justify-content:center;margin-top:14px">
+        <button class="btn secondary" onclick="viewQuiz(${dayIdx})">📝 クイズへ</button>
+        <button class="btn" onclick="viewHome()">🏠 ホーム</button>
+      </div>
+    </div>
+  `;
+}
+
+function resetAll(){
+  openModal(`
+    <h3>🔄 記録を全部消しますか？</h3>
+    <p style="color:var(--sub);font-size:13px">チェック・ポイント・連続日数・弱点がゼロに戻ります。</p>
+    <div class="row" style="justify-content:center;margin-top:10px">
+      <button class="btn ghost" onclick="closeModal()">やめる</button>
+      <button class="btn" onclick="doReset()">消す</button>
+    </div>
+  `);
+}
+function doReset(){
+  localStorage.removeItem(STORAGE_KEY);
+  state = load();
+  state.start = new Date().toISOString().slice(0,10);
+  state.days={}; state.streak=0; state.lastDay=null; state.points=0; state.mistakes={}; state.currentDay=0;
+  save(state); closeModal(); viewHome();
+}
+
+/* --- Init --- */
+viewHome();
+</script></body></html>
